@@ -92,6 +92,7 @@ let state = {
   openHistory: null,   // schedule id with history expanded
   pvMode: "full",      // preview: full | exec | phone
   reviewToggle: true,  // create form: review-before-send
+  showExecPv: false,   // approve view: exec version folded by default
 };
 
 // ---------- views ----------
@@ -229,8 +230,7 @@ function renderCreate() {
           <div class="toggle-row" style="margin-top:10px">
             <input type="checkbox" checked onclick="state.reviewToggle=this.checked">
             <div><strong>Review before send</strong>
-              <small>On by default because a recipient is external. You'll get one Approve &amp; send
-              step each run instead of an automatic send.</small></div>
+              <small>On because one recipient is outside the company.</small></div>
           </div>
           <span class="dnote">External recipients flip the safe default on (R7)</span>
         </section>
@@ -314,9 +314,10 @@ function renderApprove() {
       <button class="btn-quiet" onclick="setView('create')">Edit schedule</button>
       <span class="dnote">Dana's hour becomes one click — review the rendered email, approve (R7, R2)</span>
     </div>
-    <div class="create-grid">
-      <div style="flex:1">${emailFull()}</div>
-      <div class="create-preview"><div class="pv-tabs"><span style="font-size:12px;color:var(--muted);padding:4px 0">Executive version, as vp-risk will receive it:</span></div>${emailExec()}</div>
+    <div style="max-width:760px">${emailFull()}
+      <button class="show-more-tl" onclick="state.showExecPv=!state.showExecPv;render()">
+        ${state.showExecPv ? "Hide" : "Also sending: the short executive version to 1 person — preview"} ${state.showExecPv ? "▴" : "▾"}</button>
+      ${state.showExecPv ? emailExec() : ""}
     </div>`;
 }
 
