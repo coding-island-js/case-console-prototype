@@ -312,8 +312,10 @@ function renderRail() {
     </div>
     <div class="panel">
       <h2>🕐 Complaints</h2>
-      ${c.related.map((r) => `<div class="field"><label>${r.id}</label>${r.note}<br>
-        <span style="color:var(--muted);font-size:12px">Received ${r.received} · resolved ${r.resolved}</span></div>`).join("")}
+      <table class="mini-table">
+        <tr><th>Complaint ID</th><th>Received</th><th>Resolved</th></tr>
+        ${c.related.map((r) => `<tr><td>${r.id.slice(0,8)}…</td><td>${r.received}</td><td>${r.resolved}</td></tr>`).join("")}
+      </table>
     </div>`;
 }
 

@@ -230,7 +230,7 @@ button { font: inherit; cursor: pointer; }
 .panel h2 .sub { color: var(--muted); font-weight: 400; font-size: 13px; }
 
 /* field label/value pairs used in the rail */
-.field { padding: 9px 0; border-bottom: 1px solid #f2f2f4; font-size: 14px; }
+.field { padding: 13px 0; border-bottom: 1px solid #f2f2f4; font-size: 14px; }
 .field:last-child { border-bottom: 0; }
 .field label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 2px; }
 
@@ -242,11 +242,10 @@ button { font: inherit; cursor: pointer; }
           mask-image: linear-gradient(#000 72%, transparent);
 }
 .expand-btn {
-  background: var(--card); border: 1.5px solid var(--purple); color: var(--purple);
-  border-radius: 999px; padding: 4px 14px; font-weight: 650; font-size: 12.5px;
-  margin-top: 6px;
+  background: none; border: 0; color: var(--purple); font-weight: 650;
+  font-size: 13px; padding: 2px 4px; text-decoration: underline; text-underline-offset: 3px;
 }
-.expand-btn:hover { background: var(--purple-soft); }
+.expand-btn:hover { color: #6a4cf0; }
 
 /* ---- Assessment card (R3/R4) ---- */
 .conf {
@@ -267,15 +266,15 @@ button { font: inherit; cursor: pointer; }
 .why .ev { color: var(--muted); font-style: italic; display: block; margin-top: 4px; font-size: 13.5px; }
 .decide { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
 .btn-agree {
-  background: var(--purple); border: 1.5px solid var(--purple); color: #fff;
-  border-radius: 999px; padding: 6px 16px; font-weight: 650; font-size: 13.5px;
-}
-.btn-agree:hover { background: #6a4cf0; }
-.btn-override {
   background: var(--card); border: 1.5px solid var(--purple); color: var(--purple);
-  border-radius: 999px; padding: 6px 16px; font-weight: 650; font-size: 13.5px;
+  border-radius: 999px; padding: 4px 13px; font-weight: 650; font-size: 12.5px;
 }
-.btn-override:hover { background: var(--purple-soft); }
+.btn-agree:hover { background: var(--purple-soft); }
+.btn-override {
+  background: var(--card); border: 1px solid var(--line); color: #55555e;
+  border-radius: 999px; padding: 4px 13px; font-weight: 600; font-size: 12.5px;
+}
+.btn-override:hover { border-color: var(--purple); color: var(--purple); }
 .decided {
   font-size: 12.5px; font-weight: 650; color: var(--green);
   background: var(--green-bg); border-radius: 8px; padding: 5px 12px;
@@ -374,6 +373,10 @@ body.show-new [data-new]::before {
 }
 body.show-notes .dnote { display: inline-block; }
 .dnote-inline { position: static; margin-left: 8px; }
+.mini-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 6px; }
+.mini-table th { text-align: left; color: var(--muted); font-weight: 600; font-size: 11px;
+  padding: 4px 6px; border-bottom: 1px solid var(--line); }
+.mini-table td { padding: 6px; border-bottom: 1px solid #f2f2f4; }
 /* when notes are on, outline the annotated regions so each pin
    visibly belongs to the element it explains */
 body.show-notes :is(.panel, .case-header):has(.dnote) {
