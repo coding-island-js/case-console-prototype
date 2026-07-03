@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Task 1 — Case View: Diagnosis &amp; Redesign</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav class="topnav">
+  <a class="brand" href="index.html">Product Builder — Take-Home</a>
+  <a href="task1.html" class="here">Task 1 · Case View</a>
+  <a href="prototype.html">Task 1 · Prototype</a>
+  <a href="index.html#task2">Task 2</a>
+</nav>
+
+<p class="kicker">Task 1 · Diagnose &amp; Redesign</p>
+<h1>The case view renders the record, not the job</h1>
+<p class="lede">Diagnosis of the current Case (Complaint) view, and the reasoning behind the
+redesign — personas → scenario → requirements → design, so every decision is traceable to
+a moment in the analyst's day.</p>
+
+<p style="margin-top:18px">
+  <a class="btn" href="prototype.html">Open the redesigned prototype →</a>
+  &nbsp; <a class="btn ghost" href="#diagnosis">Skip to the diagnosis</a>
+</p>
+
+<!-- ============================================================ -->
+<h2 id="personas">1 · Who this screen is for</h2>
+<p>The brief defines the user; these personas make her goals concrete enough to design against.
+The analyst, the 6&nbsp;hours/day, and the review → investigate → respond → resolve workflow come
+from the exercise document; the queue sizes, the SLA framing, and Dana are stated working
+assumptions — reasonable for regulated complaint operations, and cheap to correct with one
+customer conversation.</p>
+
+<div class="grid2">
+  <div class="card">
+    <h3 style="margin-top:0">Maya — Complaints Analyst <span class="tag">primary</span></h3>
+    <p style="font-size:14.5px">Works a queue of 30–50 open cases, ~6 hours a day in this screen.
+    Expert user by week two — she needs scan speed, not onboarding.</p>
+    <ul style="font-size:14.5px">
+      <li><strong>Goals:</strong> clear the queue without mistakes; hit every SLA date; never get
+      burned by trusting a wrong AI conclusion; be defensible when a case is audited.</li>
+      <li><strong>Measured on:</strong> throughput, resolution quality, SLA compliance.</li>
+      <li><strong>Reality:</strong> the AI is usually right — so the dangerous moments are the
+      cases where it isn't, and the screen must make those stand out.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Dana — Compliance Manager <span class="tag gray">secondary</span></h3>
+    <p style="font-size:14.5px">Doesn't work cases day-to-day; audits them after the fact and answers
+    to regulators and the sponsor bank.</p>
+    <ul style="font-size:14.5px">
+      <li><strong>Goals:</strong> reconstruct any case — who did what, when, and why, including
+      every point where a human agreed with or overrode the AI.</li>
+      <li><strong>Implication:</strong> the audit trail and AI-decision history can't be buried;
+      they're a first-class part of the record.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="scenario">2 · Maya's day, one case at a time</h2>
+<p>Before drawing anything, here is the sequence Maya runs dozens of times a day. Each moment
+gets an ID so requirements and design elements can cite it.</p>
+
+<div class="card">
+  <ol style="margin-bottom:0">
+    <li><span class="tag">S1</span> <strong>Orient.</strong> She opens a case from her queue and needs
+    to know in seconds: who is this, what product, how risky, and when is it due.</li>
+    <li><span class="tag">S2</span> <strong>Read.</strong> She reads the complaint itself — sometimes
+    two sentences, sometimes two pages of forwarded email.</li>
+    <li><span class="tag">S3</span> <strong>Judge the AI.</strong> She reviews what Zanko concluded
+    (summary, category, risk) and decides whether to trust it — which requires knowing <em>why</em>
+    it concluded that and <em>how confident</em> it is.</li>
+    <li><span class="tag">S4</span> <strong>Locate.</strong> She confirms where the case sits in its
+    workflow (review → investigate → respond → resolve) and what the next action is.</li>
+    <li><span class="tag">S5</span> <strong>Do the stage's work.</strong> In Respond, that means
+    reviewing and approving the drafted response; in Investigate, checking the pulled records.</li>
+    <li><span class="tag">S6</span> <strong>Record.</strong> She leaves a comment or a decision note —
+    and everything she and the AI did must land in the audit trail.</li>
+    <li><span class="tag">S7</span> <strong>Advance.</strong> She moves the case to its next stage and
+    returns to the queue. Repeat ~40 times a day — seconds saved here compound.</li>
+    <li><span class="tag">S8</span> <strong>Audit (Dana, weeks later).</strong> Every judgment in
+    S3–S7 must be reconstructable, especially human overrides of the AI.</li>
+  </ol>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="requirements">3 · Requirements (each traces to a scenario moment)</h2>
+<p>A requirement with no scenario source didn't make this list; a design element with no
+requirement doesn't make the screen.</p>
+
+<div class="table-scroll"><table>
+  <tr><th style="width:56px">Req</th><th>The screen must…</th><th style="width:90px">Trace</th></tr>
+  <tr><td><span class="tag">R1</span></td><td>Show case identity and stakes — customer, product, risk, status, SLA due date — without scrolling.</td><td><span class="tag gray">S1</span></td></tr>
+  <tr><td><span class="tag">R2</span></td><td>Make the complaint readable in full, with long content managed by the reader (generous preview, one expand) — never truncated behind a click by default.</td><td><span class="tag gray">S2</span></td></tr>
+  <tr><td><span class="tag">R3</span></td><td>Present every AI conclusion with its confidence and its reasoning/evidence — never a bare score.</td><td><span class="tag gray">S3</span></td></tr>
+  <tr><td><span class="tag">R4</span></td><td>Let the analyst agree with or override any AI conclusion, with a reason, recorded permanently.</td><td><span class="tag gray">S3 S8</span></td></tr>
+  <tr><td><span class="tag">R5</span></td><td>Show the case's position in its workflow at all times.</td><td><span class="tag gray">S4</span></td></tr>
+  <tr><td><span class="tag">R6</span></td><td>Offer exactly one stage-aware primary action ("what do I do next"), with secondary actions visible but subordinate.</td><td><span class="tag gray">S4 S7</span></td></tr>
+  <tr><td><span class="tag">R7</span></td><td>Put the current stage's workspace inline — e.g., the draft response is the centerpiece when the case is in Respond.</td><td><span class="tag gray">S5</span></td></tr>
+  <tr><td><span class="tag">R8</span></td><td>Keep one unified, filterable activity timeline where comments, AI actions, and system events are equally auditable.</td><td><span class="tag gray">S6 S8</span></td></tr>
+  <tr><td><span class="tag">R9</span></td><td>Maximize scan density: no duplicated fields, no empty decoration, reference metadata quiet but reachable.</td><td><span class="tag gray">S7</span></td></tr>
+  <tr><td><span class="tag">R10</span></td><td>Make SLA state unmissable, and escalate its visibility when a case is at risk or overdue.</td><td><span class="tag gray">S1 S7</span></td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="diagnosis">4 · Diagnosis of the current screen</h2>
+
+<h3>What already works</h3>
+<p>Credit where due: the left nav is clean and stays out of the way; grouping metadata into a
+right rail is the correct instinct; "Ask Zanko" is one click from anywhere; and the visual
+language (calm cards, restrained color) is right for a tool used six hours a day. The redesign
+keeps all of this. The problems are structural, not cosmetic.</p>
+
+<h3>Why it's probably like this — and why that's now the problem</h3>
+<p>To be fair to the screen: it reads as a generic record-detail template — schema-ordered field
+rows, likely generated or assembled quickly — and that was probably the <em>right</em> call to get
+from 4 design partners to 30+ clients fast. The "Sunsetting" and "Beta" badges in the nav suggest
+a platform mid-migration. But the analyst's volume has outgrown the template: at six hours a day,
+its costs now compound on every case.</p>
+
+<h3>Root cause</h3>
+<p><strong>The screen renders the database record, not the analyst's job.</strong> Every field
+gets an identical flat row in schema order, so the layout answers "what columns does a complaint
+have?" instead of Maya's four questions: <em>what is this case (S1), can I trust the AI (S3),
+where is it in the workflow (S4), and what do I do now (S7)?</em> Three deeper patterns follow
+from it:</p>
+<ol>
+  <li><strong>The workflow doesn't exist on screen.</strong> Nothing shows review → investigate →
+  respond → resolve, and a "Waiting on customer" status dropdown is not a workflow position.
+  Violates <span class="tag">R5</span> <span class="tag">R6</span> — the two things the brief says
+  Maya must always know.</li>
+  <li><strong>Layout mirrors the schema, not the reading order.</strong> The complaint and the AI
+  summary — the two things she must actually read — are truncated behind "See&nbsp;More", while
+  single dates get full-width rows. Violates <span class="tag">R2</span> <span class="tag">R9</span>.</li>
+  <li><strong>AI output is dumped as fields, not presented as an assessment.</strong> "Resolution
+  Quality Score: 50" with no why, no confidence, no override. She's asked to trust or question the
+  AI but given no means to do either. Violates <span class="tag">R3</span> <span class="tag">R4</span>.</li>
+</ol>
+
+<h3>The evidence, on the screen itself</h3>
+
+<div class="shot">
+  <img src="img/case-top.png" alt="Current case view, top of page, with numbered problem markers">
+  <div class="marker" style="left:38%; top:9%">1</div>
+  <div class="marker" style="left:40%; top:27%">2</div>
+  <div class="marker" style="left:33%; top:42%">3</div>
+  <div class="marker" style="left:41%; top:82%">4</div>
+  <div class="marker" style="left:82%; top:22%">5</div>
+</div>
+<p class="caption">Current case view — top of the page.</p>
+
+<div class="shot">
+  <img src="img/case-scrolled.png" alt="Current case view, scrolled down, with numbered problem markers">
+  <div class="marker" style="left:24%; top:45%">6</div>
+  <div class="marker" style="left:24%; top:77%">7</div>
+  <div class="marker" style="left:80%; top:56%">8</div>
+  <div class="marker" style="left:77%; top:7%">9</div>
+</div>
+<p class="caption">Same page, scrolled down.</p>
+
+<ol class="diag-list" style="list-style:none; padding-left:0">
+  <li><span class="num">1</span><strong>No stage, no next action, anywhere.</strong> The header
+  spends its prime real estate on a system ID. Maya's first and constant question —
+  "where is this case and what's next?" — has no answer on the entire screen. <span class="tag red">R5 R6</span></li>
+  <li><span class="num">2</span><strong>The complaint is truncated by default.</strong> Reading the
+  case — the core of the job — costs a click every time, ~40 times a day. <span class="tag red">R2</span></li>
+  <li><span class="num">3</span><strong>The screen displays mutually impossible states without
+  complaint.</strong> This case shows <em>Ticket Closed 03/25</em>, <em>Resolved 03/26</em> (closed
+  before resolved), and a status of <em>Waiting on customer</em> — three facts that cannot
+  coexist — and the Resolution section sits <em>above</em> the analysis that's meant to produce it.
+  A form that happily renders contradictions is the clearest proof it has no model of the
+  workflow. <span class="tag red">R5 R9</span></li>
+  <li><span class="num">4</span><strong>The AI summary duplicates the description and is also
+  truncated.</strong> Two "See More" clicks to read two overlapping texts. <span class="tag red">R2 R9</span></li>
+  <li><span class="num">5</span><strong>Status is a dropdown buried in the rail.</strong> Case state
+  is treated as one editable field among twenty, not as the organizing fact of the screen. <span class="tag red">R1 R5</span></li>
+  <li><span class="num">6</span><strong>Bare AI scores with no reasoning, confidence, or
+  recourse.</strong> "Quality: 50. Risk: 53." Meanwhile <em>Alleged Risk: Low</em> and <em>Inherent
+  Risk: High</em> sit far apart, unreconciled — the exact moment Maya needs help judging the AI,
+  and the screen shrugs. <span class="tag red">R3 R4</span></li>
+  <li><span class="num">7</span><strong>The draft response — her main deliverable — is the second
+  tab of "Activity," below the fold.</strong> The stage's actual work is hidden inside a log
+  component. <span class="tag red">R7</span></li>
+  <li><span class="num">8</span><strong>The rail's grouping is arbitrary.</strong> "Additional
+  Details" is a junk drawer holding two fields (Agent ID, Customer Email) split from "Complaint
+  Details" for no stated reason, and the AI's summary in the center column restates the
+  description above it. Structure that doesn't mean anything trains users to stop reading.
+  <span class="tag red">R9</span></li>
+  <li><span class="num">9</span><strong>All verbs hide inside a generic "Actions ▾".</strong>
+  Respond, escalate, resolve, reassign — undifferentiated in a dropdown, so the next action is
+  never visible, never suggested. <span class="tag red">R6</span></li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="design">5 · The redesign, decision by decision</h2>
+<p>Same design language — Zanko's sidebar, cards, chips, and purple stay. What changes is the
+structure. Three zones, in Maya's reading order:</p>
+
+<h3>Information design</h3>
+<div class="table-scroll"><table>
+  <tr><th>Decision</th><th>Why (traced)</th></tr>
+  <tr><td><strong>Case header strip:</strong> customer + product + risk chip + SLA countdown +
+    workflow stepper + one primary action. Always visible. The stepper renders whatever stages the
+    case's workflow defines (Zanko has a Workflow Automation area — flows will vary); the
+    four-stage flow shown is the brief's illustration.</td>
+    <td>Answers S1 and S4 before any scrolling. <span class="tag">R1 R5 R6 R10</span></td></tr>
+  <tr><td><strong>Complaint first, full text,</strong> ~12-line preview with a single expand for
+    genuinely long content.</td>
+    <td>Reading is the job; the reader controls disclosure, not the layout. <span class="tag">R2</span></td></tr>
+  <tr><td><strong>One "Zanko Assessment" card</strong> merging the old Analysis + Resolution
+    Analysis: summary, categorization, one reconciled risk verdict — each conclusion with a
+    confidence badge and a "why" (evidence quoted from the complaint).</td>
+    <td>An assessment you can interrogate replaces scores you must take on faith; alleged-vs-inherent
+    risk is explained in one place instead of contradicting itself in two. <span class="tag">R3</span></td></tr>
+  <tr><td><strong>Stage workspace inline:</strong> in Respond, the draft response sits in the main
+    column with Approve &amp; Send as the primary action.</td>
+    <td>The screen reshapes itself around the stage's work. <span class="tag">R6 R7</span></td></tr>
+  <tr><td><strong>One timeline,</strong> filterable (all / comments / AI actions / audit), replacing
+    the four-tab Activity block.</td>
+    <td>Comments, AI events, and system events are one auditable history. <span class="tag">R8</span></td></tr>
+  <tr><td><strong>Right rail regrouped</strong> into one Details card + customer history;
+    attachments live there too with a visible count, one click away.</td>
+    <td>Reference material stays reachable but quiet, grouped by meaning. <span class="tag">R9</span></td></tr>
+</table></div>
+
+<p><strong>A feasibility note on the AI affordances.</strong> Confidence badges and quoted evidence
+require the AI layer to emit calibrated confidence and source citations. If today's engine doesn't,
+the design degrades gracefully — conclusions render without badges and the "why" block simply
+isn't shown — but I'd argue for building it: it's the difference between an AI feature analysts
+use and one they route around, and the agent already extracts these spans to categorize at all.</p>
+
+<h3>Behavioral design</h3>
+<div class="table-scroll"><table>
+  <tr><th>Decision</th><th>Why (traced)</th></tr>
+  <tr><td><strong>The primary action is computed from stage + AI state.</strong> Respond + confident
+    draft → "Approve &amp; send". Low-confidence analysis → "Review AI analysis" and sending is
+    de-emphasized until the human has looked.</td>
+    <td>The system proposes; the analyst disposes. Guardrail, not gate. <span class="tag">R3 R6</span></td></tr>
+  <tr><td><strong>Agree / Override on every AI conclusion.</strong> Agreeing is one click
+    (frequent, cheap). Overriding asks for a reason (rare, consequential) and writes to the
+    timeline.</td>
+    <td>Friction proportional to consequence — and every override becomes audit evidence for Dana.
+    <span class="tag">R4 R8</span></td></tr>
+  <tr><td><strong>SLA escalates visually:</strong> quiet date → amber "due soon" → red overdue
+    banner. Nothing else on the screen competes with red.</td>
+    <td>Color is reserved for state that demands action. <span class="tag">R10</span></td></tr>
+  <tr><td><strong>Resolve confirms once, then the case goes read-only</strong> with a closure
+    summary — and offers "Next case in queue" so the loop continues without a trip back to the
+    list.</td>
+    <td>Terminal actions deserve one deliberate step; at ~40 cases a day the return trip is the
+    hidden tax. <span class="tag">R8 S7</span></td></tr>
+</table></div>
+
+<h3>How I'd know it worked</h3>
+<p>Three numbers, all measurable in Zanko today: <strong>time-per-case</strong> (open → advance)
+should drop; <strong>SLA breaches</strong> should drop; and the <strong>AI override rate</strong>
+becomes visible for the first time — if analysts override often, that's product feedback about the
+model; if they never override, that's a calibration warning worth investigating. The redesign
+doesn't just help Maya — it starts measuring the human-AI relationship.</p>
+
+<h3>What I removed, and why</h3>
+<ul>
+  <li><strong>"Complaint Summary" as a separate field</strong> — it restated the description; the
+  assessment's summary now serves that purpose once. <span class="tag gray">R9</span></li>
+  <li><strong>The "Additional Details" card</strong> — its two fields (Agent ID, Customer Email)
+  merged into the single Details card; grouping now follows meaning, not schema history.
+  <span class="tag gray">R9</span></li>
+  <li><strong>Resolution dates on unresolved cases</strong> — resolution fields appear when the case
+  reaches Resolve, not before, so the screen can never display the closed-before-resolved
+  contradiction found in the current view. <span class="tag gray">R9</span></li>
+  <li><strong>The generic "Actions ▾" dropdown</strong> — replaced by the computed primary action +
+  explicit secondary buttons. <span class="tag gray">R6</span></li>
+</ul>
+
+<h3>What I deliberately did not build</h3>
+<ul>
+  <li><strong>No queue/list redesign, no navigation changes</strong> — the task is this screen; the
+  nav is kept verbatim so the redesign reads in context.</li>
+  <li><strong>No AI prompt editing or model configuration</strong> — trust affordances (why,
+  confidence, override) solve Maya's problem without opening a configuration surface.</li>
+  <li><strong>No layout customization / movable panels</strong> — one opinionated reading order,
+  consistent across thousands of cases, beats per-user drift in a regulated tool.</li>
+  <li><strong>No real backend</strong> — hardcoded data; the judgment being tested lives in
+  structure and behavior, not plumbing.</li>
+  <li><strong>No loading / empty / error states, no keyboard shortcuts</strong> — real for
+  production, not where this exercise's judgment lives; both are listed so the cut is a decision,
+  not an oversight.</li>
+  <li><strong>No contextual "Ask Zanko" prompts inside the case</strong> — promising (e.g., "ask
+  about this customer's history"), but it's a second feature; the assistant stays where the
+  product already puts it.</li>
+</ul>
+
+<p style="margin-top:26px"><a class="btn" href="prototype.html">Open the prototype →</a></p>
+<p class="caption" style="margin-top:10px">In the prototype: use the demo bar (bottom) to flip
+between the key states — long content, low-confidence AI, an override, an overdue case, and
+resolution — and toggle <strong>Design notes</strong> to see these R# decisions pinned in place.</p>
+
+<div class="footnote">
+Built for the Spring Labs Product Builder exercise · sample case content invented, as the brief
+allows.
+</div>
+
+</div>
+</body>
+</html>

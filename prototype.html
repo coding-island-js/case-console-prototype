@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Case View — Redesigned Prototype</title>
+<link rel="stylesheet" href="proto.css">
+</head>
+<body>
+<!-- ============================================================
+     Redesigned Case View prototype.
+
+     Beginner note: this file is only the static skeleton — the
+     sidebar and the empty containers. Everything dynamic is
+     rendered into the #-id containers by proto.js from the data
+     in case-data.js.
+
+     Business note: the sidebar and top bar replicate Zanko's
+     current product on purpose. The redesign is the case view
+     itself; keeping its surroundings verbatim shows the new
+     screen in honest context.
+     ============================================================ -->
+<div class="app">
+
+  <!-- Left sidebar: unchanged from the current product -->
+  <aside class="sidebar">
+    <div class="logo"><span class="spark">✦</span> zanko</div>
+    <div class="workspace">
+      <span class="ws-badge">CMS</span>
+      <div><small>Workspace</small>Complaint</div>
+    </div>
+    <div class="nav-item"><span class="ico">🏠</span> Home <span class="badge">Sunsetting</span></div>
+    <div class="nav-item active"><span class="ico">📋</span> Complaints</div>
+    <div class="nav-item nav-sub">Assigned to me</div>
+    <div class="nav-item nav-sub">Archived</div>
+    <div class="nav-item nav-sub">High Risk Complaints</div>
+    <div class="nav-item nav-sub">High Risk UDAAP &amp; …</div>
+    <div class="nav-item nav-sub">+ Create view</div>
+    <div class="nav-item"><span class="ico">📊</span> Reports</div>
+    <div class="nav-item"><span class="ico">📄</span> Complaint Handling Policy</div>
+    <div class="nav-item"><span class="ico">📈</span> Analysis <span class="badge">Sunsetting</span></div>
+    <div class="nav-item"><span class="ico">⚡</span> Workflow Automation <span class="badge">Beta</span></div>
+    <div class="nav-item"><span class="ico">⚙️</span> Settings</div>
+    <button class="ask-zanko-side">✦ Ask Zanko</button>
+  </aside>
+
+  <div class="main">
+    <!-- Top bar: unchanged from the current product -->
+    <div class="topbar">
+      <button class="ask-zanko-top">✦ Ask Zanko</button>
+      <span>🔔</span>
+      <div class="avatar">ZA</div>
+    </div>
+
+    <!-- Case header: the command strip. Identity + stakes + workflow
+         position + the one computed next action (R1 R5 R6 R10). -->
+    <header class="case-header">
+      <div class="ch-row1" id="hdr-row"></div>
+      <div class="stepper" id="stepper"></div>
+    </header>
+    <div id="banner"></div>
+
+    <div class="content">
+      <!-- Main column, in the analyst's reading order:
+           complaint -> AI assessment -> the stage's work -> history -->
+      <div class="col-main">
+        <section class="panel" id="complaint"></section>
+        <section class="panel" id="assessment"></section>
+        <section class="panel" id="workspace"></section>
+        <section class="panel" id="timeline"></section>
+      </div>
+
+      <!-- Right rail: reference material, quiet but reachable (R9) -->
+      <aside class="col-rail" id="rail"></aside>
+    </div>
+  </div>
+</div>
+
+<!-- Demo chrome (dark, clearly not product UI): flip between the key
+     states the brief asks for, and toggle the design-rationale pins -->
+<div class="demo-bar">
+  <span class="lbl">DEMO STATES</span>
+  <span id="demo-scenarios"></span>
+  <span class="sep"></span>
+  <button onclick="toggleNotes(this)">Design notes</button>
+  <span class="sep"></span>
+  <a href="task1.html" style="color:#c9c9d2">← Diagnosis</a>
+</div>
+
+<script src="case-data.js"></script>
+<script src="proto.js"></script>
+</body>
+</html>

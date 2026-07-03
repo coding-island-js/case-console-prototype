@@ -1,0 +1,108 @@
+/* ============================================================
+   Shared styles for the write-up pages (hub, task pages).
+   The prototype has its own stylesheet (proto.css) because it
+   replicates Zanko's product UI, while these pages are documents.
+   ============================================================ */
+
+:root {
+  --ink: #171717;        /* near-black body text — softer than pure #000 */
+  --muted: #6b6b76;
+  --accent: #7c5cfc;     /* Zanko's purple, used sparingly as a nod to the product */
+  --card: #ffffff;
+  --line: #e7e7ec;
+  --bg: #fafafb;
+  --good: #1a7f4e;
+  --bad: #c0392b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.65 -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+}
+
+.wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+
+/* --- top nav shared by all doc pages --- */
+.topnav {
+  display: flex; gap: 18px; align-items: center;
+  padding: 14px 0; margin-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+.topnav a { color: var(--muted); text-decoration: none; }
+.topnav a:hover, .topnav a.here { color: var(--accent); }
+.topnav .brand { font-weight: 700; color: var(--ink); margin-right: auto; }
+
+h1 { font-size: 30px; line-height: 1.25; margin: 0 0 6px; letter-spacing: -0.02em; }
+h2 { font-size: 21px; margin: 44px 0 12px; letter-spacing: -0.01em; }
+h3 { font-size: 16px; margin: 26px 0 8px; }
+.kicker {
+  color: var(--accent); font-size: 12px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px;
+}
+.lede { color: var(--muted); font-size: 17px; margin-top: 0; }
+
+p { margin: 0 0 14px; }
+ul, ol { margin: 0 0 16px; padding-left: 22px; }
+li { margin-bottom: 6px; }
+strong { font-weight: 650; }
+
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; padding: 20px 22px; margin: 0 0 16px;
+}
+
+/* persona cards sit side by side on desktop, stack on mobile */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } }
+
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 0 0 18px; }
+th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;
+     color: var(--muted); padding: 8px 10px; border-bottom: 2px solid var(--line); }
+td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.table-scroll { overflow-x: auto; }
+
+/* small pill used for IDs like S1, R4 so cross-references pop */
+.tag {
+  display: inline-block; background: #f1edff; color: var(--accent);
+  font-size: 12px; font-weight: 700; border-radius: 6px;
+  padding: 1px 7px; white-space: nowrap;
+}
+.tag.gray { background: #f2f2f6; color: var(--muted); }
+.tag.red  { background: #fdecec; color: var(--bad); }
+.tag.green{ background: #e8f6ee; color: var(--good); }
+
+/* annotated screenshot: image + absolutely-positioned numbered markers */
+.shot { position: relative; margin: 0 0 10px; }
+.shot img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 10px; }
+.marker {
+  position: absolute; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--bad); color: #fff; font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,0.35);
+  transform: translate(-50%, -50%);
+}
+.caption { color: var(--muted); font-size: 13px; margin: 0 0 22px; }
+
+.diag-list { counter-reset: none; }
+.diag-list li { margin-bottom: 12px; }
+.diag-list .num {
+  display: inline-flex; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--bad); color: #fff; font-size: 12px; font-weight: 700;
+  align-items: center; justify-content: center; margin-right: 8px;
+}
+
+.btn {
+  display: inline-block; background: var(--accent); color: #fff;
+  padding: 11px 20px; border-radius: 10px; font-weight: 650;
+  text-decoration: none; font-size: 15px;
+}
+.btn:hover { background: #6a4cf0; }
+.btn.ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+
+.footnote { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--line);
+            margin-top: 48px; padding-top: 14px; }
