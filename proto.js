@@ -128,7 +128,7 @@ function renderStrip() {
   const a = primaryAction();
   const overdue = c.dueInDays < 0;
   const slaChip = overdue
-    ? `<span class="chip red">Overdue — was due ${c.due}</span>`
+    ? `<span class="chip red">⏰ Overdue</span>`
     : `<span class="chip ${c.dueInDays <= 3 ? "amber" : ""}">Due ${c.due}</span>`;
 
   $("#strip").innerHTML = `
@@ -215,7 +215,7 @@ function renderAnalysis() {
           <input id="ov-reason" class="ov-input" placeholder="Why do you disagree? (saved to the audit log)">
           <button class="btn-agree" onclick="submitDisagree()">Save</button>
           <button class="btn-override" onclick="state.overrideOpen=false;render()">Cancel</button>`
-        : `<button class="btn-agree" onclick="agreeAll()">✓ Agree with the AI</button>
+        : `<button class="btn-agree" onclick="agreeAll()">Agree with the AI</button>
            <button class="btn-override" onclick="state.overrideOpen=true;render()">Disagree…</button>`}
     </div>` : ""}`;
 }
