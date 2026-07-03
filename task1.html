@@ -29,8 +29,8 @@ a moment in the analyst's day.</p>
   <ul style="margin-bottom:0">
     <li><strong>Diagnosis:</strong> the screen renders the database record, not the analyst's job —
     no workflow position, no next action, AI conclusions shown as bare scores she can neither
-    question nor correct. It even displays impossible states (closed before resolved, on an
-    open case) without complaint.</li>
+    question nor correct. It even shows state that reads as contradictory (closed before
+    resolved, on a case still "waiting on customer") with nothing to reconcile it.</li>
     <li><strong>Redesign:</strong> a command strip (workflow stepper + one computed next action +
     SLA), the complaint readable in full, an AI assessment with confidence, evidence, and
     agree/override, the stage's work inline, one auditable timeline.</li>
@@ -188,12 +188,14 @@ from it:</p>
   "where is this case and what's next?" — has no answer on the entire screen. <span class="tag red">R5 R6</span></li>
   <li><span class="num">2</span><strong>The complaint is truncated by default.</strong> Reading the
   case — the core of the job — costs a click every time, ~40 times a day. <span class="tag red">R2</span></li>
-  <li><span class="num">3</span><strong>The screen displays mutually impossible states without
-  complaint.</strong> This case shows <em>Ticket Closed 03/25</em>, <em>Resolved 03/26</em> (closed
-  before resolved), and a status of <em>Waiting on customer</em> — three facts that cannot
-  coexist — and the Resolution section sits <em>above</em> the analysis that's meant to produce it.
-  A form that happily renders contradictions is the clearest proof it has no model of the
-  workflow. <span class="tag red">R5 R9</span></li>
+  <li><span class="num">3</span><strong>The screen shows state that reads as contradictory — and
+  gives no way to tell if it is.</strong> This case shows <em>Ticket Closed 03/25</em>,
+  <em>Resolved 03/26</em> (closed before resolved), and a status of <em>Waiting on customer</em>.
+  Maybe there's an innocent reading — a ticket closed in a source system, a customer confirming
+  closure — but the screen doesn't say, and that's the point: three state fields with no stated
+  relationship, so an analyst can't tell broken data from normal data. (The Resolution section
+  also sits <em>above</em> the analysis meant to produce it.) A screen whose state an expert can't
+  verify has no model of the workflow. <span class="tag red">R5 R9</span></li>
   <li><span class="num">4</span><strong>The AI summary duplicates the description and is also
   truncated.</strong> Two "See More" clicks to read two overlapping texts. <span class="tag red">R2 R9</span></li>
   <li><span class="num">5</span><strong>Status is a dropdown buried in the rail.</strong> Case state
@@ -304,8 +306,8 @@ doesn't just help Maya — it starts measuring the human-AI relationship.</p>
   merged into the single Details card; grouping now follows meaning, not database history.
   <span class="tag gray">R9</span></li>
   <li><strong>Resolution dates on unresolved cases</strong> — resolution fields appear when the case
-  reaches Resolve, not before, so the screen can never display the closed-before-resolved
-  contradiction found in the current view. <span class="tag gray">R9</span></li>
+  reaches Resolve, not before, so the case's state can never look self-contradictory the way the
+  current view's does. <span class="tag gray">R9</span></li>
   <li><strong>The generic "Actions ▾" dropdown</strong> — replaced by the computed primary action +
   explicit secondary buttons. <span class="tag gray">R6</span></li>
 </ul>
