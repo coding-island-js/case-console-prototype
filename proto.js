@@ -321,11 +321,7 @@ function renderWorkspace() {
     $("#workspace").innerHTML = "";
     return;
   }
-  $("#workspace").style.display = ""; else if (stageName === "Investigate") {
-    body = `<p style="color:var(--muted)">Records pulled by the Zanko agent — transaction detail,
-      call logs, and the customer's dispute history are attached and summarized in the timeline.
-      Generate the draft response when the facts are confirmed.</p>`;
-  }
+  $("#workspace").style.display = "";
   $("#workspace").innerHTML = `
     <h2>${stageName === "Respond" ? "Draft response" : stageName + " workspace"}
      </h2>
