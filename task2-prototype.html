@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Zanko Reporting — Scheduled Reports Prototype</title>
+<link rel="stylesheet" href="proto.css">
+<link rel="stylesheet" href="task2.css">
+</head>
+<body>
+<!-- ============================================================
+     Scheduled Reports prototype (Task 2).
+
+     Beginner note: like the Task 1 prototype, this file is only
+     the static shell — task2.js renders the three views (list,
+     create, approve) into #view from the data at the top of that
+     file.
+
+     Business note: the sidebar and page header replicate Zanko's
+     current Reporting screen (Reports nav item active, Dashboards
+     and Reports tabs). The one addition is the Schedules tab —
+     the feature grows out of the existing Reporting area rather
+     than becoming a new module.
+     ============================================================ -->
+<div class="app">
+
+  <!-- Left sidebar: as on the current Reporting screenshot -->
+  <aside class="sidebar">
+    <div class="logo"><span class="spark">✦</span> zanko</div>
+    <div class="workspace">
+      <span class="ws-badge">CMS</span>
+      <div><small>Workspace</small>Complaint</div>
+    </div>
+    <div class="nav-item"><span class="ico">🏠</span> Home <span class="badge">Sunsetting</span></div>
+    <div class="nav-item"><span class="ico">📋</span> Complaints</div>
+    <div class="nav-item active"><span class="ico">📊</span> Reports</div>
+    <div class="nav-item nav-sub">CMS Insights Dashb…</div>
+    <div class="nav-item"><span class="ico">📄</span> Complaint Handling Policy</div>
+    <div class="nav-item"><span class="ico">📈</span> Analysis <span class="badge">Sunsetting</span></div>
+    <div class="nav-item"><span class="ico">⚡</span> Workflow Automation <span class="badge">Beta</span></div>
+    <div class="nav-item"><span class="ico">⚙️</span> Settings</div>
+    <button class="ask-zanko-side">✦ Ask Zanko</button>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="ask-zanko-top">✦ Ask Zanko</button>
+      <span>🔔</span>
+      <div class="avatar">ZA</div>
+    </div>
+
+    <!-- Reporting header: existing tabs + the new Schedules tab (R8) -->
+    <div class="page-head" style="position:relative">
+      <h1>Reporting<span class="beta">Beta</span></h1>
+      <nav class="tabs">
+        <a href="#" onclick="return false">Dashboards</a>
+        <a href="#" onclick="return false">Reports</a>
+        <a href="#" onclick="return false" class="on">Schedules</a>
+      </nav>
+      <span class="dnote">A peer of Dashboards and Reports — the area grows, no new module (R8)</span>
+    </div>
+
+    <!-- task2.js renders the current view (list / create / approve) here -->
+    <div class="page-body" id="view"></div>
+  </div>
+</div>
+
+<!-- Demo chrome: guided tour, state switcher, rationale pins -->
+<div class="demo-bar">
+  <button onclick="startTour()" style="background:#7c5cfc;border-color:#7c5cfc;color:#fff">▶ Tour</button>
+  <span class="sep"></span>
+  <span class="lbl">DEMO STATES</span>
+  <span id="demo-scenarios"></span>
+  <span class="sep"></span>
+  <button onclick="toggleNotes(this)">Design notes</button>
+  <span class="sep"></span>
+  <a href="task2.html" style="color:#c9c9d2">← Framing</a>
+</div>
+<div class="tour-card" id="tour-card"></div>
+
+<script src="task2.js"></script>
+</body>
+</html>
