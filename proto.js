@@ -357,7 +357,6 @@ function render() {
   document.body.classList.toggle("readonly", state.scenario === "resolved");
   renderHeader(); renderComplaint(); renderAssessment();
   renderWorkspace(); renderTimeline(); renderRail(); renderDemoBar();
-  renderTour();
 }
 
 // Design-notes toggle: shows the purple pins that map each element
@@ -365,53 +364,6 @@ function render() {
 function toggleNotes(btn) {
   document.body.classList.toggle("show-notes");
   btn.classList.toggle("on");
-}
-
-// ---------- guided tour ----------
-// A self-narrating walkthrough: each stop switches to the right demo
-// state, scrolls to the element, and explains it in one breath. Anyone
-// opening this link cold can see the whole argument in six clicks.
-
-const TOUR = [
-  { scenario: "default", sel: ".case-header", title: "The command strip",
-    text: "Who, what product, how risky, when it's due, where the case sits in its workflow, and one computed next action — all before any scrolling. This is the answer to “what do I do next?”" },
-  { scenario: "long", sel: "#complaint", title: "Long content",
-    text: "The complaint is readable in full by default. Genuinely long email chains collapse under the reader's control — no “See More” tax on every case." },
-  { scenario: "lowconf", sel: "#assessment", title: "Low-confidence AI",
-    text: "When the AI is unsure, the screen says so: amber badges, the draft response is held, and the primary action changes to “Review AI analysis.” The system proposes; the analyst disposes." },
-  { scenario: "overridden", sel: "#assessment", title: "Analyst override",
-    text: "Agreeing with the AI is one click. Overriding requires a reason and is written to the audit log — friction proportional to consequence, and evidence for the next compliance audit." },
-  { scenario: "overdue", sel: "#banner", title: "Overdue SLA",
-    text: "Red is reserved for state that demands action. The banner names the missed deadline and the fastest path back to compliance. Nothing else on the screen competes with it." },
-  { scenario: "resolved", sel: "#banner", title: "Resolved — and the next case",
-    text: "One confirmation, then the case becomes a read-only record with a closure summary. “Next case in queue” keeps the loop going — at ~40 cases a day, the return trip is the hidden tax." },
-];
-
-function startTour() { state.tourIdx = 0; setScenario(TOUR[0].scenario); }
-function nextTour() {
-  state.tourIdx += 1;
-  if (state.tourIdx >= TOUR.length) { endTour(); return; }
-  setScenario(TOUR[state.tourIdx].scenario);
-}
-function endTour() { state.tourIdx = -1; setScenario("default"); }
-
-function renderTour() {
-  document.querySelectorAll(".tour-target").forEach((el) => el.classList.remove("tour-target"));
-  const card = $("#tour-card");
-  const i = state.tourIdx;
-  if (i == null || i < 0) { card.style.display = "none"; return; }
-  const stop = TOUR[i];
-  card.style.display = "block";
-  card.innerHTML = `
-    <div class="tour-step">Tour · ${i + 1} of ${TOUR.length}</div>
-    <h3>${stop.title}</h3>
-    <p>${stop.text}</p>
-    <div class="tour-btns">
-      <button class="btn-primary" onclick="nextTour()">${i + 1 === TOUR.length ? "Finish" : "Next →"}</button>
-      <button class="btn-quiet" onclick="endTour()">End tour</button>
-    </div>`;
-  const target = document.querySelector(stop.sel);
-  if (target) { target.classList.add("tour-target"); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
 }
 
 render();

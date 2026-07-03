@@ -92,7 +92,6 @@ let state = {
   openHistory: null,   // schedule id with history expanded
   pvMode: "full",      // preview: full | exec | phone
   reviewToggle: true,  // create form: review-before-send
-  tourIdx: -1,
 };
 
 // ---------- views ----------
@@ -328,7 +327,6 @@ function render() {
   else if (state.view === "approve") renderApprove();
   else renderList();
   renderDemoBar();
-  renderTour();
 }
 
 // ---------- demo chrome ----------
@@ -358,50 +356,6 @@ function renderDemoBar() {
 function toggleNotes(btn) {
   document.body.classList.toggle("show-notes");
   btn.classList.toggle("on");
-}
-
-// ---------- guided tour ----------
-
-const TOUR = [
-  { demo: "list", sel: ".tabs", title: "It lives where reports live",
-    text: "Schedules is a third tab beside Dashboards and Reports — the Reporting area growing, not a new module. Anything the Reports tab can generate, this tab can deliver." },
-  { demo: "list", sel: "#view", title: "Decide once",
-    text: "Each row is a standing decision: source report, cadence, who gets which version. Status leads the row — “does anything need me?” is answered in one scan. Schedules run until paused." },
-  { demo: "create", sel: ".create-form", title: "One report, many audiences",
-    text: "The create flow is four decisions, and the version is a property of the recipient — the sponsor bank gets the full report, the VP gets the executive summary. Nobody maintains three diverging reports." },
-  { demo: "approve", sel: ".approve-bar", title: "The approval gate",
-    text: "External recipients default to review-before-send. The Compliance Manager's Monday hour becomes one click: review the rendered email, Approve & send. Regulated audiences deserve a human on the trigger." },
-  { demo: "phone", sel: ".create-preview", title: "The email is the product",
-    text: "The VP never logs in — so her version is designed for a phone: a better-or-worse verdict line first, four deltas, what needs attention. Readable before the board meeting starts." },
-  { demo: "failed", sel: "#view", title: "Failure is loud",
-    text: "A bounced send to a regulated audience can't be silent: the row goes red, the owner is notified, retry is one click — and the history keeps a provable record of what went to whom, when." },
-];
-
-function startTour() { state.tourIdx = 0; setDemo(TOUR[0].demo); }
-function nextTour() {
-  state.tourIdx += 1;
-  if (state.tourIdx >= TOUR.length) { endTour(); return; }
-  setDemo(TOUR[state.tourIdx].demo);
-}
-function endTour() { state.tourIdx = -1; setDemo("list"); }
-
-function renderTour() {
-  document.querySelectorAll(".tour-target").forEach((el) => el.classList.remove("tour-target"));
-  const card = $("#tour-card");
-  const i = state.tourIdx;
-  if (i == null || i < 0) { card.style.display = "none"; return; }
-  const stop = TOUR[i];
-  card.style.display = "block";
-  card.innerHTML = `
-    <div class="tour-step">Tour · ${i + 1} of ${TOUR.length}</div>
-    <h3>${stop.title}</h3>
-    <p>${stop.text}</p>
-    <div class="tour-btns">
-      <button class="btn-primary" onclick="nextTour()">${i + 1 === TOUR.length ? "Finish" : "Next →"}</button>
-      <button class="btn-quiet" onclick="endTour()">End tour</button>
-    </div>`;
-  const target = document.querySelector(stop.sel);
-  if (target) { target.classList.add("tour-target"); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
 }
 
 render();

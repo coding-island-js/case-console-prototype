@@ -80,8 +80,6 @@
 <!-- Demo chrome (dark, clearly not product UI): flip between the key
      states the brief asks for, and toggle the design-rationale pins -->
 <div class="demo-bar">
-  <button onclick="startTour()" style="background:#7c5cfc;border-color:#7c5cfc;color:#fff">▶ Tour</button>
-  <span class="sep"></span>
   <span class="lbl">DEMO STATES</span>
   <span id="demo-scenarios"></span>
   <span class="sep"></span>
@@ -91,9 +89,6 @@
   <button class="demo-collapse" title="Collapse demo controls"
     onclick="this.parentElement.classList.toggle('min'); this.textContent = this.parentElement.classList.contains('min') ? '▶ Demo' : '✕';">✕</button>
 </div>
-
-<!-- guided-tour caption card (filled by renderTour in proto.js) -->
-<div class="tour-card" id="tour-card"></div>
 
 <script src="case-data.js"></script>
 <script src="proto.js"></script>
