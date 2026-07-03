@@ -297,6 +297,16 @@ body.readonly .decide, body.readonly .comment-box, body.readonly .override-form 
 .demo-bar.min > *:not(.demo-collapse) { display: none; }
 .demo-collapse { border-color: transparent !important; color: #77777f !important; }
 
+/* ---- "What's new" overlay: red boxes on everything we added.
+   Outlines attach to the elements themselves, so they track every
+   screen size — nothing is absolutely positioned over content. ---- */
+body.show-new [data-new] { outline: 2px dashed #c0392b; outline-offset: 4px; }
+body.show-new [data-new]::before {
+  content: attr(data-new); position: absolute; top: -10px; left: 14px;
+  background: #c0392b; color: #fff; font-size: 11px; font-weight: 700;
+  border-radius: 6px; padding: 2px 9px; z-index: 40; max-width: 90%;
+}
+
 /* ---- Design notes (rationale overlay): purple pins that map each
    element to the requirement it serves. Hidden unless toggled. ---- */
 .dnote {

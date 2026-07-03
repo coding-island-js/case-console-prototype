@@ -56,21 +56,22 @@
       <nav class="tabs">
         <a href="#" onclick="return false">Dashboards</a>
         <a href="#" onclick="return false">Reports</a>
-        <a href="#" onclick="return false" class="on">Schedules</a>
+        <a href="#" onclick="return false" class="on" style="position:relative" data-new="NEW tab">Schedules</a>
       </nav>
       <span class="dnote">A peer of Dashboards and Reports — the area grows, no new module (R8)</span>
     </div>
 
     <!-- task2.js renders the current view (list / create / approve) here -->
-    <div class="page-body" id="view"></div>
+    <div class="page-body" id="view" data-new="NEW — everything in this tab is the feature"></div>
   </div>
 </div>
 
 <!-- Demo chrome: state switcher + rationale pins -->
 <div class="demo-bar">
-  <span class="lbl">DEMO STATES</span>
+  <span class="lbl">SHOW ME:</span>
   <span id="demo-scenarios"></span>
   <span class="sep"></span>
+  <button onclick="document.body.classList.toggle('show-new'); this.classList.toggle('on')" style="color:#f3a09a">What's new</button>
   <button onclick="toggleNotes(this)">Design notes</button>
   <span class="sep"></span>
   <a href="task2.html" style="color:#c9c9d2">← Framing</a>
