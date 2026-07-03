@@ -328,13 +328,13 @@ button { font: inherit; cursor: pointer; }
 body.readonly .decide, body.readonly .comment-box, body.readonly .override-form { display: none; }
 
 /* ============ Demo chrome (not part of the product) ============
-   Dark bar so an evaluator can't mistake it for Zanko UI. */
+   A slim strip ABOVE the app — clearly not product UI, and it can
+   never cover the screen being demoed. */
 .demo-bar {
-  position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%);
-  background: #17171d; color: #c9c9d2; border-radius: 999px;
-  padding: 8px 14px; display: flex; gap: 6px; align-items: center;
-  font-size: 12px; box-shadow: 0 6px 24px rgba(0,0,0,0.35); z-index: 50;
-  flex-wrap: wrap; justify-content: center; max-width: 94vw;
+  position: static; width: 100%;
+  background: #17171d; color: #c9c9d2;
+  padding: 8px 16px; display: flex; gap: 6px; align-items: center;
+  font-size: 12px; flex-wrap: wrap;
 }
 .demo-bar .lbl { color: #77777f; font-weight: 700; letter-spacing: 0.04em; }
 .demo-bar button {

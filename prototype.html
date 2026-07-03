@@ -21,6 +21,17 @@
      itself; keeping its surroundings verbatim shows the new
      screen in honest context.
      ============================================================ -->
+<!-- Demo chrome (dark, clearly not product UI): flip between the key
+     states the brief asks for, and toggle the design-rationale pins -->
+<div class="demo-bar">
+  <span class="lbl">SHOW ME:</span>
+  <span id="demo-scenarios"></span>
+  <span class="sep"></span>
+  <button onclick="document.body.classList.toggle('show-new'); this.classList.toggle('on')" style="color:#f3a09a">What's new</button>
+  <button onclick="toggleNotes(this)">Design notes</button>
+  <span class="sep"></span>
+  <a href="task1.html" style="color:#c9c9d2">← Diagnosis</a>
+</div>
 <div class="app">
 
   <!-- Left sidebar: unchanged from the current product -->
@@ -61,7 +72,7 @@
       <button class="btn-quiet">Actions ▾</button>
     </div>
     <!-- CHANGE 1: the only added bar — steps + one next action -->
-    <div class="strip" id="strip"></div>
+    <div class="strip" id="strip" data-new="NEW — the only added bar"></div>
     <div id="banner"></div>
 
     <div class="content">
@@ -79,19 +90,6 @@
   </div>
 </div>
 
-<!-- Demo chrome (dark, clearly not product UI): flip between the key
-     states the brief asks for, and toggle the design-rationale pins -->
-<div class="demo-bar">
-  <span class="lbl">SHOW ME:</span>
-  <span id="demo-scenarios"></span>
-  <span class="sep"></span>
-  <button onclick="document.body.classList.toggle('show-new'); this.classList.toggle('on')" style="color:#f3a09a">What's new</button>
-  <button onclick="toggleNotes(this)">Design notes</button>
-  <span class="sep"></span>
-  <a href="task1.html" style="color:#c9c9d2">← Diagnosis</a>
-  <button class="demo-collapse" title="Collapse demo controls"
-    onclick="this.parentElement.classList.toggle('min'); this.textContent = this.parentElement.classList.contains('min') ? '▶ Demo' : '✕';">✕</button>
-</div>
 
 <script src="case-data.js"></script>
 <script src="proto.js"></script>

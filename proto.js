@@ -173,6 +173,7 @@ function renderResolution() {
   const el = $("#resolution");
   if (state.scenario !== "resolved") { el.style.display = "none"; el.innerHTML = ""; return; }
   el.style.display = "";
+  el.setAttribute("data-new", "CHANGED — appears only when the case is resolved");
   el.innerHTML = `
     <h2>📄 Resolution Description</h2>
     <div class="frow"><label>Resolution Description</label>
@@ -210,7 +211,7 @@ function renderAnalysis() {
     </div>
 
     ${state.scenario !== "resolved" && !d ? `
-    <div class="frow decide-row">
+    <div class="frow decide-row" data-new="NEW — agree or disagree, with a saved reason">
       ${state.c.agreed ? `<span class="decided">✓ Confirmed by analyst</span>`
         : state.overrideOpen ? `
           <input id="ov-reason" class="ov-input" placeholder="Why do you disagree? (saved to the audit log)">
@@ -254,7 +255,7 @@ function renderActivity() {
     body = `
       ${state.lowConfidence ? `<div class="held">⚠ Held — the AI isn't sure about its analysis.
         Review it above before this reply goes out.</div>` : ""}
-      <div class="letter">
+      <div class="letter" data-new="CHANGED — opens itself when it's time to reply">
         <div class="letter-head">Reply to ${c.customer.name} <span>drafted by Zanko · ${c.draft.generatedAt}</span></div>
         <div class="letter-body">${esc(c.draft.text)}</div>
       </div>
