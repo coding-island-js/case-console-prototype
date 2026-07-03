@@ -53,25 +53,27 @@
       <div class="avatar">ZA</div>
     </div>
 
-    <!-- Case header: the command strip. Identity + stakes + workflow
-         position + the one computed next action (R1 R5 R6 R10). -->
-    <header class="case-header" data-new="NEW — top bar: who/risk/due + workflow steps + one next action">
-      <div class="ch-row1" id="hdr-row"></div>
-      <div class="stepper" id="stepper"></div>
-    </header>
+    <!-- THEIR header row, untouched: big labeled Complaint ID -->
+    <div class="their-header">
+      <span class="cid">Complaint ID: CNT-51788881253936</span>
+      <button class="copy-id" title="Copy ID" onclick="navigator.clipboard && navigator.clipboard.writeText('CNT-51788881253936'); this.textContent='✓'; setTimeout(()=>this.textContent='⧉',900)">⧉</button>
+      <span style="flex:1"></span>
+      <button class="btn-quiet">Actions ▾</button>
+    </div>
+    <!-- CHANGE 1: the only added bar — steps + one next action -->
+    <div class="strip" id="strip"></div>
     <div id="banner"></div>
 
     <div class="content">
       <!-- Main column, in the analyst's reading order:
            complaint -> AI assessment -> the stage's work -> history -->
       <div class="col-main">
-        <section class="panel" id="complaint"></section>
-        <section class="panel" id="assessment" data-new="NEW — AI shows confidence + evidence, with Agree / Override"></section>
-        <section class="panel" id="workspace" data-new="NEW — the current step's work, not buried in a tab"></section>
-        <section class="panel" id="timeline" data-new="NEW — one history instead of four tabs"></section>
+        <section class="panel" id="description"></section>
+        <section class="panel" id="resolution"></section>
+        <section class="panel" id="analysis"></section>
+        <section class="panel" id="activity"></section>
       </div>
 
-      <!-- Right rail: reference material, quiet but reachable (R9) -->
       <aside class="col-rail" id="rail"></aside>
     </div>
   </div>
