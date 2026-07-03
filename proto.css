@@ -240,9 +240,11 @@ button { font: inherit; cursor: pointer; }
           mask-image: linear-gradient(#000 72%, transparent);
 }
 .expand-btn {
-  background: none; border: 0; color: var(--purple); font-weight: 650;
-  font-size: 13px; padding: 6px 0 0;
+  background: var(--card); border: 1.5px solid var(--purple); color: var(--purple);
+  border-radius: 999px; padding: 4px 14px; font-weight: 650; font-size: 12.5px;
+  margin-top: 6px;
 }
+.expand-btn:hover { background: var(--purple-soft); }
 
 /* ---- Assessment card (R3/R4) ---- */
 .conf {
@@ -263,13 +265,15 @@ button { font: inherit; cursor: pointer; }
 .why .ev { color: var(--muted); font-style: italic; display: block; margin-top: 4px; font-size: 13.5px; }
 .decide { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
 .btn-agree {
-  background: var(--card); border: 1.5px solid var(--green); color: var(--green);
-  border-radius: 8px; padding: 6px 14px; font-weight: 650; font-size: 13.5px;
+  background: var(--card); border: 1.5px solid var(--purple); color: var(--purple);
+  border-radius: 999px; padding: 6px 16px; font-weight: 650; font-size: 13.5px;
 }
+.btn-agree:hover { background: var(--purple-soft); }
 .btn-override {
-  background: var(--card); border: 1px solid var(--line); color: #55555e;
-  border-radius: 8px; padding: 6px 14px; font-weight: 600; font-size: 13.5px;
+  background: var(--card); border: 1.5px solid var(--purple); color: var(--purple);
+  border-radius: 999px; padding: 6px 16px; font-weight: 650; font-size: 13.5px;
 }
+.btn-override:hover { background: var(--purple-soft); }
 .decided {
   font-size: 12.5px; font-weight: 650; color: var(--green);
   background: var(--green-bg); border-radius: 8px; padding: 5px 12px;
