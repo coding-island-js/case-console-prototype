@@ -120,6 +120,17 @@ button { font: inherit; cursor: pointer; }
 .chip.purple{ background: var(--purple-soft); color: var(--purple); }
 
 .ch-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.copy-id { background: none; border: 0; color: var(--muted); font-size: 14px; padding: 2px 4px; }
+.copy-id:hover { color: var(--purple); }
+.btn-more { background: var(--card); border: 1.5px solid #c4c4cd; color: #3f3f46;
+  border-radius: 9px; padding: 9px 12px; font-weight: 700; font-size: 14px; }
+
+/* the collapsed one-line AI assessment (scannable, not an essay) */
+.assess-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.assess-row .lead { font-weight: 700; font-size: 15.5px; display: flex; align-items: center; gap: 6px; }
+.btn-details { background: none; border: 0; color: var(--purple); font-weight: 650; font-size: 13.5px; padding: 6px 4px; }
+.assess-detail { border-top: 1px solid #f2f2f4; margin-top: 12px; }
+.show-more-tl { background: none; border: 0; color: var(--purple); font-weight: 650; font-size: 13.5px; padding: 8px 0 0; }
 .btn-primary {
   background: var(--purple); color: #fff; border: 0; border-radius: 9px;
   padding: 10px 20px; font-weight: 650; font-size: 15px;
@@ -144,9 +155,12 @@ button { font: inherit; cursor: pointer; }
 .step.current .dot { background: #fff; border-color: var(--purple); color: var(--purple); }
 .step.current { color: var(--ink); font-weight: 650; }
 .step.done { color: #55555e; }
-.step-line { flex: 0 0 auto; margin: 0 12px; color: #c9c9d2; font-size: 18px; font-weight: 700; }
-.step-line::after { content: "➜"; }
-.step-line.done { color: var(--purple); }
+.step-line { flex: 0 0 46px; margin: 0 10px; border-top: 2px dashed #d4d4dc; position: relative; }
+.step-line::after { content: "▸"; position: absolute; right: -4px; top: -11px; color: #d4d4dc; font-size: 15px; }
+.step-line.done { border-color: var(--purple); }
+.step-line.done::after { color: var(--purple); }
+.step-line.next { border-color: #c9b8ff; }
+.step-line.next::after { color: #c9b8ff; }
 .step button { all: unset; display: flex; align-items: center; gap: 8px; cursor: pointer; }
 
 /* ---- SLA banner: appears only when the case demands attention (R10) ---- */
