@@ -100,7 +100,7 @@ button { font: inherit; cursor: pointer; }
 .case-header {
   position: sticky; top: 0; z-index: 20;
   background: var(--card); border-bottom: 1px solid var(--line);
-  padding: 14px 24px 0;
+  padding: 16px 26px 0;
 }
 .ch-row1 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .back { color: var(--muted); text-decoration: none; font-size: 13px; }
@@ -127,13 +127,13 @@ button { font: inherit; cursor: pointer; }
 .btn-primary:hover { background: #6a4cf0; }
 .btn-primary:disabled { background: #c9c9d2; cursor: default; }
 .btn-quiet {
-  background: var(--card); border: 1px solid var(--line); color: #55555e;
+  background: var(--card); border: 1.5px solid #c4c4cd; color: #3f3f46;
   border-radius: 9px; padding: 9px 15px; font-weight: 600; font-size: 14px;
 }
 .btn-quiet:hover { border-color: #c9c9d2; }
 
 /* ---- Workflow stepper (R5): always visible, part of the header ---- */
-.stepper { display: flex; align-items: center; margin-top: 12px; padding-bottom: 12px; }
+.stepper { display: flex; align-items: center; margin-top: 14px; padding-bottom: 14px; }
 .step { display: flex; align-items: center; gap: 8px; font-size: 14.5px; color: var(--muted); }
 .step .dot {
   width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700;
@@ -144,8 +144,9 @@ button { font: inherit; cursor: pointer; }
 .step.current .dot { background: #fff; border-color: var(--purple); color: var(--purple); }
 .step.current { color: var(--ink); font-weight: 650; }
 .step.done { color: #55555e; }
-.step-line { flex: 0 0 34px; height: 2px; background: #ececf1; margin: 0 10px; }
-.step-line.done { background: var(--purple); }
+.step-line { flex: 0 0 auto; margin: 0 12px; color: #c9c9d2; font-size: 18px; font-weight: 700; }
+.step-line::after { content: "➜"; }
+.step-line.done { color: var(--purple); }
 .step button { all: unset; display: flex; align-items: center; gap: 8px; cursor: pointer; }
 
 /* ---- SLA banner: appears only when the case demands attention (R10) ---- */
