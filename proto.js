@@ -167,18 +167,24 @@ function renderDescription() {
     </div>`;
 }
 
-// CHANGE 5: their Resolution Description card — only when actually resolved
+// Their Resolution Description card — always visible, like theirs.
+// It's the analyst's working field: she writes the outcome here as she
+// works. Dates show "—" until they actually happen.
 function renderResolution() {
   const el = $("#resolution");
-  if (state.scenario !== "resolved") { el.style.display = "none"; el.innerHTML = ""; return; }
   el.style.display = "";
-  el.setAttribute("data-new", "CHANGED — appears only when the case is resolved");
+  const done = state.scenario === "resolved";
   el.innerHTML = `
     <h2>📄 Resolution Description</h2>
     <div class="frow"><label>Resolution Description</label>
-      Resolved by calling the customer and explaining the disclosure. Flagged for fraud;
-      investigation found it was not actual fraud. Provisional credit of $487.20 issued.</div>
-    <div class="frow"><label>Resolved Date</label>Jul 2, 2026</div>`;
+      ${done
+        ? `Resolved by calling the customer and explaining the disclosure. Flagged for fraud;
+           investigation found it was not actual fraud. Provisional credit of $487.20 issued.`
+        : `<span style="color:var(--muted)">Written by the analyst as the case is worked — filled
+           in before the case is closed.</span>`}</div>
+    <div class="frow"><label>Due Date</label>${state.c.due}</div>
+    <div class="frow"><label>Resolved Date</label>${done ? "Jul 2, 2026" : "—"}</div>
+  `;
 }
 
 // CHANGE 3: their Zanko Analysis card — same fields, now accountable
