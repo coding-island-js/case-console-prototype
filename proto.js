@@ -315,10 +315,13 @@ function renderWorkspace() {
         <button class="btn-quiet">Edit draft</button>
         <button class="btn-quiet">Regenerate</button>
       </div>`;
-  } else if (stageName === "Review") {
-    body = `<p style="color:var(--muted)">Confirm the intake details and the AI's categorization
-      above, then move the case to Investigate.</p>`;
-  } else if (stageName === "Investigate") {
+  } else {
+    // Review / Investigate have no work product yet — show nothing.
+    $("#workspace").style.display = "none";
+    $("#workspace").innerHTML = "";
+    return;
+  }
+  $("#workspace").style.display = ""; else if (stageName === "Investigate") {
     body = `<p style="color:var(--muted)">Records pulled by the Zanko agent — transaction detail,
       call logs, and the customer's dispute history are attached and summarized in the timeline.
       Generate the draft response when the facts are confirmed.</p>`;
