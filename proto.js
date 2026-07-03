@@ -181,7 +181,7 @@ function renderHeader() {
     : "";
 }
 
-function jumpStage(i) {  // demo affordance: click any step to move the case
+function jumpStage(i) {  // demo shortcut: click any step to move the case
   if (state.scenario === "resolved") return;
   state.c.stage = i; render();
 }
@@ -232,7 +232,7 @@ function renderAssessment() {
       </div>
       ${decideButtons("risk")}
     </div>
-    <span class="dnote">AI you can interrogate: why, confidence, agree/override (R3, R4)</span>`;
+    <span class="dnote">AI you can question: why, confidence, agree/override (R3, R4)</span>`;
 }
 
 // Agree is one click (cheap, frequent). Override asks for a reason

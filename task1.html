@@ -29,7 +29,7 @@ a moment in the analyst's day.</p>
   <ul style="margin-bottom:0">
     <li><strong>Diagnosis:</strong> the screen renders the database record, not the analyst's job —
     no workflow position, no next action, AI conclusions shown as bare scores she can neither
-    interrogate nor correct. It even displays impossible states (closed before resolved, on an
+    question nor correct. It even displays impossible states (closed before resolved, on an
     open case) without complaint.</li>
     <li><strong>Redesign:</strong> a command strip (workflow stepper + one computed next action +
     SLA), the complaint readable in full, an AI assessment with confidence, evidence, and
@@ -60,7 +60,7 @@ customer conversation.</p>
     <p style="font-size:14.5px">Works a queue of 30–50 open cases, ~6 hours a day in this screen.
     Expert user by week two — she needs scan speed, not onboarding.</p>
     <ul style="font-size:14.5px">
-      <li><strong>Goals:</strong> clear the queue without mistakes; hit every SLA date; never get
+      <li><strong>Goals:</strong> clear the queue without mistakes; hit every SLA date (the promised response deadline); never get
       burned by trusting a wrong AI conclusion; be defensible when a case is audited.</li>
       <li><strong>Measured on:</strong> throughput, resolution quality, SLA compliance.</li>
       <li><strong>Reality:</strong> the AI is usually right — so the dangerous moments are the
@@ -136,7 +136,7 @@ language (calm cards, restrained color) is right for a tool used six hours a day
 keeps all of this. The problems are structural, not cosmetic.</p>
 
 <h3>Why it's probably like this — and why that's now the problem</h3>
-<p>To be fair to the screen: it reads as a generic record-detail template — schema-ordered field
+<p>To be fair to the screen: it reads as a generic record-detail template — field
 rows, likely generated or assembled quickly — and that was probably the <em>right</em> call to get
 from 4 design partners to 30+ clients fast. The "Sunsetting" and "Beta" badges in the nav suggest
 a platform mid-migration. But the analyst's volume has outgrown the template: at six hours a day,
@@ -144,7 +144,7 @@ its costs now compound on every case.</p>
 
 <h3>Root cause</h3>
 <p><strong>The screen renders the database record, not the analyst's job.</strong> Every field
-gets an identical flat row in schema order, so the layout answers "what columns does a complaint
+gets an identical flat row in database order, so the layout answers "what columns does a complaint
 have?" instead of Maya's four questions: <em>what is this case (S1), can I trust the AI (S3),
 where is it in the workflow (S4), and what do I do now (S7)?</em> Three deeper patterns follow
 from it:</p>
@@ -153,7 +153,7 @@ from it:</p>
   respond → resolve, and a "Waiting on customer" status dropdown is not a workflow position.
   Violates <span class="tag">R5</span> <span class="tag">R6</span> — the two things the brief says
   Maya must always know.</li>
-  <li><strong>Layout mirrors the schema, not the reading order.</strong> The complaint and the AI
+  <li><strong>Layout follows the database, not the analyst's reading order.</strong> The complaint and the AI
   summary — the two things she must actually read — are truncated behind "See&nbsp;More", while
   single dates get full-width rows. Violates <span class="tag">R2</span> <span class="tag">R9</span>.</li>
   <li><strong>AI output is dumped as fields, not presented as an assessment.</strong> "Resolution
@@ -200,7 +200,7 @@ from it:</p>
   is treated as one editable field among twenty, not as the organizing fact of the screen. <span class="tag red">R1 R5</span></li>
   <li><span class="num">6</span><strong>Bare AI scores with no reasoning, confidence, or
   recourse.</strong> "Quality: 50. Risk: 53." Meanwhile <em>Alleged Risk: Low</em> and <em>Inherent
-  Risk: High</em> sit far apart, unreconciled — the exact moment Maya needs help judging the AI,
+  Risk: High</em> sit far apart with nothing explaining how both can be true — the exact moment Maya needs help judging the AI,
   and the screen shrugs. <span class="tag red">R3 R4</span></li>
   <li><span class="num">7</span><strong>The draft response — her main deliverable — is the second
   tab of "Activity," below the fold.</strong> The stage's actual work is hidden inside a log
@@ -246,10 +246,10 @@ structure. Three zones, in Maya's reading order:</p>
     genuinely long content.</td>
     <td>Reading is the job; the reader controls disclosure, not the layout. <span class="tag">R2</span></td></tr>
   <tr><td><strong>One "Zanko Assessment" card</strong> merging the old Analysis + Resolution
-    Analysis: summary, categorization, one reconciled risk verdict — each conclusion with a
+    Analysis: summary, categorization, one risk verdict that explains itself — each conclusion with a
     confidence badge and a "why" (evidence quoted from the complaint).</td>
-    <td>An assessment you can interrogate replaces scores you must take on faith; alleged-vs-inherent
-    risk is explained in one place instead of contradicting itself in two. <span class="tag">R3</span></td></tr>
+    <td>An assessment the analyst can question replaces scores taken on faith; the two risk ratings
+    (alleged vs. inherent) are explained together instead of contradicting each other a screen apart. <span class="tag">R3</span></td></tr>
   <tr><td><strong>Stage workspace inline:</strong> in Respond, the draft response sits in the main
     column with Approve &amp; Send as the primary action.</td>
     <td>The screen reshapes itself around the stage's work. <span class="tag">R6 R7</span></td></tr>
@@ -261,8 +261,8 @@ structure. Three zones, in Maya's reading order:</p>
     <td>Reference material stays reachable but quiet, grouped by meaning. <span class="tag">R9</span></td></tr>
 </table></div>
 
-<p><strong>A feasibility note on the AI affordances.</strong> Confidence badges and quoted evidence
-require the AI layer to emit calibrated confidence and source citations. If today's engine doesn't,
+<p><strong>A feasibility note on the AI features.</strong> Confidence badges and quoted evidence
+require the AI layer to report how confident it is and cite the passages it relied on. If today's engine doesn't,
 the design degrades gracefully — conclusions render without badges and the "why" block simply
 isn't shown — but I'd argue for building it: it's the difference between an AI feature analysts
 use and one they route around, and the agent already extracts these spans to categorize at all.</p>
@@ -271,8 +271,8 @@ use and one they route around, and the agent already extracts these spans to cat
 <div class="table-scroll"><table>
   <tr><th>Decision</th><th>Why (traced)</th></tr>
   <tr><td><strong>The primary action is computed from stage + AI state.</strong> Respond + confident
-    draft → "Approve &amp; send". Low-confidence analysis → "Review AI analysis" and sending is
-    de-emphasized until the human has looked.</td>
+    draft → "Approve &amp; send". Low-confidence analysis → "Review AI analysis" and the send
+    button steps back until a human has looked.</td>
     <td>The system proposes; the analyst disposes. Guardrail, not gate. <span class="tag">R3 R6</span></td></tr>
   <tr><td><strong>Agree / Override on every AI conclusion.</strong> Agreeing is one click
     (frequent, cheap). Overriding asks for a reason (rare, consequential) and writes to the
@@ -293,7 +293,7 @@ use and one they route around, and the agent already extracts these spans to cat
 <p>Three numbers, all measurable in Zanko today: <strong>time-per-case</strong> (open → advance)
 should drop; <strong>SLA breaches</strong> should drop; and the <strong>AI override rate</strong>
 becomes visible for the first time — if analysts override often, that's product feedback about the
-model; if they never override, that's a calibration warning worth investigating. The redesign
+model; if they never override, that's a warning the confidence scores may be off — worth investigating. The redesign
 doesn't just help Maya — it starts measuring the human-AI relationship.</p>
 
 <h3>What I removed, and why</h3>
@@ -301,7 +301,7 @@ doesn't just help Maya — it starts measuring the human-AI relationship.</p>
   <li><strong>"Complaint Summary" as a separate field</strong> — it restated the description; the
   assessment's summary now serves that purpose once. <span class="tag gray">R9</span></li>
   <li><strong>The "Additional Details" card</strong> — its two fields (Agent ID, Customer Email)
-  merged into the single Details card; grouping now follows meaning, not schema history.
+  merged into the single Details card; grouping now follows meaning, not database history.
   <span class="tag gray">R9</span></li>
   <li><strong>Resolution dates on unresolved cases</strong> — resolution fields appear when the case
   reaches Resolve, not before, so the screen can never display the closed-before-resolved
@@ -314,8 +314,8 @@ doesn't just help Maya — it starts measuring the human-AI relationship.</p>
 <ul>
   <li><strong>No queue/list redesign, no navigation changes</strong> — the task is this screen; the
   nav is kept verbatim so the redesign reads in context.</li>
-  <li><strong>No AI prompt editing or model configuration</strong> — trust affordances (why,
-  confidence, override) solve Maya's problem without opening a configuration surface.</li>
+  <li><strong>No AI prompt editing or model configuration</strong> — trust controls (the why, the
+  confidence, the override) solve Maya's problem without opening a configuration surface.</li>
   <li><strong>No layout customization / movable panels</strong> — one opinionated reading order,
   consistent across thousands of cases, beats per-user drift in a regulated tool.</li>
   <li><strong>No real backend</strong> — hardcoded data; the judgment being tested lives in

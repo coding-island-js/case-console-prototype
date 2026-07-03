@@ -32,7 +32,7 @@ prototype.</p>
   <h3 style="margin-top:0">The problem</h3>
   <p>A complaints analyst lives in this screen for around six hours a day, and the brief says she
   should always know two things: where the case is in its workflow, and what to do next. The
-  current screen answers neither. It shows every field the database has, in schema order — but the
+  current screen answers neither. It shows every field the database has, in database order — but the
   complaint itself is cut off behind a "See More" click, the AI's conclusions appear as bare scores
   with no explanation and no way to disagree, her main deliverable (the draft response) is hidden
   in a tab below the fold, and nothing anywhere shows the workflow. The screen even displays
@@ -42,8 +42,8 @@ prototype.</p>
 
   <h3>What I built</h3>
   <p>The redesign keeps Zanko's look and reorganizes the screen around the analyst's day. A header
-  strip stays visible at all times: who the customer is, the risk, the SLA deadline, a workflow
-  stepper, and <strong>one suggested next action</strong> computed from the case's stage and the
+  strip stays visible at all times: who the customer is, the risk, the SLA deadline (the date a response is due), a workflow
+  stepper (a progress bar of the case's steps), and <strong>one suggested next action</strong> computed from the case's stage and the
   AI's state. The complaint is readable in full. The AI's conclusions come with confidence levels,
   quoted evidence, and Agree / Override buttons — overriding asks for a reason and writes it to
   the audit log. The draft response sits front and center when the case is ready to send, and
