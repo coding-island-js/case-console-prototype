@@ -137,10 +137,9 @@ function renderStrip() {
       return `${line}<div class="step ${cls}"><button onclick="jumpStage(${i})">
         <span class="dot">${i < c.stage ? "✓" : i + 1}</span>${s}</button></div>`;
     }).join("")}
-    <span style="flex:1"></span>
+    <span style="width:14px"></span>
     ${slaChip}
-    <button class="btn-primary" onclick="advance()" ${a.disabled ? "disabled" : ""}>${a.label}</button>
-    <span class="dnote">NEW — the only added bar: where the case is + what to do next</span>`;
+    <button class="btn-primary" onclick="advance()" ${a.disabled ? "disabled" : ""}>${a.label}</button>`;
 
   $("#banner").innerHTML = overdue
     ? `<div class="banner red">⏰ This case is overdue — the reply was due ${c.due}. Sending it is the fastest fix.</div>`
@@ -164,7 +163,6 @@ function renderDescription() {
       <div class="complaint-text ${needsFold ? "collapsed" : ""}">${esc(text)}</div>
       ${state.longContent ? `<button class="expand-btn" onclick="state.complaintExpanded=!state.complaintExpanded;render()">
           ${state.complaintExpanded ? "Collapse ↑" : `Show the rest (${words} words) ↓`}</button>` : ""}
-      <span class="dnote">CHANGED — was cut off behind "See More"</span>
     </div>`;
 }
 
@@ -179,8 +177,7 @@ function renderResolution() {
     <div class="frow"><label>Resolution Description</label>
       Resolved by calling the customer and explaining the disclosure. Flagged for fraud;
       investigation found it was not actual fraud. Provisional credit of $487.20 issued.</div>
-    <div class="frow"><label>Resolved Date</label>Jul 2, 2026</div>
-    <span class="dnote">CHANGED — resolution fields appear when a case is resolved, not before</span>`;
+    <div class="frow"><label>Resolved Date</label>Jul 2, 2026</div>`;
 }
 
 // CHANGE 3: their Zanko Analysis card — same fields, now accountable
@@ -219,7 +216,6 @@ function renderAnalysis() {
           <button class="btn-override" onclick="state.overrideOpen=false;render()">Cancel</button>`
         : `<button class="btn-agree" onclick="agreeAll()">✓ Agree with the AI</button>
            <button class="btn-override" onclick="state.overrideOpen=true;render()">Disagree…</button>`}
-      <span class="dnote">NEW — the brief says she must "trust (or question) the AI"; these are the buttons for that</span>
     </div>` : ""}`;
 }
 
@@ -262,8 +258,7 @@ function renderActivity() {
       ${atRespond && !state.lowConfidence ? `<div class="decide-row" style="margin-top:10px">
         <button class="btn-primary" onclick="advance()">Approve &amp; send reply</button>
         <button class="btn-quiet">Edit</button>
-      </div>` : ""}
-      <span class="dnote">CHANGED — this tab used to hide her main piece of work; now it opens itself when it's time to reply</span>`;
+      </div>` : ""}`;
   } else if (state.activeTab === "comments") {
     const items = c.timeline.filter((t) => t.kind === "comment").slice().reverse();
     body = items.map((t) => `<div class="tl-item"><div class="tl-icon comment">💬</div>

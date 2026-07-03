@@ -173,7 +173,6 @@ function renderList() {
       <input placeholder="Search schedules">
       <div class="spacer"></div>
       <button class="btn-primary" onclick="setView('create')">+ New schedule</button>
-      <span class="dnote">Status first: “does anything need me?” is one scan (R5, R9)</span>
     </div>
     ${rows}
     <p style="color:var(--muted); font-size:12.5px; margin-top:14px">Schedules run until paused.
@@ -200,7 +199,6 @@ function renderCreate() {
             <button class="opt">CMS Insights Dashboard</button>
             <button class="opt">Choose another…</button>
           </div>
-          <span class="dnote">Distribution of existing reports — no new authoring surface (R1)</span>
         </section>
 
         <section class="panel fstep">
@@ -221,7 +219,6 @@ function renderCreate() {
           <div class="recip"><span class="em">vp-risk@lender-demo.com</span>
             <span class="ver"><button>Full report</button><button class="on">Executive</button></span></div>
           <div class="recip"><input placeholder="Add recipient…" style="border:1px solid var(--line);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px"></div>
-          <span class="dnote">Version is a property of the recipient — decide once (R3)</span>
         </section>
 
         <section class="panel fstep">
@@ -232,7 +229,6 @@ function renderCreate() {
             <div><strong>Review before send</strong>
               <small>On because one recipient is outside the company.</small></div>
           </div>
-          <span class="dnote">External recipients flip the safe default on (R7)</span>
         </section>
 
         <button class="btn-primary" onclick="setView('list')">Activate schedule</button>
@@ -247,7 +243,6 @@ function renderCreate() {
           <button class="${state.pvMode === "phone" ? "on" : ""}" onclick="setPv('phone')">📱 Phone</button>
         </div>
         ${renderEmail(state.pvMode)}
-        <span class="dnote">You configure what people receive — so you look at it while deciding (R3, R4)</span>
       </div>
     </div>`;
 }
@@ -312,7 +307,6 @@ function renderApprove() {
         Approving sends Full to 2 recipients (1 external) and Executive to 1.</div>
       <button class="btn-primary" onclick="approveSend(1)">Approve &amp; send</button>
       <button class="btn-quiet" onclick="setView('create')">Edit schedule</button>
-      <span class="dnote">Dana's hour becomes one click — review the rendered email, approve (R7, R2)</span>
     </div>
     <div style="max-width:760px">${emailFull()}
       <button class="show-more-tl" onclick="state.showExecPv=!state.showExecPv;render()">
