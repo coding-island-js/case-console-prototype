@@ -31,9 +31,11 @@ a moment in the analyst's day.</p>
     no workflow position, no next action, AI conclusions shown as bare scores she can neither
     question nor correct. It even shows state that reads as contradictory (closed before
     resolved, on a case still "waiting on customer") with nothing to reconcile it.</li>
-    <li><strong>Redesign:</strong> a command strip (workflow stepper + one computed next action +
-    SLA), the complaint readable in full, an AI assessment with confidence, evidence, and
-    agree/override, the stage's work inline, one auditable timeline.</li>
+    <li><strong>Redesign:</strong> minimum intervention — Zanko's existing screen, unchanged, plus
+    five fixes: an added steps-and-next-action bar; the complaint shown in full; confidence, an
+    expandable "why," and Agree/Disagree woven into the existing analysis fields; the draft reply
+    surfaced when it's time to respond; resolution fields only on resolved cases. Analysts
+    relearn nothing.</li>
     <li><strong>Left out on purpose:</strong> queue redesign, nav changes, AI configuration,
     layout customization, real backend.</li>
     <li><strong>Proof:</strong> <a href="prototype.html">the clickable prototype</a> — six states,
@@ -222,82 +224,39 @@ from it:</p>
 
 <div class="card" style="border-left:3px solid var(--accent)">
   <h3 style="margin-top:0">The three decisions that matter most</h3>
-  <p><strong>1 — The workflow became the screen's spine.</strong> A persistent stepper plus one
-  primary action computed from stage and AI state, so "where is this case and what do I do next"
-  is answered before anything else.</p>
-  <p><strong>2 — AI output became an assessment, not a scorecard.</strong> Every conclusion carries
-  its confidence, its evidence, and an agree/override control — the analyst can finally do what the
-  brief asks: trust it or question it.</p>
-  <p style="margin-bottom:0"><strong>3 — The screen reshapes around the stage.</strong> In Respond,
-  the draft response is the centerpiece instead of a buried tab; when resolved, the case becomes a
-  read-only record. Same data, ordered by the job.</p>
+  <p><strong>1 — Minimum intervention.</strong> The current screen's layout survives untouched;
+  every change maps to a diagnosed problem. A redesign nobody has to relearn is a redesign that
+  can actually ship.</p>
+  <p><strong>2 — The workflow became visible, with one computed next action.</strong> One added
+  bar answers the brief's two "always know" demands; the button's label defines each stage
+  concretely.</p>
+  <p style="margin-bottom:0"><strong>3 — AI conclusions became accountable.</strong> Each AI field
+  shows how sure it is; the "why" is one click away; Agree/Disagree records the human's call —
+  the brief's "trust (or question) the AI," made into buttons.</p>
 </div>
 
-<p>Same design language — Zanko's sidebar, cards, chips, and purple stay. What changes is the
-structure. Three zones, in Maya's reading order:</p>
-
-<h3>Information design</h3>
+<p>The design philosophy is <strong>minimum intervention</strong>: their screen, their sections,
+their labels, their right rail — untouched. Five changes only, each traceable to the diagnosis:</p>
 <div class="table-scroll"><table>
-  <tr><th>Decision</th><th>Why (traced)</th></tr>
-  <tr><td><strong>Case header strip:</strong> customer + product + risk chip + SLA countdown +
-    workflow stepper + one primary action. Always visible. The stepper renders whatever stages the
-    case's workflow defines (Zanko has a Workflow Automation area — flows will vary); the
-    four-stage flow shown is the brief's illustration.</td>
-    <td>Answers S1 and S4 before any scrolling. <span class="tag">R1 R5 R6 R10</span></td></tr>
-  <tr><td><strong>Complaint first, full text,</strong> ~12-line preview with a single expand for
-    genuinely long content.</td>
-    <td>Reading is the job; the reader controls disclosure, not the layout. <span class="tag">R2</span></td></tr>
-  <tr><td><strong>One "Zanko Assessment" card</strong> merging the old Analysis + Resolution
-    Analysis: summary, categorization, one risk verdict that explains itself — each conclusion with a
-    confidence badge and a "why" (evidence quoted from the complaint).</td>
-    <td>An assessment the analyst can question replaces scores taken on faith; the two risk ratings
-    (alleged vs. inherent) are explained together instead of contradicting each other a screen apart. <span class="tag">R3</span></td></tr>
-  <tr><td><strong>Stage workspace inline:</strong> in Respond, the draft response sits in the main
-    column with Approve &amp; Send as the primary action.</td>
-    <td>The screen reshapes itself around the stage's work. <span class="tag">R6 R7</span></td></tr>
-  <tr><td><strong>One timeline,</strong> filterable (all / comments / AI actions / audit), replacing
-    the four-tab Activity block.</td>
-    <td>Comments, AI events, and system events are one auditable history. <span class="tag">R8</span></td></tr>
-  <tr><td><strong>Right rail regrouped</strong> into one Details card + customer history;
-    attachments live there too with a visible count, one click away.</td>
-    <td>Reference material stays reachable but quiet, grouped by meaning. <span class="tag">R9</span></td></tr>
+  <tr><th>Change</th><th>Fixes</th></tr>
+  <tr><td><strong>1 · One added bar</strong> — workflow steps, the due date, and a single
+    next-action button whose label names the stage's exit ("Start investigating" → "Write the
+    reply" → "Approve &amp; send reply" → "Mark resolved").</td>
+    <td>No workflow position, no next action anywhere <span class="tag">R1 R5 R6 R10</span></td></tr>
+  <tr><td><strong>2 · The complaint shows in full.</strong> Genuinely long threads fold under the
+    reader's control.</td>
+    <td>Reading the case cost a "See More" click on every case <span class="tag">R2</span></td></tr>
+  <tr><td><strong>3 · The existing Zanko Analysis fields carry confidence,</strong> an expandable
+    "why" with quoted evidence, and Agree / Disagree with a required, recorded reason. When
+    confidence is low, the reasoning opens itself and the reply is held.</td>
+    <td>Bare scores with no reasons and no way to disagree <span class="tag">R3 R4</span></td></tr>
+  <tr><td><strong>4 · The Draft Response tab opens itself</strong> at the Respond stage, the reply
+    framed as a letter with Approve &amp; send inside.</td>
+    <td>Her main work product was hidden behind an unselected tab <span class="tag">R6 R7</span></td></tr>
+  <tr><td><strong>5 · Resolution fields render only on resolved cases,</strong> and an overdue
+    case gets the screen's only red banner.</td>
+    <td>Resolution content on open cases; no urgency signal <span class="tag">R9 R10</span></td></tr>
 </table></div>
-
-<p><strong>A feasibility note on the AI features.</strong> Confidence badges and quoted evidence
-require the AI layer to report how confident it is and cite the passages it relied on. If today's engine doesn't,
-the design degrades gracefully — conclusions render without badges and the "why" block simply
-isn't shown — but I'd argue for building it: it's the difference between an AI feature analysts
-use and one they route around, and the agent already extracts these spans to categorize at all.</p>
-
-<h3>Behavioral design</h3>
-<div class="table-scroll"><table>
-  <tr><th>Decision</th><th>Why (traced)</th></tr>
-  <tr><td><strong>The primary action is computed from stage + AI state.</strong> Respond + confident
-    draft → "Approve &amp; send". Low-confidence analysis → "Review AI analysis" and the send
-    button steps back until a human has looked.</td>
-    <td>The system proposes; the analyst disposes. Guardrail, not gate. <span class="tag">R3 R6</span></td></tr>
-  <tr><td><strong>Agree / Override on every AI conclusion.</strong> Agreeing is one click
-    (frequent, cheap). Overriding asks for a reason (rare, consequential) and writes to the
-    timeline.</td>
-    <td>Friction proportional to consequence — and every override becomes audit evidence for Dana.
-    <span class="tag">R4 R8</span></td></tr>
-  <tr><td><strong>SLA escalates visually:</strong> quiet date → amber "due soon" → red overdue
-    banner. Nothing else on the screen competes with red.</td>
-    <td>Color is reserved for state that demands action. <span class="tag">R10</span></td></tr>
-  <tr><td><strong>Resolve confirms once, then the case goes read-only</strong> with a closure
-    summary — and offers "Next case in queue" so the loop continues without a trip back to the
-    list.</td>
-    <td>Terminal actions deserve one deliberate step; at ~40 cases a day the return trip is the
-    hidden tax. <span class="tag">R8 S7</span></td></tr>
-</table></div>
-
-<h3>How I'd know it worked</h3>
-<p>Three numbers, all measurable in Zanko today: <strong>time-per-case</strong> (open → advance)
-should drop; <strong>SLA breaches</strong> should drop; and the <strong>AI override rate</strong>
-becomes visible for the first time — if analysts override often, that's product feedback about the
-model; if they never override, that's a warning the confidence scores may be off — worth investigating. The redesign
-doesn't just help Maya — it starts measuring the human-AI relationship.</p>
-
 <h3>What I removed, and why</h3>
 <ul>
   <li><strong>"Complaint Summary" as a separate field</strong> — it restated the description; the
