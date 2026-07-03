@@ -197,7 +197,7 @@ button { font: inherit; cursor: pointer; }
 .step-line.done::after { color: var(--purple); }
 .step-line.next { border-color: #c9b8ff; }
 .step-line.next::after { color: #c9b8ff; }
-.step button { all: unset; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.step-label { display: flex; align-items: center; gap: 8px; }
 
 /* ---- SLA banner: appears only when the case demands attention (R10) ---- */
 .banner {

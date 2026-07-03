@@ -43,7 +43,7 @@ const SCENARIOS = {
 function setScenario(name) {
   state = { ...state, c: freshCase(), scenario: name, complaintExpanded: false,
             longContent: false, lowConfidence: false, overrideOpen: false,
-            whyOpen: false, activeTab: "draft" };
+            whyOpen: false, activeTab: "comments" };
   const c = state.c;
   if (name === "long") state.longContent = true;
   if (name === "lowconf") {
@@ -63,6 +63,9 @@ function setScenario(name) {
       text: "Disagreed with AI category: Customer service failure -> Unauthorized charges." });
   }
   if (name === "overdue") { c.dueInDays = -2; c.due = "Jun 30, 2026"; }
+  // their tab order stays; the Draft tab opens itself only when the
+  // case is at the Respond step — "when it's time to reply"
+  if (name !== "resolved" && c.stages[c.stage] === "Respond") state.activeTab = "draft";
   if (name === "resolved") {
     c.stage = 4;
     c.status = "Resolved";
@@ -105,14 +108,12 @@ function advance() {
   c.stage += 1;
   if (c.stage >= 4) {
     state.scenario = "resolved"; state.c.status = "Resolved"; state.activeTab = "comments";
+  } else if (c.stages[c.stage] === "Respond") {
+    state.activeTab = "draft";
   }
   render();
 }
 
-function jumpStage(i) {  // demo shortcut: click a step to move the case
-  if (state.scenario === "resolved") return;
-  state.c.stage = i; render();
-}
 
 // ---------- helpers ----------
 
@@ -134,8 +135,8 @@ function renderStrip() {
     ${c.stages.map((s, i) => {
       const cls = i < c.stage ? "done" : i === c.stage ? "current" : "";
       const line = i ? `<div class="step-line ${i <= c.stage ? "done" : i === c.stage + 1 ? "next" : ""}"></div>` : "";
-      return `${line}<div class="step ${cls}"><button onclick="jumpStage(${i})">
-        <span class="dot">${i < c.stage ? "✓" : i + 1}</span>${s}</button></div>`;
+      return `${line}<div class="step ${cls}"><span class="step-label">
+        <span class="dot">${i < c.stage ? "✓" : i + 1}</span>${s}</span></div>`;
     }).join("")}
     <span style="width:14px"></span>
     ${slaChip}
@@ -286,11 +287,14 @@ function renderActivity() {
 
 function renderRail() {
   const c = state.c;
+  // field-for-field from their screenshot — nothing added, nothing moved
   $("#rail").innerHTML = `
     <div class="panel">
       <h2>📄 Complaint Details</h2>
       <div class="field"><label>Status</label>${state.scenario === "resolved" ? "Resolved" : c.status} ▾</div>
       <div class="field"><label>Case Owner</label>${c.owner} ▾</div>
+      <div class="field"><label>Customer State</label></div>
+      <div class="field"><label>Reviewers</label>Select Assignees ▾</div>
       <div class="field"><label>Date Received</label>${c.received}</div>
       <div class="field"><label>Channel</label>${c.channel}</div>
       <div class="field"><label>Customer ID</label>${c.customer.customerId}</div>
@@ -300,8 +304,8 @@ function renderRail() {
     </div>
     <div class="panel">
       <h2>📄 Additional Details</h2>
+      <div class="field"><label>Agent ID</label>9502647806</div>
       <div class="field"><label>Customer Email</label>${c.customer.email}</div>
-      <div class="field"><label>Attachments</label><a href="#" onclick="return false" style="color:var(--purple)">dispute-form.pdf</a> · <a href="#" onclick="return false" style="color:var(--purple)">txn-record.csv</a></div>
     </div>
     <div class="panel">
       <h2>🕐 Complaints</h2>
