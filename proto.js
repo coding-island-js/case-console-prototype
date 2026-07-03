@@ -147,7 +147,7 @@ function renderHeader() {
   const overdue = c.dueInDays < 0;
   const slaChip = overdue
     ? `<span class="chip red">⏰ Overdue by ${-c.dueInDays}d</span>`
-    : `<span class="chip ${c.dueInDays <= 3 ? "amber" : ""}">Due ${c.due} · ${c.dueInDays}d</span>`;
+    : `<span class="chip ${c.dueInDays <= 3 ? "amber" : ""}">Due ${c.due} · in ${c.dueInDays} days</span>`;
   // no status chip: the steps bar IS the status (each fact once, R9)
   const resolvedChip = state.scenario === "resolved" ? `<span class="chip green">✓ Resolved</span>` : "";
 
@@ -223,7 +223,7 @@ function renderAssessment() {
       ${state.scenario !== "resolved" && !d ? (state.c.agreed_category
           ? `<span class="decided">✓ Confirmed</span>`
           : `<button class="btn-agree" onclick="agree('category')">✓ Agree</button>
-             <button class="btn-override" onclick="state.overrideOpen='category';state.assessOpen=true;render()">Override…</button>`) : ""}
+             <button class="btn-override" onclick="state.overrideOpen='category';state.assessOpen=true;render()">Disagree…</button>`) : ""}
       <button class="btn-details" onclick="state.assessOpen=!state.assessOpen;render()">
         ${state.assessOpen ? "Hide the why ▴" : "See the why ▾"}</button>
     </div>`;
@@ -242,7 +242,7 @@ function renderAssessment() {
         <span class="chip">${a.category.secondary}</span>
         ${a.category.themes.map((t) => `<span class="chip">${t}</span>`).join(" ")}
       </div>
-      ${d ? `<div class="override-note"><strong>Analyst override</strong> — was “${d.from}”, now “${d.to}”.
+      ${d ? `<div class="override-note"><strong>Analyst disagreed</strong> — was “${d.from}”, now “${d.to}”.
               Reason: ${d.reason} <em>(${d.who}, ${d.at} · recorded in audit log)</em></div>`
           : decideButtons("category")}
     </div>
@@ -266,7 +266,7 @@ function decideButtons(field) {
   if (state.scenario === "resolved") return "";
   if (state.overrideOpen === field) {
     return `<div class="override-form">
-      <input id="ov-reason" placeholder="Reason for override (required — written to the audit log)">
+      <input id="ov-reason" placeholder="Why do you disagree? (required — saved to the audit log)">
       <button class="btn-agree" onclick="submitOverride('${field}')">Save</button>
       <button class="btn-override" onclick="state.overrideOpen=false;render()">Cancel</button>
     </div>`;
@@ -275,7 +275,7 @@ function decideButtons(field) {
   return `<div class="decide">
     ${agreed ? `<span class="decided">✓ Confirmed by analyst</span>`
              : `<button class="btn-agree" onclick="agree('${field}')">✓ Agree</button>`}
-    <button class="btn-override" onclick="state.overrideOpen='${field}';render()">Override…</button>
+    <button class="btn-override" onclick="state.overrideOpen='${field}';render()">Disagree…</button>
   </div>`;
 }
 function agree(field) {
@@ -325,7 +325,7 @@ function renderWorkspace() {
   }
   $("#workspace").innerHTML = `
     <h2>${stageName === "Respond" ? "Draft response" : stageName + " workspace"}
-      <span class="sub">the work of the current stage, front and center</span></h2>
+     </h2>
     ${body}
     <span class="dnote">The current stage's work, front and center — not in a tab (R7)</span>`;
 }
@@ -337,7 +337,7 @@ function renderTimeline() {
   const items = state.tlOpen ? all : all.slice(0, 2);
   const icon = { ai: "✦", comment: "💬", audit: "🔒" };
   $("#timeline").innerHTML = `
-    <h2>Activity <span class="sub">one history: analyst, AI, and system — filter, don't hunt</span></h2>
+    <h2>Activity</h2>
     ${state.tlOpen ? `<div class="tl-filters">
       ${["all", "comment", "ai", "audit"].map((f) =>
         `<button class="${state.tlFilter === f ? "on" : ""}" onclick="state.tlFilter='${f}';render()">
