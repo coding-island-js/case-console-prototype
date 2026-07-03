@@ -158,7 +158,7 @@ function renderHeader() {
       <button class="btn-quiet">Reassign</button>
       <button class="btn-primary" onclick="advance()" ${a.disabled ? "disabled" : ""}>${a.label}</button>
     </div>
-    <span class="dnote">R1 R10 · identity + stakes + SLA, zero scroll</span>`;
+    <span class="dnote">Identity, stakes, SLA — zero scroll (R1, R10)</span>`;
 
   // Stepper: done / current / todo, clickable for the demo.
   $("#stepper").innerHTML = c.stages.map((s, i) => {
@@ -168,7 +168,7 @@ function renderHeader() {
       <div class="step ${cls}"><button onclick="jumpStage(${i})"><span class="dot">${dot}</span>${s}</button></div>`;
   }).join("") +
   (a.sub ? `<span class="chip amber" style="margin-left:14px">${a.sub}</span>` : "") +
-  `<span class="dnote" style="top:auto;bottom:6px">R5 R6 · workflow position + one computed next action</span>`;
+  `<span class="dnote" style="top:auto;bottom:6px">Always know where the case is and what's next (R5, R6)</span>`;
 
   // SLA banner appears only when the case demands attention (R10).
   $("#banner").innerHTML = overdue
@@ -195,7 +195,7 @@ function renderComplaint() {
     <div class="complaint-text ${needsCollapse ? "collapsed" : ""}">${esc(text)}</div>
     ${state.longContent ? `<button class="expand-btn" onclick="toggleComplaint()">
         ${state.complaintExpanded ? "Collapse ↑" : `Show full complaint (${words} words) ↓`}</button>` : ""}
-    <span class="dnote">R2 · full text by default; reader controls long content</span>`;
+    <span class="dnote">Full text by default; the reader controls long content (R2)</span>`;
 }
 function toggleComplaint() { state.complaintExpanded = !state.complaintExpanded; render(); }
 
@@ -232,7 +232,7 @@ function renderAssessment() {
       </div>
       ${decideButtons("risk")}
     </div>
-    <span class="dnote">R3 R4 · assessment you can interrogate: why + confidence + agree/override</span>`;
+    <span class="dnote">AI you can interrogate: why, confidence, agree/override (R3, R4)</span>`;
 }
 
 // Agree is one click (cheap, frequent). Override asks for a reason
@@ -302,7 +302,7 @@ function renderWorkspace() {
     <h2>${stageName === "Respond" ? "Draft response" : stageName + " workspace"}
       <span class="sub">the work of the current stage, front and center</span></h2>
     ${body}
-    <span class="dnote">R7 · the stage's work lives in the main column, not in a tab</span>`;
+    <span class="dnote">The current stage's work, front and center — not in a tab (R7)</span>`;
 }
 
 function renderTimeline() {
@@ -323,7 +323,7 @@ function renderTimeline() {
         <div><div>${t.text}</div><div class="meta">${t.who} · ${t.at}</div></div>
       </div>`).join("")}
     <div class="comment-box"><input placeholder="Add a comment…"><button class="btn-quiet">Post</button></div>
-    <span class="dnote">R8 · comments, AI actions, and audit events are one auditable record</span>`;
+    <span class="dnote">One auditable history: analyst, AI, system (R8)</span>`;
 }
 
 function renderRail() {
@@ -337,7 +337,7 @@ function renderRail() {
       <div class="field"><label>Customer email</label>${c.customer.email}</div>
       <div class="field"><label>Attachments</label><a href="#" onclick="return false" style="color:var(--purple)">dispute-form.pdf</a> · <a href="#" onclick="return false" style="color:var(--purple)">txn-record.csv</a></div>
       <div class="field"><label>Tags</label>${c.tags.map((t) => `<span class="chip">${t}</span>`).join(" ")} <span class="chip">+ Add</span></div>
-      <span class="dnote">R9 · every field exactly once; reference data quiet but reachable</span>
+      <span class="dnote">Reference data grouped by meaning, each field once (R9)</span>
     </div>
     <div class="panel">
       <h2>Customer history</h2>
@@ -357,13 +357,61 @@ function render() {
   document.body.classList.toggle("readonly", state.scenario === "resolved");
   renderHeader(); renderComplaint(); renderAssessment();
   renderWorkspace(); renderTimeline(); renderRail(); renderDemoBar();
+  renderTour();
 }
 
-// Design-notes toggle: shows the purple R# pins that map each element
+// Design-notes toggle: shows the purple pins that map each element
 // back to the requirement it serves (see task1.html for the R# table).
 function toggleNotes(btn) {
   document.body.classList.toggle("show-notes");
   btn.classList.toggle("on");
+}
+
+// ---------- guided tour ----------
+// A self-narrating walkthrough: each stop switches to the right demo
+// state, scrolls to the element, and explains it in one breath. Anyone
+// opening this link cold can see the whole argument in six clicks.
+
+const TOUR = [
+  { scenario: "default", sel: ".case-header", title: "The command strip",
+    text: "Who, what product, how risky, when it's due, where the case sits in its workflow, and one computed next action — all before any scrolling. This is the answer to “what do I do next?”" },
+  { scenario: "long", sel: "#complaint", title: "Long content",
+    text: "The complaint is readable in full by default. Genuinely long email chains collapse under the reader's control — no “See More” tax on every case." },
+  { scenario: "lowconf", sel: "#assessment", title: "Low-confidence AI",
+    text: "When the AI is unsure, the screen says so: amber badges, the draft response is held, and the primary action changes to “Review AI analysis.” The system proposes; the analyst disposes." },
+  { scenario: "overridden", sel: "#assessment", title: "Analyst override",
+    text: "Agreeing with the AI is one click. Overriding requires a reason and is written to the audit log — friction proportional to consequence, and evidence for the next compliance audit." },
+  { scenario: "overdue", sel: "#banner", title: "Overdue SLA",
+    text: "Red is reserved for state that demands action. The banner names the missed deadline and the fastest path back to compliance. Nothing else on the screen competes with it." },
+  { scenario: "resolved", sel: "#banner", title: "Resolved — and the next case",
+    text: "One confirmation, then the case becomes a read-only record with a closure summary. “Next case in queue” keeps the loop going — at ~40 cases a day, the return trip is the hidden tax." },
+];
+
+function startTour() { state.tourIdx = 0; setScenario(TOUR[0].scenario); }
+function nextTour() {
+  state.tourIdx += 1;
+  if (state.tourIdx >= TOUR.length) { endTour(); return; }
+  setScenario(TOUR[state.tourIdx].scenario);
+}
+function endTour() { state.tourIdx = -1; setScenario("default"); }
+
+function renderTour() {
+  document.querySelectorAll(".tour-target").forEach((el) => el.classList.remove("tour-target"));
+  const card = $("#tour-card");
+  const i = state.tourIdx;
+  if (i == null || i < 0) { card.style.display = "none"; return; }
+  const stop = TOUR[i];
+  card.style.display = "block";
+  card.innerHTML = `
+    <div class="tour-step">Tour · ${i + 1} of ${TOUR.length}</div>
+    <h3>${stop.title}</h3>
+    <p>${stop.text}</p>
+    <div class="tour-btns">
+      <button class="btn-primary" onclick="nextTour()">${i + 1 === TOUR.length ? "Finish" : "Next →"}</button>
+      <button class="btn-quiet" onclick="endTour()">End tour</button>
+    </div>`;
+  const target = document.querySelector(stop.sel);
+  if (target) { target.classList.add("tour-target"); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
 }
 
 render();
