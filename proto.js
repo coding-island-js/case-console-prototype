@@ -253,7 +253,10 @@ function renderActivity() {
       ${state.lowConfidence ? `<div class="held">⚠ Held — the AI isn't sure about its analysis.
         Review it above before this reply goes out.</div>` : ""}
       <div class="letter" data-new="CHANGED — opens itself when it's time to reply">
-        <div class="letter-head">Reply to ${c.customer.name} <span>drafted by Zanko · ${c.draft.generatedAt}</span></div>
+        <div class="letter-head ${state.scenario === "resolved" ? "sent" : ""}">
+          ${state.scenario === "resolved"
+            ? `✓ Sent to ${c.customer.name} <span>Jul 2, 2026, 10:05 AM</span>`
+            : `Reply to ${c.customer.name} <span>drafted by Zanko · ${c.draft.generatedAt}</span>`}</div>
         <div class="letter-body">${esc(c.draft.text)}</div>
       </div>
       ${atRespond && !state.lowConfidence ? `<div class="decide-row" style="margin-top:10px">

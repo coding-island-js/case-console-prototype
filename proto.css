@@ -118,8 +118,9 @@ button { font: inherit; cursor: pointer; }
 .tabs-row { display: flex; gap: 4px; margin: 2px 0 14px; border-bottom: 1px solid var(--line); }
 .tabs-row button {
   background: none; border: 0; border-bottom: 2px solid transparent;
-  padding: 6px 12px; font-size: 14px; color: var(--muted);
+  padding: 6px 12px; font-size: 14px; color: var(--muted); border-radius: 6px 6px 0 0;
 }
+.tabs-row button:hover { background: var(--purple-soft); color: var(--purple); }
 .tabs-row button.on { color: var(--purple); font-weight: 650; border-bottom-color: var(--purple); }
 /* the reply, framed like a letter — glanceable, not a text blob */
 .letter { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fdfdfe; }
@@ -127,6 +128,7 @@ button { font: inherit; cursor: pointer; }
   display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
   background: #f6f4ff; padding: 9px 14px; font-weight: 650; font-size: 13.5px;
 }
+.letter-head.sent { background: var(--green-bg); color: var(--green); }
 .letter-head span { color: var(--muted); font-weight: 400; font-size: 12.5px; }
 .letter-body { padding: 12px 16px; white-space: pre-wrap; font-size: 14px; line-height: 1.6; }
 
@@ -265,10 +267,10 @@ button { font: inherit; cursor: pointer; }
 .why .ev { color: var(--muted); font-style: italic; display: block; margin-top: 4px; font-size: 13.5px; }
 .decide { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
 .btn-agree {
-  background: var(--card); border: 1.5px solid var(--purple); color: var(--purple);
+  background: var(--purple); border: 1.5px solid var(--purple); color: #fff;
   border-radius: 999px; padding: 6px 16px; font-weight: 650; font-size: 13.5px;
 }
-.btn-agree:hover { background: var(--purple-soft); }
+.btn-agree:hover { background: #6a4cf0; }
 .btn-override {
   background: var(--card); border: 1.5px solid var(--purple); color: var(--purple);
   border-radius: 999px; padding: 6px 16px; font-weight: 650; font-size: 13.5px;
