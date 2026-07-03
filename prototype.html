@@ -58,7 +58,7 @@
     <!-- Top bar: unchanged from the current product -->
     <div class="topbar">
       <button class="ask-zanko-top">✦ Ask Zanko</button>
-      <span>🔔</span>
+      <span class="bell">🔔<i>1</i></span>
       <div class="avatar">ZA</div>
     </div>
 
@@ -66,8 +66,10 @@
     <div class="their-header">
       <span class="cid">Complaint ID: CNT-51788881253936</span>
       <button class="copy-id" title="Copy ID" onclick="navigator.clipboard && navigator.clipboard.writeText('CNT-51788881253936'); this.textContent='✓'; setTimeout(()=>this.textContent='⧉',900)">⧉</button>
+      <span style="color:var(--muted)">🔗</span>
       <span style="flex:1"></span>
       <button class="btn-quiet">Actions ▾</button>
+      <span class="win-icons">⋮ &nbsp;⤢ &nbsp;↗ &nbsp;✕</span>
     </div>
     <!-- CHANGE 1: the only added bar — steps + one next action -->
     <div class="strip" id="strip" data-new="NEW — the only added bar"></div>

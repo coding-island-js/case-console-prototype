@@ -221,7 +221,7 @@ button { font: inherit; cursor: pointer; }
 @media (max-width: 760px) { .sidebar { display: none; } .content { padding: 14px 12px 130px; } }
 
 .panel {
-  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  background: var(--card); border: 1px solid #dcdce3; border-radius: 12px;
   padding: 16px 18px; margin-bottom: 16px; position: relative;
 }
 .panel h2 {
@@ -374,6 +374,18 @@ body.show-new [data-new]::before {
 }
 body.show-notes .dnote { display: inline-block; }
 .dnote-inline { position: static; margin-left: 8px; }
+.agree-check { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+.agree-check input { width: 16px; height: 16px; accent-color: var(--purple); cursor: pointer; }
+.agree-check.done { color: var(--green); font-weight: 650; }
+.linklike { background: none; border: 0; color: var(--purple); font-size: 13.5px;
+  text-decoration: underline; text-underline-offset: 3px; padding: 2px 4px; }
+.dates-inline { display: flex; gap: 34px; flex-wrap: wrap; }
+.dates-inline label { margin-bottom: 2px; }
+.win-icons { color: var(--muted); font-size: 13px; letter-spacing: 1px; }
+.bell { position: relative; }
+.bell i { position: absolute; top: -6px; right: -8px; background: #e11d48; color: #fff;
+  font-style: normal; font-size: 9px; font-weight: 700; border-radius: 50%;
+  width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; }
 .mini-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 6px; }
 .mini-table th { text-align: left; color: var(--muted); font-weight: 600; font-size: 11px;
   padding: 4px 6px; border-bottom: 1px solid var(--line); }
