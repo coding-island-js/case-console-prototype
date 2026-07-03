@@ -292,6 +292,10 @@ body.readonly .decide, body.readonly .comment-box, body.readonly .override-form 
 }
 .demo-bar button.on { background: var(--purple); border-color: var(--purple); color: #fff; }
 .demo-bar .sep { width: 1px; height: 18px; background: #33333d; margin: 0 4px; }
+/* collapsed mode: the bar shrinks to a single "▶ Demo" pill so the
+   product screen stays clean while exploring */
+.demo-bar.min > *:not(.demo-collapse) { display: none; }
+.demo-collapse { border-color: transparent !important; color: #77777f !important; }
 
 /* ---- Design notes (rationale overlay): purple pins that map each
    element to the requirement it serves. Hidden unless toggled. ---- */

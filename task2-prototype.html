@@ -76,6 +76,8 @@
   <button onclick="toggleNotes(this)">Design notes</button>
   <span class="sep"></span>
   <a href="task2.html" style="color:#c9c9d2">← Framing</a>
+  <button class="demo-collapse" title="Collapse demo controls"
+    onclick="this.parentElement.classList.toggle('min'); this.textContent = this.parentElement.classList.contains('min') ? '▶ Demo' : '✕';">✕</button>
 </div>
 <div class="tour-card" id="tour-card"></div>
 
