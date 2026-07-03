@@ -245,7 +245,9 @@ function renderActivity() {
   const c = state.c;
   const atRespond = c.stages[c.stage] === "Respond" && state.scenario !== "resolved";
   const tabs = ["comments", "draft", "attachments", "audit"];
-  const labels = { comments: "Comments", draft: "Draft Response", attachments: "Attachments", audit: "Audit Log" };
+  const labels = { comments: "Comments",
+    draft: "Draft Response" + (state.scenario === "resolved" ? " ✓" : ""),
+    attachments: "Attachments", audit: "Audit Log" };
 
   let body = "";
   if (state.activeTab === "draft") {
