@@ -20,104 +20,55 @@
 
 <p class="kicker">Spring Labs · Zanko exercise</p>
 <h1>Two short builds, one link</h1>
-<p class="lede">Both tasks are built as working prototypes in Zanko's existing design language, so
-they read as the next release of the product rather than a re-imagination of it. Each one comes
-with its reasoning attached: the problem, the solution, what was deliberately left out, and why.
-This page is the short version — every section links to the full thinking and the clickable
-prototype.</p>
+<p class="lede">Both tasks are built as working prototypes in Zanko's existing design language.
+The video walks through everything; the write-ups hold the full reasoning.</p>
+
+<div class="card">
+  <h3 style="margin-top:0">The walkthrough — 7 min 49 s</h3>
+  <video controls preload="metadata" style="width:100%; border-radius:12px; background:#000">
+    <source src="walkthrough.mp4" type="video/mp4">
+  </video>
+  <p style="font-size:14px; color:var(--muted); margin:10px 0 0">Task 1 starts at 0:00 · Task 2
+  starts at 5:05.</p>
+</div>
 
 <!-- ============================================================ -->
 <h2>Task 1 — Case View redesign</h2>
 <div class="card">
-  <h3 style="margin-top:0">The problem</h3>
-  <p>A complaints analyst lives in this screen for around six hours a day, and the brief says she
-  should always know two things: where the case is in its workflow, and what to do next. The
-  current screen answers neither. It shows every field the database has, in database order — but the
-  complaint itself is cut off behind a "See More" click, the AI's conclusions appear as bare scores
-  with no explanation and no way to disagree, her main deliverable (the draft response) is hidden
-  in a tab below the fold, and nothing anywhere shows the workflow. The screen even shows dates
-  that read as contradictory — a ticket closed <em>before</em> it was resolved, on a case still
-  waiting on the customer — and gives the analyst no way to tell whether that's an error or just
-  unexplained. In short: it renders the database record, not the analyst's job.</p>
-
-  <h3>What I built</h3>
-  <p>Minimum intervention: Zanko's existing screen — same sections, same labels, same right
-  rail — plus five fixes, each mapped to a diagnosed problem. One added bar shows the workflow
-  steps and <strong>one suggested next action</strong>. The complaint shows in full. The existing
-  AI fields now say how sure they are, offer their reasoning one click away, and take Agree or
-  Disagree with a reason that's saved for auditors — and the reply cannot be sent until a human
-  has judged the analysis (Zanko's own site: "human-in-the-loop review option before sending"). The draft reply opens itself when it's time
-  to respond, and one verb per button: send sends, resolve resolves. Values that haven't happened
-  yet show a dash until they're real. Analysts relearn nothing.</p>
-
-  <p>
+  <p>The analyst lives in this screen six hours a day and should always know where the case is
+  and what to do next — the current screen answers neither, and its AI scores can't be trusted or
+  questioned. I kept Zanko's screen and added five fixes: a workflow bar with one suggested next
+  action, the complaint shown in full, AI conclusions that say how sure they are and take
+  agree/disagree with a saved reason, the draft reply surfaced when it's time to respond, and a
+  human approval before anything sends.</p>
+  <p style="margin-bottom:0">
     <a class="btn" href="prototype.html">Open the clickable prototype</a>&nbsp;
     <a class="btn ghost" href="task1.html">Read the full diagnosis</a>
   </p>
-  <p style="font-size:14px; color:var(--muted)">In the prototype, use the demo strip (top) to
-  flip the key situations — the respond stage, a long complaint, an unsure AI, and an overdue
-  case; sending and resolving happen by clicking the purple button. The <strong>What's new</strong>
-  toggle outlines everything added to Zanko's screen.</p>
-  <p style="font-size:14px; color:var(--muted); margin-bottom:0"><strong>What I'd do next:</strong>
-  the queue view the analyst comes from — the same "what's next" answer applied to picking the
-  right case — plus keyboard-first navigation for the forty-cases-a-day loop.</p>
 </div>
 
 <!-- ============================================================ -->
 <h2 id="task2">Task 2 — What should Zanko Reporting do next?</h2>
 <div class="card">
-  <h3 style="margin-top:0">The problem</h3>
-  <p>Three customers, three roles, one complaint said three ways: the reports live inside Zanko,
-  but the people who need them don't. A compliance manager rebuilds the same summary by hand every
-  Monday and emails it to her sponsor bank — it costs her the first hour of every week. An
-  operations lead exports one report and trims it into different versions for each audience,
-  over and over. And a VP wants a clean monthly summary on her phone before board meetings — she's
-  never going to log in, and no feature should require her to. Zanko already makes all of these
-  reports — but it cannot send them. The Reporting page is a list with no send button, so the
-  people became the delivery system.</p>
-
-  <h3>What I built</h3>
-  <p><strong>Scheduled Reports</strong> — a Schedules tab inside the existing Reporting area. Pick
-  which report Zanko already generates, when it goes, and who gets it, where each recipient gets
-  one of two versions: the full report, or the headline — the report's own top section, phone
-  friendly, opening with the answer to "are we getting better or worse." It delivers by email and
-  runs until paused. Because a sponsor bank is a regulated audience, external sends wait for a
-  one-click <strong>Approve &amp; send</strong> — the compliance manager's Monday hour becomes a
-  minute without giving up control. Every send is recorded (who got which version, when, delivered
-  or not). Version two, on purpose: auto-send for outside email (after the approve click has
-  earned trust), picking your own sections (version one has two fixed versions), and loud failure
-  handling — a red row with one-click retry. And it is not a report designer — Zanko already
-  makes the reports; this feature only delivers them.</p>
-
-  <p>
+  <p>Three customers, one pattern: Zanko makes the reports but cannot send them, so the people
+  became the delivery system. I built <strong>Scheduled Reports</strong> — a Schedules tab in the
+  existing Reporting area: which report, when it goes, who gets it, and which of two versions each
+  person gets (full report or headline). External sends wait for a one-click Approve; every send
+  is recorded. Left for version two, on purpose: auto-send after trust is earned, picking your own
+  sections, and loud failure handling.</p>
+  <p style="margin-bottom:0">
     <a class="btn" href="task2-prototype.html">Open the clickable prototype</a>&nbsp;
     <a class="btn ghost" href="task2.html">Read the framing &amp; scoping</a>
   </p>
-  <p style="font-size:14px; color:var(--muted)">In the prototype, use the demo strip (top) to
-  walk the flow — the schedules list, the create flow with a live email preview, the approval
-  gate, and the executive email in a phone frame.</p>
-  <p style="font-size:14px; color:var(--muted); margin-bottom:0"><strong>What I'd do next:</strong>
-  auto-send for schedules that have earned trust, and the section picker for custom versions —
-  once the email loop proves people actually stop doing delivery by hand.</p>
 </div>
 
 <!-- ============================================================ -->
 <h2>AI tools used &amp; time spent</h2>
 <div class="card">
-  <p><strong>Tools:</strong> Claude Code (Anthropic) end to end — reading the brief, drafting both
-  diagnoses, and building this site and the prototypes in plain HTML/CSS/JS. Before finalizing
-  each task, an independent AI review pass attacked my own framing; it caught one misreading of
-  the current screen in Task 1 and several soft spots in Task 2 (both corrected) — the same check
-  I'd run on my own work regardless of tooling. No frameworks, no build step; hosted on Netlify,
-  auto-deployed from GitHub.</p>
-  <p><strong>My role vs. the AI's:</strong> the problem framing, the requirements, the scoping
-  calls, and every design decision were mine to direct and approve; the AI accelerated the
-  reading, the writing, and the construction.</p>
-  <p><strong>One thing this exercise sharpened for me:</strong> AI assistance moves the scope
-  line. Mechanical completeness — states, edge cases, keyboard polish — has become cheap, so it
-  stays in a v1. What still costs real time is judgment: features that need requirements
-  interrogated and designs iterated by a person. Those are what a first version should cut, and
-  that's how I scoped both tasks here.</p>
+  <p>Claude Code (Anthropic) end to end — reading the brief, drafting the diagnoses, and building
+  this site and both prototypes in plain HTML/CSS/JS. The framing, requirements, scoping calls,
+  and design decisions were mine to direct and approve; the AI accelerated the reading, the
+  writing, and the construction.</p>
   <p style="margin-bottom:0"><strong>Time:</strong> about 6 hours total across the two tasks,
   within the brief's 4–6 hour target.</p>
 </div>
