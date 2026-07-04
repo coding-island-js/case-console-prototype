@@ -118,9 +118,14 @@ function renderStrip() {
   const c = state.c;
   const a = primaryAction();
   const overdue = c.dueInDays < 0;
+  // The due date lives in their Due Date field (parity). It joins this
+  // bar only when it needs attention — due soon (amber) or late (red) —
+  // so the date is never said twice on a calm case (hierarchy, R9/R10).
   const slaChip = overdue
     ? `<span class="chip red">⏰ Overdue</span>`
-    : `<span class="chip ${c.dueInDays <= 3 ? "amber" : ""}">Due ${c.due}</span>`;
+    : c.dueInDays <= 3
+    ? `<span class="chip amber">Due ${c.due}</span>`
+    : "";
 
   $("#strip").innerHTML = `
     ${c.stages.map((s, i) => {
