@@ -179,7 +179,7 @@ function renderResolution() {
            investigation found it was not actual fraud. Provisional credit of $487.20 issued.`
         : `<span style="color:var(--muted)">Written by the analyst as the case is worked — filled
            in before the case is closed.</span>`}</div>
-    <div class="frow dates-inline">
+    <div class="frow dates-inline" data-new="CHANGED — dates on one line, and '—' until they happen">
       <span><label>Ticket Closed</label>${done ? "Jul 2, 2026" : "—"}</span>
       <span><label>Due Date</label>${state.c.due}</span>
       <span><label>Resolved Date</label>${done ? "Jul 2, 2026" : "—"}</span>
@@ -199,11 +199,11 @@ function renderResAnalysis() {
       ${done
         ? "The agent apologized for the poor customer service experience, confirmed receipt of the dispute form, and expedited the unauthorized-charge reversal."
         : `<span style="color:var(--muted)">— generated after the case is resolved.</span>`}</div>
-    <div class="frow"><label>Resolution Quality Score</label>${done ? "82" : "—"}</div>
+    <div class="frow"><label>Resolution Quality Score</label>${done ? "82 / 100" : "—"}</div>
     <div class="frow"><label>Inherent Risks</label>
       <span class="chip">Change to Account</span> <span class="chip">Human Error</span>
       <span class="chip">Non-Courtesy Credit</span></div>
-    <div class="frow"><label>Inherent Risk Score</label>${a.risk.score}</div>
+    <div class="frow"><label>Inherent Risk Score</label>${a.risk.score} / 100</div>
     <div class="frow" data-new="NEW — the why, one click away">
       <label>Inherent Risk Level ${conf(a.risk.confidence)}</label>
       <span class="chip red">${a.risk.level}</span>
@@ -228,7 +228,7 @@ function renderAnalysis() {
       <label>Complaint Summary ${conf(a.summaryConfidence)}</label>
       ${a.summary}</div>
 
-    <div class="frow facts-grid">
+    <div class="frow facts-grid" data-new="CHANGED — four short fields grouped into one row (was a long column)">
       <span><label>Issue Type</label><span class="chip">${a.category.issueType}</span></span>
       <span><label>Zanko Primary Categories ${conf(a.category.confidence)}</label>
         <span class="chip purple">${d ? d.to : a.category.primary}</span>
