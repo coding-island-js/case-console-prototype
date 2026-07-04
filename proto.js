@@ -134,7 +134,8 @@ function renderStrip() {
     }).join("")}
     <span style="width:14px"></span>
     ${slaChip}
-    <button class="btn-primary" onclick="advance()" ${a.disabled ? "disabled" : ""} title="${a.hint || ""}">${a.label}</button>`;
+    <button class="btn-primary" onclick="advance()" ${a.disabled ? "disabled" : ""} title="${a.hint || ""}">${a.label}</button>
+    ${a.hint ? `<span class="gate-hint">↓ review the AI's analysis first</span>` : ""}`;
 
   $("#banner").innerHTML = overdue
     ? `<div class="banner red">⏰ This case is overdue — the reply was due ${c.due}. Review the analysis and send.</div>`
@@ -235,9 +236,11 @@ function renderAnalysis() {
       "${d.to}". Why: ${d.reason} <em>(${d.who}, ${d.at} — saved to the audit log)</em></div></div>` : ""}
 
     ${!d && (state.c.agreed || state.scenario !== "resolved") ? `
-    <div class="frow decide-row" data-new="NEW — agree or disagree, with a saved reason">
+    <div class="frow decide-row ${!state.c.agreed && state.c.stage < 3 && state.scenario !== "resolved" ? "needs-you" : ""}" data-new="NEW — agree or disagree, with a saved reason">
       ${state.c.agreed
-        ? `<label class="agree-check done"><input type="checkbox" checked disabled> Confirmed by analyst</label>`
+        ? (state.c.stage >= 3
+          ? `<label class="agree-check done"><input type="checkbox" checked disabled> Confirmed by analyst</label>`
+          : `<label class="agree-check done"><input type="checkbox" checked onchange="unagree()"> Confirmed by analyst — untick to withdraw</label>`)
         : `<label class="agree-check"><input type="checkbox" onchange="agreeAll()"> I agree with the AI's analysis</label>`}
       ${state.scenario === "resolved" || state.c.agreed ? ""
         : state.overrideOpen ? `
@@ -246,6 +249,14 @@ function renderAnalysis() {
           <button class="linklike" onclick="state.overrideOpen=false;render()">cancel</button>`
         : `<button class="linklike" onclick="state.overrideOpen=true;render()">or disagree…</button>`}
     </div>` : ""}`;
+}
+
+function unagree() {
+  // withdrawing is allowed until the reply is sent — audited like
+  // everything else. The gate closes again.
+  state.c.agreed = false;
+  state.c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now", text: "Withdrew confirmation of the AI's analysis." });
+  render();
 }
 
 function agreeAll() {
