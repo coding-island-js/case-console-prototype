@@ -105,9 +105,12 @@ function advance() {
   c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now",
     text: c.stages[c.stage] === "Respond" ? "Response approved and sent to customer."
         : (c.stages[c.stage] + " finished — moved to " + (c.stages[c.stage + 1] || "done") + ".") });
+  const wasRespond = c.stages[c.stage] === "Respond";
   c.stage += 1;
   if (c.stage >= 4) {
-    state.scenario = "resolved"; state.c.status = "Resolved"; state.activeTab = "comments";
+    state.scenario = "resolved"; state.c.status = "Resolved";
+    // stay on the letter: its header turns "✓ Sent" right where you clicked
+    if (wasRespond) state.activeTab = "draft";
   } else if (c.stages[c.stage] === "Respond") {
     state.activeTab = "draft";
   }
