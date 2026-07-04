@@ -38,11 +38,11 @@ reports — on a schedule, to the right people, in the version each person needs
     <li><strong>Trust:</strong> an email to someone outside the company waits for a person to
     click Approve. Inside the company, it sends on its own.</li>
     <li><strong>Version two, on purpose:</strong> auto-send for outside email (after the approve
-    click has earned trust) and picking your own sections (version one has two fixed
-    versions).</li>
+    click has earned trust), picking your own sections (version one has two fixed versions), and
+    loud failure handling — a red row with one-click retry (version one records every send).</li>
     <li><strong>Proof:</strong> <a href="task2-prototype.html">the clickable prototype</a> — the
-    Schedules list, the schedule screen with a live email preview, the approval gate, the
-    phone-sized executive email, and a failed delivery.</li>
+    Schedules list, the schedule screen with a live email preview, the approval gate, and the
+    phone-sized executive email.</li>
   </ul>
 </div>
 
@@ -104,7 +104,7 @@ the readers have to do — nothing.</p>
   <tr><td><span class="tag">R6</span></td><td>Record every send — who got which version, and when. A bank can ask about this later.</td><td><span class="tag gray">C1 + regulated context</span></td></tr>
   <tr><td><span class="tag">R7</span></td><td>An email to someone outside the company waits for a person to click Approve. Inside the company, it sends on its own.</td><td><span class="tag gray">C1 "ready for me"</span></td></tr>
   <tr><td><span class="tag">R8</span></td><td>Live inside the existing Reporting area as a third tab next to Dashboards and Reports — the area growing, not a new module.</td><td><span class="tag gray">brief</span></td></tr>
-  <tr><td><span class="tag">R9</span></td><td>Make failure loud: a failed send turns the row red, tells the owner, and retries in one click.</td><td><span class="tag gray">trust — implied by C1's stakes</span></td></tr>
+  <tr><td><span class="tag">R9</span></td><td>Make failure loud: a failed send should alert the owner and offer a one-click retry. Deferred to version two — version one already records every send (R6); loud failure is the same trust feature one size larger.</td><td><span class="tag gray">trust — implied by C1's stakes</span></td></tr>
 </table></div>
 <p class="caption">C1 = the compliance manager · C2 = the operations lead · C3 = the VP. As in
 Task 1: no requirement without a source, no design element without a requirement.</p>
@@ -114,10 +114,10 @@ Task 1: no requirement without a source, no design element without a requirement
 
 <h3>In</h3>
 <ul>
-  <li><strong>A Schedules tab</strong> in Reporting. Each row is one schedule, and its status
-  leads the row: sent, awaiting approval, failed, or paused. The prototype shows three schedules —
-  one for each customer: the Monday email to the sponsor bank, the ops team's weekly detail, and
-  the executive's monthly summary. <span class="tag gray">R5 R8 R9</span></li>
+  <li><strong>A Schedules tab</strong> in Reporting. Each row is one schedule — name, source
+  report, recipients, when it goes, and the next run — active until paused. The prototype shows
+  three schedules, one for each customer: the Monday email to the sponsor bank, the ops team's
+  weekly detail, and the executive's monthly summary. <span class="tag gray">R5 R8</span></li>
   <li><strong>The schedule screen — four settings:</strong> which report, when it goes, who gets
   it, and which of two versions each person gets. A live preview of the email sits beside the four
   settings the whole time, so you see what each reader gets before you commit. <span class="tag gray">R1 R3 R7</span></li>
@@ -169,10 +169,11 @@ Task 1: no requirement without a source, no design element without a requirement
   <tr><td><strong>Schedules is a third tab</strong> beside Dashboards and Reports, reusing the
     existing list layout, search, and row style of the Reports tab.</td>
     <td>It reads as the Reporting area growing, not a bolt-on. <span class="tag">R8</span></td></tr>
-  <tr><td><strong>Status leads every row</strong> (sent / awaiting approval / failed / paused),
-    then name, cadence, recipients, next run.</td>
-    <td>The owner's Monday question is "does anything need me?" — answered by scanning one column.
-    <span class="tag">R5 R9</span></td></tr>
+  <tr><td><strong>The list stays calm</strong> — every row reads name, report, recipients, when
+    it goes, and the next run, with a quiet Active / Paused state. When a send is waiting for a
+    person, that one row surfaces a Review &amp; approve button.</td>
+    <td>The owner's Monday question is "does anything need me?" — a quiet list means no, and the
+    one row that does need her says so. <span class="tag">R5 R7</span></td></tr>
   <tr><td><strong>The live preview is half the schedule screen,</strong> switchable between the
     full report, the headline version, and a phone frame.</td>
     <td>You are deciding what people <em>receive</em>; you should be looking at it while you
@@ -227,7 +228,7 @@ approve click is working — if approvals pile up, the default needs tuning).</p
 <p style="margin-top:26px"><a class="btn" href="task2-prototype.html">Open the prototype →</a></p>
 <p class="caption" style="margin-top:10px">In the prototype: use the demo strip (top) to flip
 between the states — the schedules list, the schedule screen with its live preview, the approval
-gate, the executive email in a phone frame, and a failed delivery.</p>
+gate, and the executive email in a phone frame.</p>
 
 <div class="footnote">
 Built for the Spring Labs Product Builder exercise · sample data invented, as the brief allows ·

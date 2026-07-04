@@ -7,10 +7,10 @@
 
    Business note: the product idea in one line — Zanko already
    MAKES the reports; this feature is how they REACH people.
-   A schedule = source report + cadence + recipients (each with
-   an audience version) + delivery rules. Everything else
-   (approval, history, failure handling) exists to make an
-   automated send trustworthy in a regulated environment.
+   A schedule = which report + when it goes + who gets it (each
+   with one of two versions) + delivery rules. Approval and send
+   history exist to make an automated send trustworthy in a
+   regulated environment. (Failure alerts/retry: version two.)
    ============================================================ */
 
 // ---------- data ----------
@@ -20,36 +20,35 @@ const SCHEDULES = [
     id: 1, name: "Weekly Complaint Review → Sponsor Bank",
     source: "Weekly Complaint Review", cadence: "Weekly · Mon 7:00 AM",
     nextRun: "Mon Jul 6, 7:00 AM", owner: "dana.reyes@lender-demo.com",
-    review: true, status: "approval",
+    review: true, status: "active",
     recipients: [
       { email: "reports@sponsorbank-demo.com", ext: true,  ver: "Full" },
       { email: "compliance-team@lender-demo.com", ext: false, ver: "Full" },
-      { email: "vp-risk@lender-demo.com", ext: false, ver: "Executive" },
+      { email: "vp-risk@lender-demo.com", ext: false, ver: "Headline" },
     ],
     history: [
-      { at: "Mon Jun 29, 7:04 AM", what: "Full ×2 · Executive ×1", st: "Delivered", by: "approved by dana.reyes" },
-      { at: "Mon Jun 22, 7:02 AM", what: "Full ×2 · Executive ×1", st: "Delivered", by: "approved by dana.reyes" },
+      { at: "Mon Jun 29, 7:04 AM", what: "Full ×2 · Headline ×1", st: "Delivered", by: "approved by dana.reyes" },
+      { at: "Mon Jun 22, 7:02 AM", what: "Full ×2 · Headline ×1", st: "Delivered", by: "approved by dana.reyes" },
     ],
   },
   {
     id: 2, name: "Monthly Executive Summary",
     source: "Weekly Complaint Review", cadence: "Monthly · last day, 5:00 PM",
     nextRun: "Fri Jul 31, 5:00 PM", owner: "leo.park@fintech-demo.com",
-    review: false, status: "sent",
-    recipients: [{ email: "priya.n@fintech-demo.com", ext: false, ver: "Executive" }],
-    history: [{ at: "Tue Jun 30, 5:00 PM", what: "Executive ×1", st: "Delivered", by: "auto-sent" }],
+    review: false, status: "active",
+    recipients: [{ email: "priya.n@fintech-demo.com", ext: false, ver: "Headline" }],
+    history: [{ at: "Tue Jun 30, 5:00 PM", what: "Headline ×1", st: "Delivered", by: "auto-sent" }],
   },
   {
     id: 3, name: "Ops Team Weekly Detail",
     source: "CMS Insights Dashboard", cadence: "Weekly · Fri 4:00 PM",
     nextRun: "Fri Jul 3, 4:00 PM", owner: "leo.park@fintech-demo.com",
-    review: false, status: "failed",
-    failNote: "Last run Fri Jun 26: 1 of 2 delivered — j.moss@fintech-demo.com bounced. Owner notified.",
+    review: false, status: "active",
     recipients: [
       { email: "ops-leads@fintech-demo.com", ext: false, ver: "Full" },
       { email: "j.moss@fintech-demo.com", ext: false, ver: "Full" },
     ],
-    history: [{ at: "Fri Jun 26, 4:01 PM", what: "Full ×2", st: "1 of 2 delivered — 1 bounce", by: "auto-sent" }],
+    history: [{ at: "Fri Jun 26, 4:01 PM", what: "Full ×2", st: "Delivered", by: "auto-sent" }],
   },
 ];
 
@@ -100,24 +99,15 @@ function toggleHistory(id) {
 // email, one click, done — instead of an hour of rebuilding it by hand.
 function approveSend(id) {
   const s = state.schedules.find((x) => x.id === id);
-  s.status = "sent";
-  s.history.unshift({ at: "now", what: "Full ×2 · Executive ×1", st: "Delivered", by: "approved by dana.reyes" });
+  s.status = "active";
+  s.history.unshift({ at: "now", what: "Full ×2 · Headline ×1", st: "Delivered", by: "approved by dana.reyes" });
   state.view = "list";
-  render();
-}
-
-// Failures retry in one click; the history keeps the record either way.
-function retry(id) {
-  const s = state.schedules.find((x) => x.id === id);
-  s.status = "sent";
-  s.failNote = null;
-  s.history.unshift({ at: "now", what: "Full ×1 (retry)", st: "Delivered", by: "retried by leo.park" });
   render();
 }
 
 function togglePause(id) {
   const s = state.schedules.find((x) => x.id === id);
-  s.status = s.status === "paused" ? "sent" : "paused";
+  s.status = s.status === "paused" ? "active" : "paused";
   // resuming restores the schedule's own next run (from the source data)
   s.nextRun = s.status === "paused" ? "— paused" : SCHEDULES.find((x) => x.id === id).nextRun;
   render();
@@ -128,22 +118,18 @@ function togglePause(id) {
 const $ = (sel) => document.querySelector(sel);
 
 const STATUS = {
-  sent:     { cls: "sent",     label: "✓ Sent" },
-  approval: { cls: "approval", label: "● Awaiting approval" },
-  failed:   { cls: "failed",   label: "⚠ Delivery failed" },
-  paused:   { cls: "paused",   label: "⏸ Paused" },
+  active: { cls: "sent",   label: "● Active" },
+  paused: { cls: "paused", label: "⏸ Paused" },
 };
 
 function rowAction(s) {
-  if (s.status === "approval") return `<button class="btn-primary" onclick="setView('approve')">Review &amp; approve</button>`;
-  if (s.status === "failed")   return `<button class="btn-primary" onclick="retry(${s.id})">Retry send</button>`;
-  if (s.status === "paused")   return `<button class="btn-quiet" onclick="togglePause(${s.id})">Resume</button>`;
+  if (s.status === "paused") return `<button class="btn-quiet" onclick="togglePause(${s.id})">Resume</button>`;
   return `<button class="btn-quiet" onclick="togglePause(${s.id})">Pause</button>`;
 }
 
 function renderList() {
   const rows = state.schedules.map((s) => `
-    <div class="sched-row ${s.status === "failed" ? "failed" : ""}">
+    <div class="sched-row">
       <div class="st"><span class="status-chip ${STATUS[s.status].cls}">${STATUS[s.status].label}</span></div>
       <div class="nm">
         <strong>${s.name}</strong>
@@ -153,7 +139,6 @@ function renderList() {
       </div>
       <div class="meta"><b>${s.cadence}</b>Next: ${s.nextRun}</div>
       <div>${rowAction(s)} <button class="btn-quiet" onclick="toggleHistory(${s.id})">History</button></div>
-      ${s.failNote ? `<div class="fail-note">${s.failNote}</div>` : ""}
       ${state.openHistory === s.id ? `
         <div class="history">
           ${s.history.map((h) => `<div class="h-row"><b>${h.at}</b><span>${h.what}</span><span>${h.st}</span><span>${h.by}</span></div>`).join("")}
@@ -186,7 +171,7 @@ function renderCreate() {
       <div class="create-form">
 
         <section class="panel fstep">
-          <h2>Source report <span class="sub">anything the Reports tab can generate, Schedules can deliver</span></h2>
+          <h2>Which report <span class="sub">anything the Reports tab can generate, Schedules can deliver</span></h2>
           <div class="opt-row">
             <button class="opt on">Weekly Complaint Review</button>
             <button class="opt">CMS Insights Dashboard</button>
@@ -195,7 +180,7 @@ function renderCreate() {
         </section>
 
         <section class="panel fstep">
-          <h2>Cadence</h2>
+          <h2>When it goes</h2>
           <div class="opt-row">
             <button class="opt on">Weekly · Monday 7:00 AM</button>
             <button class="opt">Monthly · last day</button>
@@ -204,13 +189,13 @@ function renderCreate() {
         </section>
 
         <section class="panel fstep">
-          <h2>Recipients &amp; versions <span class="sub">one report, a version per audience</span></h2>
+          <h2>Who gets it <span class="sub">each person gets one of two versions of the same report</span></h2>
           <div class="recip"><span class="em">reports@sponsorbank-demo.com <span class="ext-badge">EXTERNAL</span></span>
-            <span class="ver"><button class="on">Full report</button><button>Executive</button></span></div>
+            <span class="ver"><button class="on">Full report</button><button>Headline</button></span></div>
           <div class="recip"><span class="em">compliance-team@lender-demo.com</span>
-            <span class="ver"><button class="on">Full report</button><button>Executive</button></span></div>
+            <span class="ver"><button class="on">Full report</button><button>Headline</button></span></div>
           <div class="recip"><span class="em">vp-risk@lender-demo.com</span>
-            <span class="ver"><button>Full report</button><button class="on">Executive</button></span></div>
+            <span class="ver"><button>Full report</button><button class="on">Headline</button></span></div>
           <div class="recip"><input placeholder="Add recipient…" style="border:1px solid var(--line);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px"></div>
         </section>
 
@@ -232,7 +217,7 @@ function renderCreate() {
         <h2>Live preview <span class="sub">what each audience receives</span></h2>
         <div class="pv-tabs">
           <button class="${state.pvMode === "full" ? "on" : ""}" onclick="setPv('full')">Full report</button>
-          <button class="${state.pvMode === "exec" ? "on" : ""}" onclick="setPv('exec')">Executive</button>
+          <button class="${state.pvMode === "exec" ? "on" : ""}" onclick="setPv('exec')">Headline</button>
           <button class="${state.pvMode === "phone" ? "on" : ""}" onclick="setPv('phone')">📱 Phone</button>
         </div>
         ${renderEmail(state.pvMode)}
@@ -297,13 +282,13 @@ function renderApprove() {
     <div class="approve-bar" style="position:relative">
       <span>●</span>
       <div class="grow"><strong>Ready for your review</strong> — generated Mon Jul 6, 7:00 AM.
-        Approving sends Full to 2 recipients (1 external) and Executive to 1.</div>
+        Approving sends the full report to 2 recipients (1 external) and the headline to 1.</div>
       <button class="btn-primary" onclick="approveSend(1)">Approve &amp; send</button>
       <button class="btn-quiet" onclick="setView('create')">Edit schedule</button>
     </div>
     <div style="max-width:760px">${emailFull()}
       <button class="show-more-tl" onclick="state.showExecPv=!state.showExecPv;render()">
-        ${state.showExecPv ? "Hide" : "Also sending: the short executive version to 1 person — preview"} ${state.showExecPv ? "▴" : "▾"}</button>
+        ${state.showExecPv ? "Hide" : "Also sending: the headline version to 1 person — preview"} ${state.showExecPv ? "▴" : "▾"}</button>
       ${state.showExecPv ? emailExec() : ""}
     </div>`;
 }
@@ -324,7 +309,6 @@ const DEMO = [
   { key: "create",   label: "Create flow",    go: () => { state.view = "create"; state.pvMode = "full"; } },
   { key: "approve",  label: "Approval gate",  go: () => { resetData(); state.view = "approve"; } },
   { key: "phone",    label: "Exec email (phone)", go: () => { state.view = "create"; state.pvMode = "phone"; } },
-  { key: "failed",   label: "Delivery failed", go: () => { resetData(); state.view = "list"; state.openHistory = 3; } },
 ];
 let demoKey = "list";
 
