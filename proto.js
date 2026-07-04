@@ -137,7 +137,7 @@ function renderStrip() {
     <button class="btn-primary" onclick="advance()" ${a.disabled ? "disabled" : ""} title="${a.hint || ""}">${a.label}</button>`;
 
   $("#banner").innerHTML = overdue
-    ? `<div class="banner red">⏰ This case is overdue — the reply was due ${c.due}. Sending it is the fastest fix.</div>`
+    ? `<div class="banner red">⏰ This case is overdue — the reply was due ${c.due}. Review the analysis and send.</div>`
     : state.scenario === "resolved"
     ? `<div class="banner green">✓ Resolved Jul 2 — reply sent, credit issued. This case is read-only.
        <button class="btn-primary" style="margin-left:auto" onclick="setScenario('default')">Next case →</button></div>`
@@ -249,12 +249,10 @@ function renderAnalysis() {
 }
 
 function agreeAll() {
+  // A human agreeing doesn't make the AI more sure — the numbers stay
+  // honest. The human ratification is what opens the gate.
   state.c.agreed = true;
-  if (state.lowConfidence) {
-    state.lowConfidence = false;
-    state.c.assessment.category.confidence = 88;
-    state.c.assessment.risk.confidence = 85;
-  }
+  state.lowConfidence = false;
   state.c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now", text: "Confirmed the AI's analysis." });
   render();
 }
