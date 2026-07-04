@@ -217,8 +217,7 @@ function renderCreate() {
         <h2>Live preview <span class="sub">what each audience receives</span></h2>
         <div class="pv-tabs">
           <button class="${state.pvMode === "full" ? "on" : ""}" onclick="setPv('full')">Full report</button>
-          <button class="${state.pvMode === "exec" ? "on" : ""}" onclick="setPv('exec')">Headline</button>
-          <button class="${state.pvMode === "phone" ? "on" : ""}" onclick="setPv('phone')">📱 Phone</button>
+          <button class="${state.pvMode !== "full" ? "on" : ""}" onclick="setPv('exec')">Headline</button>
         </div>
         ${renderEmail(state.pvMode)}
       </div>
