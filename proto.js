@@ -252,16 +252,17 @@ function renderAnalysis() {
 
     <div class="frow"><label>Emotion</label><span class="chip amber">Frustration</span></div>
 
-    ${state.scenario !== "resolved" && !d ? `
+    ${!d && (state.c.agreed || state.scenario !== "resolved") ? `
     <div class="frow decide-row" data-new="NEW — agree or disagree, with a saved reason">
       ${state.c.agreed
         ? `<label class="agree-check done"><input type="checkbox" checked disabled> Confirmed by analyst</label>`
         : `<label class="agree-check"><input type="checkbox" onchange="agreeAll()"> I agree with the AI's analysis</label>`}
-      ${state.overrideOpen ? `
+      ${state.scenario === "resolved" || state.c.agreed ? ""
+        : state.overrideOpen ? `
           <input id="ov-reason" class="ov-input" placeholder="Why do you disagree? (saved to the audit log)">
           <button class="btn-quiet" onclick="submitDisagree()">Save</button>
           <button class="linklike" onclick="state.overrideOpen=false;render()">cancel</button>`
-        : state.c.agreed ? "" : `<button class="linklike" onclick="state.overrideOpen=true;render()">or disagree…</button>`}
+        : `<button class="linklike" onclick="state.overrideOpen=true;render()">or disagree…</button>`}
     </div>` : ""}`;
 }
 
