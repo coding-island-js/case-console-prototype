@@ -198,9 +198,9 @@ function renderResAnalysis() {
     <div class="frow"><label>Resolution Summary</label>
       ${done
         ? "The agent apologized for the poor customer service experience, confirmed receipt of the dispute form, and expedited the unauthorized-charge reversal."
-        : `<span style="color:var(--muted)">— generated after the case is resolved.</span>`}</div>
+        : `<span style="color:var(--muted)">— filled in when the case is resolved</span>`}</div>
     <div class="frow"><label>Resolution Quality Score</label>${done ? "82 / 100"
-      : `<span style="color:var(--muted)">— scored once the case is resolved</span>`}</div>
+      : `<span style="color:var(--muted)">— filled in when the case is resolved</span>`}</div>
     <div class="frow"><label>Inherent Risks</label>
       <span class="chip">Change to Account</span> <span class="chip">Human Error</span>
       <span class="chip">Non-Courtesy Credit</span></div>
