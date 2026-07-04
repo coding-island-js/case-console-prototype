@@ -239,18 +239,16 @@ function renderAnalysis() {
     <div class="frow"><label>Complaint Summary ${conf(a.summaryConfidence)}</label>
       ${a.summary}</div>
 
-    <div class="frow"><label>Issue Type</label><span class="chip">${a.category.issueType}</span></div>
-
-    <div class="frow"><label>Zanko Primary Categories ${conf(a.category.confidence)}</label>
-      <span class="chip purple">${d ? d.to : a.category.primary}</span>
-      <span class="chip">${a.category.secondary}</span>
-      ${d ? `<div class="override-note"><strong>Analyst disagreed</strong> — was "${d.from}", now
-        "${d.to}". Why: ${d.reason} <em>(${d.who}, ${d.at} — saved to the audit log)</em></div>` : ""}
+    <div class="frow facts-grid">
+      <span><label>Issue Type</label><span class="chip">${a.category.issueType}</span></span>
+      <span><label>Zanko Primary Categories ${conf(a.category.confidence)}</label>
+        <span class="chip purple">${d ? d.to : a.category.primary}</span>
+        <span class="chip">${a.category.secondary}</span></span>
+      <span><label>Alleged Risk Level</label><span class="chip">Low</span></span>
+      <span><label>Emotion</label><span class="chip amber">Frustration</span></span>
     </div>
-
-    <div class="frow"><label>Alleged Risk Level</label><span class="chip">Low</span></div>
-
-    <div class="frow"><label>Emotion</label><span class="chip amber">Frustration</span></div>
+    ${d ? `<div class="frow"><div class="override-note"><strong>Analyst disagreed</strong> — was "${d.from}", now
+      "${d.to}". Why: ${d.reason} <em>(${d.who}, ${d.at} — saved to the audit log)</em></div></div>` : ""}
 
     ${!d && (state.c.agreed || state.scenario !== "resolved") ? `
     <div class="frow decide-row" data-new="NEW — agree or disagree, with a saved reason">
