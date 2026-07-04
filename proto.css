@@ -387,6 +387,7 @@ body.show-notes .dnote { display: inline-block; }
 .gate-hint { color: var(--amber); font-size: 12.5px; font-weight: 650; }
 .decide-row.needs-you { border-left: 3px solid #e6a817; background: #fffbeb;
   padding-left: 12px; border-radius: 0 8px 8px 0; }
+.panel.needs-you-card { border-left: 3px solid #e6a817; }
 .bell { position: relative; }
 .bell i { position: absolute; top: -6px; right: -8px; background: #e11d48; color: #fff;
   font-style: normal; font-size: 9px; font-weight: 700; border-radius: 50%;
