@@ -81,30 +81,25 @@ function setScenario(name) {
 // ---------- the one next action ----------
 
 function primaryAction() {
-  // One button, one verb. Send sends. Resolve resolves.
+  // judge -> send -> close. One rule (their website's own words:
+  // "Human-in-the-loop review option before sending"): the reply
+  // cannot go out until a human has agreed or disagreed.
   if (state.scenario === "resolved") return { label: "✓ Case resolved", disabled: true };
-  if (state.lowConfidence)          return { label: "Review AI analysis" };
   if (state.c.stage >= 3)           return { label: "Mark resolved" };
-  return { label: "Approve & send reply" };
+  const judged = state.c.agreed || state.c.assessment.analystDecision;
+  return { label: "Approve & send reply", disabled: !judged,
+           hint: judged ? "" : "Review the AI's analysis first — agree or disagree above" };
 }
 
 function advance() {
   const c = state.c;
   if (state.scenario === "resolved") return;
-  if (state.lowConfidence) {
-    state.lowConfidence = false;
-    c.assessment.category.confidence = 88;
-    c.assessment.risk.confidence = 85;
-    c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now", text: "AI analysis reviewed and confirmed by analyst." });
-    render(); return;
-  }
   if (c.stage < 3) {
-    // send the reply — one thing
+    if (!(c.agreed || c.assessment.analystDecision)) return; // gate: judge first
     c.stage = 3;
     state.activeTab = "draft";
     c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now", text: "Reply approved and sent to customer." });
   } else {
-    // mark resolved — one thing
     state.scenario = "resolved";
     c.status = "Resolved";
     c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now", text: "Case marked resolved." });
@@ -139,7 +134,7 @@ function renderStrip() {
     }).join("")}
     <span style="width:14px"></span>
     ${slaChip}
-    <button class="btn-primary" onclick="advance()" ${a.disabled ? "disabled" : ""}>${a.label}</button>`;
+    <button class="btn-primary" onclick="advance()" ${a.disabled ? "disabled" : ""} title="${a.hint || ""}">${a.label}</button>`;
 
   $("#banner").innerHTML = overdue
     ? `<div class="banner red">⏰ This case is overdue — the reply was due ${c.due}. Sending it is the fastest fix.</div>`
@@ -255,6 +250,11 @@ function renderAnalysis() {
 
 function agreeAll() {
   state.c.agreed = true;
+  if (state.lowConfidence) {
+    state.lowConfidence = false;
+    state.c.assessment.category.confidence = 88;
+    state.c.assessment.risk.confidence = 85;
+  }
   state.c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now", text: "Confirmed the AI's analysis." });
   render();
 }
@@ -276,7 +276,7 @@ function submitDisagree() {
 
 function renderActivity() {
   const c = state.c;
-  const atRespond = c.stage === 2 && state.scenario !== "resolved" && !state.lowConfidence;
+  const atRespond = c.stage === 2 && state.scenario !== "resolved" && (c.agreed || c.assessment.analystDecision);
   const tabs = ["comments", "draft", "attachments", "audit"];
   const labels = { comments: "Comments",
     draft: "Draft Response" + (state.c.stage >= 3 ? " ✓" : ""),
@@ -285,8 +285,9 @@ function renderActivity() {
   let body = "";
   if (state.activeTab === "draft") {
     body = `
-      ${state.lowConfidence ? `<div class="held">⚠ Held — the AI isn't sure about its analysis.
-        Review it above before this reply goes out.</div>` : ""}
+      ${c.stage < 3 && !(c.agreed || c.assessment.analystDecision) ? `<div class="held">⚠ Held —
+        this reply can't go out until you've reviewed the AI's analysis above (agree, or
+        disagree with a reason).${state.lowConfidence ? " The AI isn't sure — its reasoning is open above." : ""}</div>` : ""}
       <div class="letter" data-new="CHANGED — opens itself when it's time to reply">
         <div class="letter-head ${state.c.stage >= 3 ? "sent" : ""}">
           ${c.stage >= 3
