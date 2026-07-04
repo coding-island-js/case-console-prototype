@@ -55,9 +55,9 @@ prototype.</p>
     <a class="btn ghost" href="task1.html">Read the full diagnosis</a>
   </p>
   <p style="font-size:14px; color:var(--muted)">In the prototype, use the demo strip (top) to
-  flip the key situations — long complaint, unsure AI, an analyst disagreement, an overdue case,
-  and resolution. The <strong>What's new</strong> toggle outlines everything added to Zanko's
-  screen.</p>
+  flip the key situations — the respond stage, a long complaint, an unsure AI, and an overdue
+  case; sending and resolving happen by clicking the purple button. The <strong>What's new</strong>
+  toggle outlines everything added to Zanko's screen.</p>
   <p style="font-size:14px; color:var(--muted); margin-bottom:0"><strong>What I'd do next:</strong>
   the queue view the analyst comes from — the same "what's next" answer applied to picking the
   right case — plus keyboard-first navigation for the forty-cases-a-day loop.</p>
@@ -72,8 +72,9 @@ prototype.</p>
   Monday and emails it to her sponsor bank — it costs her the first hour of every week. An
   operations lead exports one report and trims it into different versions for each audience,
   over and over. And a VP wants a clean monthly summary on her phone before board meetings — she's
-  never going to log in, and no feature should require her to. Zanko can already <em>make</em> all
-  of these reports. What's missing is how they <em>reach people</em>.</p>
+  never going to log in, and no feature should require her to. Zanko already makes all of these
+  reports — but it cannot send them. The Reporting page is a list with no send button, so the
+  people became the delivery system.</p>
 
   <h3>What I built</h3>
   <p><strong>Scheduled Reports</strong> — a Schedules tab inside the existing Reporting area. Pick
@@ -83,9 +84,10 @@ prototype.</p>
   Because a sponsor bank is a regulated audience, external sends wait for a one-click
   <strong>Approve &amp; send</strong> — the compliance manager's Monday hour becomes a minute
   without giving up control. Every send is recorded (who got what version, when, delivered or
-  not), and a failed delivery goes loudly red with a one-click retry. Deliberately left out of v1:
-  report authoring, Slack delivery, and per-recipient custom filters — the gap in every quote is
-  distribution, and everything else dilutes that.</p>
+  not), and a failed delivery goes loudly red with a one-click retry. Version two, on purpose:
+  auto-send for outside email (after the approve click has earned trust) and picking your own
+  sections (version one has two fixed versions). And it is not a report designer — Zanko already
+  makes the reports; this feature only delivers them.</p>
 
   <p>
     <a class="btn" href="task2-prototype.html">Open the clickable prototype</a>&nbsp;
@@ -95,8 +97,8 @@ prototype.</p>
   walk the flow — the schedules list, the create flow with a live email preview, the approval
   gate, the executive email in a phone frame, and a failed delivery.</p>
   <p style="font-size:14px; color:var(--muted); margin-bottom:0"><strong>What I'd do next:</strong>
-  Slack/Teams delivery and per-team filtered cuts — once the email loop proves people actually
-  stop exporting by hand.</p>
+  auto-send for schedules that have earned trust, and the section picker for custom versions —
+  once the email loop proves people actually stop doing delivery by hand.</p>
 </div>
 
 <!-- ============================================================ -->

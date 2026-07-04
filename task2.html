@@ -19,147 +19,148 @@
 </nav>
 
 <p class="kicker">Task 2 · Design a feature from customer feedback</p>
-<h1>The report should come to you</h1>
-<p class="lede">Three customers, three roles, one complaint said three ways: Zanko's reporting is
-<em>pull</em> — log in, rebuild, export, trim, forward — while their week runs on <em>push</em>.
-The feature is <strong>Scheduled Reports</strong>: subscribe the right people to a report Zanko
-already generates, in the version each audience needs, delivered by email on a cadence.</p>
+<h1>Zanko makes the reports. It cannot send them.</h1>
+<p class="lede">Three customers, three roles, the same gap: Zanko already makes the report each
+one needs, but a person still carries it to its readers — by logging in, copying, exporting,
+trimming, and forwarding. The feature is <strong>Scheduled Reports</strong>: Zanko sends the
+reports — on a schedule, to the right people, in the version each person needs.</p>
 
 <div class="card" style="border-left:3px solid var(--accent)">
   <h3 style="margin-top:0">TL;DR — 30 seconds</h3>
   <ul style="margin-bottom:0">
-    <li><strong>The shared need:</strong> the information already exists in Zanko — the missing
-    product is <em>distribution</em>. Every quote describes manual redistribution of a report the
-    platform already makes.</li>
-    <li><strong>The feature:</strong> Scheduled Reports — a Schedules tab in Reporting: pick an
-    existing report, set a cadence, choose recipients with a version per audience (Full or
-    Executive), optionally review before external sends, done. It runs until paused.</li>
-    <li><strong>Deliberately out of v1:</strong> report authoring/custom builder, Slack/Teams,
-    per-recipient custom filters, multi-report digests. Distribution is the gap; everything else
-    dilutes it.</li>
+    <li><strong>The problem:</strong> Zanko makes the reports but cannot send them. The Reporting
+    page is a list of reports with no send button — a report waits there until someone logs in and
+    fetches it. So the people became the delivery system. Every quote describes delivery work done
+    by hand.</li>
+    <li><strong>The feature:</strong> a Schedules tab in Reporting. Each row is one schedule, and a
+    schedule is four settings: which report, when it goes, who gets it, and which of two versions
+    each person gets. Set it once and it runs until paused.</li>
+    <li><strong>Trust:</strong> an email to someone outside the company waits for a person to
+    click Approve. Inside the company, it sends on its own.</li>
+    <li><strong>Version two, on purpose:</strong> auto-send for outside email (after the approve
+    click has earned trust) and picking your own sections (version one has two fixed
+    versions).</li>
     <li><strong>Proof:</strong> <a href="task2-prototype.html">the clickable prototype</a> — the
-    Schedules list, the create flow with live email preview, the approval gate, the phone-sized
-    executive email, and a failed delivery.</li>
+    Schedules list, the schedule screen with a live email preview, the approval gate, the
+    phone-sized executive email, and a failed delivery.</li>
   </ul>
 </div>
 
 <!-- ============================================================ -->
-<h2 id="synthesis">1 · Reading between the lines</h2>
+<h2 id="synthesis">1 · What the three customers said</h2>
 
 <div class="card">
-  <p style="font-size:14.5px"><em>"Every Monday morning I rebuild the same complaint summary by
-  hand and email it out to our sponsor bank… I just want Zanko to put that exact rundown together
-  and have it ready for me each week."</em> — Compliance Manager, mid-size lender <span class="tag gray">"Dana" below</span></p>
-  <p style="font-size:14px; margin-bottom:0"><strong>Between the lines:</strong> a fixed report on
-  a fixed cadence to an <em>external, regulated</em> stakeholder. "Ready <em>for me</em>" — not
-  "sent for me." She wants the rebuild automated but the send under her control: an approval gate,
-  not a fire-and-forget blast.</p>
+  <p style="font-size:14.5px"><span class="tag">Customer 1</span> <strong>A compliance manager at
+  a mid-size lender.</strong> Every Monday she logs in, copies the complaint summary into an
+  email, and sends it to her sponsor bank. Her words: <em>"It eats the first hour of my week."</em></p>
+  <p style="font-size:14px; margin-bottom:0"><strong>The detail that matters:</strong> she asks for
+  the report "ready <em>for me</em>" — not "sent for me." She wants the work done, but the send
+  kept under her control. Her reader is outside the company, and her company answers to it.</p>
 </div>
 
 <div class="card">
-  <p style="font-size:14.5px"><em>"Different people need different cuts of the same information…
-  I'd love to decide once who gets what, and then stop thinking about it."</em>
-  — Customer Operations Lead, fintech <span class="tag gray">"Leo" below</span></p>
-  <p style="font-size:14px; margin-bottom:0"><strong>Between the lines:</strong> one source report,
-  several audiences, <em>configured once</em>. He isn't asking for more reports — he's asking to
-  stop being the human mail-merge between one report and its readers.</p>
+  <p style="font-size:14.5px"><span class="tag">Customer 2</span> <strong>An operations lead at a
+  fintech.</strong> He exports one report, trims a short copy for some readers, and forwards both
+  around. His words: <em>"I'd love to decide once who gets what, and then stop thinking about
+  it."</em></p>
+  <p style="font-size:14px; margin-bottom:0"><strong>The detail that matters:</strong> his two
+  audiences, in his own words, want <em>"the detailed breakdown"</em> and <em>"the headline
+  numbers."</em> Two versions of one report — not more reports.</p>
 </div>
 
 <div class="card">
-  <p style="font-size:14.5px"><em>"Honestly, I don't log into the tool… a clean monthly summary I
-  can actually read on my phone before a board meeting — top trends, biggest risks, are we getting
-  better or worse."</em> — VP of Customer Experience <span class="tag gray">"Priya" below</span></p>
-  <p style="font-size:14px; margin-bottom:0"><strong>Between the lines:</strong> for executives the
-  <em>email is the product</em>. She'll never be a Zanko user, and that's fine — she needs a
-  phone-readable digest with direction-of-travel ("better or worse"), not a login.</p>
+  <p style="font-size:14.5px"><span class="tag">Customer 3</span> <strong>A VP of Customer
+  Experience.</strong> She never logs into the tool. She wants a monthly summary she can read on
+  her phone before a board meeting. Her words: <em>"are we getting better or worse."</em></p>
+  <p style="font-size:14px; margin-bottom:0"><strong>The detail that matters:</strong> she named
+  where she reads: her phone, by email, no login. For her, the email <em>is</em> the product.</p>
 </div>
 
-<p><strong>The synthesis:</strong> all three are downstream of the same missing capability. Zanko
-can already <em>make</em> the artifact (the existing "Weekly Complaint Review" is literally
-"Generated by Ask Zanko") — nobody is served by how it <em>reaches people</em>. Dana redistributes
-it weekly, Leo redistributes it per-audience, Priya wants it to arrive on its own. One feature
-closes all three loops.</p>
+<p><strong>The pattern:</strong> Zanko makes the reports. Zanko cannot send them. The proof is on
+the product's own Reporting page — it is a list of reports with no send button. A report waits in
+that list until someone logs in and fetches it. That is why all three customers became the
+delivery system themselves: the manual work in every quote is delivery work. The feature is
+scheduled delivery — <strong>Zanko sends the reports.</strong></p>
 
-<p><strong>One assumption, stated:</strong> "schedule an existing report" treats a report as a
-re-runnable definition, not a point-in-time snapshot. If Dana's Monday rundown is ad-hoc today
-(her "by hand" suggests it might be), the same flow covers her: any generated report gets a
-<em>"Make this recurring"</em> action, which saves the definition and opens the schedule form.
-Either way, authoring stays out of scope — v1 only adds the re-run-and-deliver loop.</p>
+<p><strong>One assumption, stated:</strong> scheduling a report treats it as something Zanko can
+re-run each period, not a one-time snapshot. The example report ("Generated by Ask Zanko") makes
+that a safe bet. If a customer's Monday rundown is one-off today, any generated report gets a
+"Make this recurring" action that opens the same schedule screen.</p>
 
-<p><strong>Who it's for:</strong> the <em>configurers</em> are ops/compliance leads (Dana, Leo) —
-existing Zanko users who own a reporting obligation. The <em>beneficiaries</em> include people who
-will never log in (Priya, the sponsor bank). A feature here is judged by how little the recipients
-have to do: nothing.</p>
+<p><strong>Who it's for:</strong> the people who set it up are the compliance manager and the
+operations lead — existing Zanko users who owe someone a report. The people it serves include
+people who will never log in: the VP, and the sponsor bank. The feature is judged by how little
+the readers have to do — nothing.</p>
 
 <!-- ============================================================ -->
 <h2 id="requirements">2 · Requirements (each traces to a quote)</h2>
 <div class="table-scroll"><table>
   <tr><th style="width:56px">Req</th><th>The feature must…</th><th style="width:100px">Trace</th></tr>
-  <tr><td><span class="tag">R1</span></td><td>Schedule an <em>existing</em> report on a recurring cadence (weekly / monthly to start).</td><td><span class="tag gray">Q1 Q3</span></td></tr>
-  <tr><td><span class="tag">R2</span></td><td>Deliver by email — readable without logging in to Zanko.</td><td><span class="tag gray">Q1 Q3</span></td></tr>
-  <tr><td><span class="tag">R3</span></td><td>Send different versions of the same report to different recipients: <em>Full report</em> or <em>Executive summary</em>.</td><td><span class="tag gray">Q2 Q3</span></td></tr>
-  <tr><td><span class="tag">R4</span></td><td>Make the executive version phone-first: headline numbers, deltas, biggest risks, and an explicit better-or-worse verdict.</td><td><span class="tag gray">Q3</span></td></tr>
-  <tr><td><span class="tag">R5</span></td><td>Be a decide-once configuration: it runs until paused, editable any time.</td><td><span class="tag gray">Q2</span></td></tr>
-  <tr><td><span class="tag">R6</span></td><td>Keep a history of every send — what went to whom, in which version, when, and whether it was delivered.</td><td><span class="tag gray">Q1 + regulated context</span></td></tr>
-  <tr><td><span class="tag">R7</span></td><td>Offer review-before-send, defaulted on when recipients are external (a sponsor bank is a regulator-adjacent audience).</td><td><span class="tag gray">Q1 "ready for me"</span></td></tr>
-  <tr><td><span class="tag">R8</span></td><td>Live inside the existing Reporting area as a peer of Dashboards and Reports — a natural, scalable extension, not a new module.</td><td><span class="tag gray">brief</span></td></tr>
-  <tr><td><span class="tag">R9</span></td><td>Make failure loud: a failed delivery is visible in the list, notifies the owner, and retries in one click.</td><td><span class="tag gray">trust — implied by Q1's stakes</span></td></tr>
+  <tr><td><span class="tag">R1</span></td><td>Send an <em>existing</em> report on a schedule — weekly and monthly to start.</td><td><span class="tag gray">C1 C3</span></td></tr>
+  <tr><td><span class="tag">R2</span></td><td>Deliver by email — readable on a phone, no login. Email is what the VP asked to read.</td><td><span class="tag gray">C1 C3</span></td></tr>
+  <tr><td><span class="tag">R3</span></td><td>Offer two versions of the same report, in the customers' own words: the detailed one (the full report) and the headline one (the report's own top section).</td><td><span class="tag gray">C2 C3</span></td></tr>
+  <tr><td><span class="tag">R4</span></td><td>Make the headline version answer the VP's own question first — are we getting better, or worse — then the four big numbers.</td><td><span class="tag gray">C3</span></td></tr>
+  <tr><td><span class="tag">R5</span></td><td>Be a decide-once setting: it runs until paused, editable any time.</td><td><span class="tag gray">C2</span></td></tr>
+  <tr><td><span class="tag">R6</span></td><td>Record every send — who got which version, and when. A bank can ask about this later.</td><td><span class="tag gray">C1 + regulated context</span></td></tr>
+  <tr><td><span class="tag">R7</span></td><td>An email to someone outside the company waits for a person to click Approve. Inside the company, it sends on its own.</td><td><span class="tag gray">C1 "ready for me"</span></td></tr>
+  <tr><td><span class="tag">R8</span></td><td>Live inside the existing Reporting area as a third tab next to Dashboards and Reports — the area growing, not a new module.</td><td><span class="tag gray">brief</span></td></tr>
+  <tr><td><span class="tag">R9</span></td><td>Make failure loud: a failed send turns the row red, tells the owner, and retries in one click.</td><td><span class="tag gray">trust — implied by C1's stakes</span></td></tr>
 </table></div>
-<p class="caption">Q1 = Compliance Manager · Q2 = Ops Lead · Q3 = VP. As in Task 1: no requirement
-without a source, no design element without a requirement.</p>
+<p class="caption">C1 = the compliance manager · C2 = the operations lead · C3 = the VP. As in
+Task 1: no requirement without a source, no design element without a requirement.</p>
 
 <!-- ============================================================ -->
-<h2 id="scope">3 · What's in v1 — and what's deliberately not</h2>
+<h2 id="scope">3 · What's in version one — and what is not</h2>
 
 <h3>In</h3>
 <ul>
-  <li><strong>A Schedules tab</strong> in Reporting: list of schedules with status-first rows
-  (sent / awaiting approval / failed / paused), owner, cadence, next run. <span class="tag gray">R5 R8 R9</span></li>
-  <li><strong>A create flow in four decisions:</strong> source report → cadence → recipients with a
-  version each → delivery options (subject, review-before-send). A live email preview sits beside
-  it the whole time — you see exactly what each audience gets before you commit. <span class="tag gray">R1 R3 R7</span></li>
-  <li><strong>Two versions, not N:</strong> Full report and Executive summary. Two covers every
-  quote; per-recipient custom filtering is configuration sprawl v1 doesn't need. <span class="tag gray">R3 R4</span></li>
-  <li><strong>The approval gate:</strong> schedules with external recipients default to "review
-  before send" — Monday morning Dana gets one Approve &amp; send button, not an hour of rebuilding. <span class="tag gray">R7</span></li>
-  <li><strong>Send history per schedule</strong> with delivery status — the compliance answer to
-  "did the bank get it, and which version?" <span class="tag gray">R6</span></li>
-  <li><strong>Pause, don't delete:</strong> pausing preserves the history; deletion is possible but
-  the history survives as an audit record. <span class="tag gray">R5 R6</span></li>
+  <li><strong>A Schedules tab</strong> in Reporting. Each row is one schedule, and its status
+  leads the row: sent, awaiting approval, failed, or paused. The prototype shows three schedules —
+  one for each customer: the Monday email to the sponsor bank, the ops team's weekly detail, and
+  the executive's monthly summary. <span class="tag gray">R5 R8 R9</span></li>
+  <li><strong>The schedule screen — four settings:</strong> which report, when it goes, who gets
+  it, and which of two versions each person gets. A live preview of the email sits beside the four
+  settings the whole time, so you see what each reader gets before you commit. <span class="tag gray">R1 R3 R7</span></li>
+  <li><strong>Two versions, in the customers' own words:</strong> the detailed one is the full
+  report; the headline one is the report's own top section — the Executive Summary the example
+  report already opens with. <span class="tag gray">R3 R4</span></li>
+  <li><strong>The approve click:</strong> when a reader is outside the company, the email waits
+  for the owner to review it and click Approve &amp; send. Inside the company, it sends on its
+  own. The compliance manager's Monday hour becomes one look and one click. <span class="tag gray">R7</span></li>
+  <li><strong>Send history per schedule</strong> — who got which version, when, and whether it was
+  delivered. The answer to "did the bank get it?" <span class="tag gray">R6</span></li>
+  <li><strong>Pause, don't delete:</strong> pausing keeps the history. It is an audit record, not
+  just a log. <span class="tag gray">R5 R6</span></li>
 </ul>
 
-<h3>Out (and why)</h3>
+<h3>What this feature is not</h3>
 <ul>
-  <li><strong>No report authoring or custom builder</strong> — Zanko already generates the reports;
-  the unmet need in every quote is distribution. Building an editor here would be solving a problem
-  nobody stated.</li>
-  <li><strong>No Slack/Teams/webhooks</strong> — the named audiences (sponsor bank, a VP before a
-  board meeting) live in email. Channels can be v2 once the email loop proves out.</li>
-  <li><strong>No per-recipient custom filters or N-version designer</strong> — a fair reading of
-  Leo's "different cuts" could mean filtered slices (my team, my product line), not just detail
-  levels. But his own two audiences ("detailed breakdown" vs. "headline numbers") are detail-level,
-  so two detail levels is the honest v1 reduction; slice-level filters multiply preview,
-  approval, and audit surface and wait for evidence.</li>
-  <li><strong>No multi-report digests</strong> — bundling several reports into one email is real
-  but separable; v1 keeps one schedule = one report so history and approval stay legible.</li>
-  <li><strong>No open/read tracking</strong> — delivery status yes, surveillance no; "did the VP
-  read it" is a v2 conversation with legal, not a v1 default.</li>
+  <li><strong>It is not a report builder.</strong> Not in version two either. The brief shows the
+  reports already exist ("Generated by Ask Zanko") and says not to design report contents. This
+  feature only delivers them.</li>
+  <li><strong>No auto-send for outside email</strong> until the approve click has earned trust.
+  That is version two.</li>
+  <li><strong>No picking your own sections.</strong> Version one has two versions: the full
+  report, and the report's own top section. The section picker is version two.</li>
+  <li><strong>No Slack and no texts.</strong> Nobody in the quotes asked for them. Email is what
+  the VP asked to read.</li>
 </ul>
 
 <!-- ============================================================ -->
 <h2 id="design">4 · Design decisions</h2>
 
 <div class="card" style="border-left:3px solid var(--accent)">
-  <h3 style="margin-top:0">The three decisions that matter most</h3>
-  <p><strong>1 — Distribution, not authoring.</strong> The feature schedules reports Zanko already
-  makes. That keeps v1 small, honest to the quotes, and scalable — anything the Reports tab can
-  generate, the Schedules tab can deliver.</p>
-  <p><strong>2 — Audience versions are a property of the recipient, not the report.</strong> One
-  schedule, one source of truth, each recipient tagged Full or Executive — Leo decides once; nobody
-  maintains three diverging reports.</p>
-  <p style="margin-bottom:0"><strong>3 — Trust is a feature: approval + history + loud failure.</strong>
-  In a regulated context, an automated send to a sponsor bank must be reviewable before it leaves
-  and provable after it does. That's what separates this from a cron job.</p>
+  <h3 style="margin-top:0">The biggest decisions</h3>
+  <p><strong>1 — Delivery, not report design.</strong> Zanko already makes the reports. The
+  feature only sends them. That keeps version one small, honest to the quotes, and scalable —
+  anything the Reports tab can make, the Schedules tab can deliver.</p>
+  <p><strong>2 — The version belongs to the person, not the report.</strong> One schedule, one
+  report, and each reader tagged with the version they get. The operations lead decides once;
+  nobody maintains three diverging copies.</p>
+  <p style="margin-bottom:0"><strong>3 — Trust is a feature: the approve click, the send record,
+  and loud failure.</strong> An automatic email to a sponsor bank must be reviewable before it
+  leaves and provable after it does. Same rule as Task 1: nothing leaves the company without a
+  person.</p>
 </div>
 
 <h3>Information design</h3>
@@ -172,35 +173,35 @@ without a source, no design element without a requirement.</p>
     then name, cadence, recipients, next run.</td>
     <td>The owner's Monday question is "does anything need me?" — answered by scanning one column.
     <span class="tag">R5 R9</span></td></tr>
-  <tr><td><strong>The live preview is half the create screen,</strong> switchable between Full,
-    Executive, and a phone frame.</td>
-    <td>You configure what people <em>receive</em>; you should be looking at it while you decide.
-    <span class="tag">R3 R4</span></td></tr>
-  <tr><td><strong>The executive email leads with a verdict line</strong> ("Overall: improving —
-    volume up, resolution faster, two themes to watch") above four big deltas. In v1 the verdict is
-    <em>computed from which way the numbers moved</em> — simple up-or-down math, not free-form AI prose — so
-    nothing mailed to a VP or a bank can hallucinate.</td>
-    <td>Priya's literal question is "are we getting better or worse" — so the email answers it in
+  <tr><td><strong>The live preview is half the schedule screen,</strong> switchable between the
+    full report, the headline version, and a phone frame.</td>
+    <td>You are deciding what people <em>receive</em>; you should be looking at it while you
+    decide. <span class="tag">R3 R4</span></td></tr>
+  <tr><td><strong>The headline email leads with a verdict line</strong> ("Overall: improving…")
+    above four big numbers. In version one the verdict is <em>computed from which way the numbers
+    moved</em> — simple up-or-down math, not free-form AI prose — so nothing mailed to a VP or a
+    bank can make things up.</td>
+    <td>The VP's literal question is "are we getting better or worse" — so the email answers it in
     its first line. <span class="tag">R4</span></td></tr>
 </table></div>
 
 <h3>Behavioral design</h3>
 <div class="table-scroll"><table>
   <tr><th>Decision</th><th>Why (traced)</th></tr>
-  <tr><td><strong>External recipients flip "review before send" on by default.</strong> The owner
-    can turn it off, but the safe path is the default path. Unapproved sends <em>hold and
-    re-notify</em> — nothing external ever auto-sends on a timeout; the gate is the point. (Yes,
-    this reintroduces a weekly click Leo wanted to eliminate — deliberate friction, only where the
-    audience is regulated.)</td>
-    <td>A sponsor bank send is a compliance artifact; defaults carry the judgment. <span class="tag">R7</span></td></tr>
-  <tr><td><strong>External sends carry the summary plus an expiring secure link — full complaint
-    data never rides in the email body.</strong> Internal recipients (Priya) get the digest
-    in-body, since "read on my phone without logging in" is her whole use case.</td>
-    <td>Emailing regulated data outside the org deserves a colder default than emailing your own
-    VP. <span class="tag">R2 R7</span></td></tr>
+  <tr><td><strong>An outside reader turns "review before send" on by default.</strong> The owner
+    can turn it off, but the safe path is the default path. An unapproved email <em>holds and asks
+    again</em> — nothing outside the company ever sends itself on a timer. (Yes, this keeps one
+    weekly click the operations lead wanted to lose — deliberate friction, only where the reader
+    is regulated.)</td>
+    <td>A sponsor bank email is a compliance record; the default carries the judgment. <span class="tag">R7</span></td></tr>
+  <tr><td><strong>Outside emails carry the summary plus an expiring secure link — complaint-level
+    data never rides in the email body.</strong> Inside readers get the numbers in the email
+    itself, since "read on my phone without logging in" is the VP's whole use case.</td>
+    <td>Emailing regulated data outside the company deserves a colder default than emailing your
+    own VP. <span class="tag">R2 R7</span></td></tr>
   <tr><td><strong>Approving is one click from the list</strong> — review the rendered email,
     Approve &amp; send. Editing reopens the schedule, not the report.</td>
-    <td>Dana's hour becomes a minute; friction only where the stakes are. <span class="tag">R7 R2</span></td></tr>
+    <td>The compliance manager's hour becomes one look and one click. <span class="tag">R7 R2</span></td></tr>
   <tr><td><strong>Failures notify the owner and stay red in the list until retried or resolved.</strong></td>
     <td>A silent failure to a regulator-adjacent audience is the worst outcome this feature can
     have. <span class="tag">R9</span></td></tr>
@@ -210,24 +211,23 @@ without a source, no design element without a requirement.</p>
 </table></div>
 
 <p><strong>Feasibility note.</strong> This leans on one thing Zanko demonstrably has — report
-generation ("Generated by Ask Zanko" on the example report) — plus two new building blocks: outbound
-email rendering and a scheduler with an approval queue. The executive summary derives from the
-same data as the full report (headline KPIs, deltas, top themes), and its verdict line is
-that same up-or-down math, so no new analytics or AI outputs are required for v1. Cadence includes
-day and time (Dana's report must land <em>before</em> Monday 8 AM), and each run covers the period
-since the last.</p>
+generation ("Generated by Ask Zanko" on the example report) — plus two new building blocks:
+sending email, and a scheduler with an approval queue. The headline version uses the same data as
+the full report (the big numbers, their movement, the top themes), and its verdict line is that
+same up-or-down math, so version one needs no new analytics or AI output. A schedule includes day
+and time (the Monday report must land <em>before</em> Monday morning), and each run covers the
+period since the last.</p>
 
 <h3>How I'd know it worked</h3>
-<p>Three signals: <strong>recurring manual exports drop</strong> (assuming export events are
-logged, which Zanko's data-capture practice implies); <strong>schedules survive</strong>
-(created-then-paused-forever means the config didn't fit the need); and <strong>approval
-latency</strong> (if Dana approves within minutes every Monday, the gate is working — if approvals
-pile up, the default needs tuning).</p>
+<p>Three signals: <strong>manual exports drop</strong> (assuming export events are logged);
+<strong>schedules survive</strong> (created-then-paused-forever means the setting didn't fit the
+need); and <strong>approval speed</strong> (if the owner approves within minutes every Monday, the
+approve click is working — if approvals pile up, the default needs tuning).</p>
 
 <p style="margin-top:26px"><a class="btn" href="task2-prototype.html">Open the prototype →</a></p>
-<p class="caption" style="margin-top:10px">In the prototype: use the demo bar (bottom) to flip
-between the states — schedule list, create flow with live preview, approval gate, the phone-sized
-executive email, and a failed delivery.</p>
+<p class="caption" style="margin-top:10px">In the prototype: use the demo strip (top) to flip
+between the states — the schedules list, the schedule screen with its live preview, the approval
+gate, the executive email in a phone frame, and a failed delivery.</p>
 
 <div class="footnote">
 Built for the Spring Labs Product Builder exercise · sample data invented, as the brief allows ·

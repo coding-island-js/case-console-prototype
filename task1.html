@@ -27,9 +27,10 @@ a moment in the analyst's day.</p>
 <div class="card" style="border-left:3px solid var(--accent)">
   <h3 style="margin-top:0">TL;DR — 30 seconds</h3>
   <ul style="margin-bottom:0">
-    <li><strong>Diagnosis:</strong> the screen renders the database record, not the analyst's job —
-    no workflow position, no next action, AI conclusions shown as bare scores she can neither
-    question nor correct. It even shows state that reads as contradictory (closed before
+    <li><strong>Diagnosis:</strong> the analyst's day is four actions — read the complaint, check
+    the AI, send the reply, close the case — and the current screen helps with none of them. It
+    shows every saved field instead: no workflow position, no next action, AI conclusions shown as
+    bare scores she can neither question nor correct. It even shows state that reads as contradictory (closed before
     resolved, on a case still "waiting on customer") with nothing to reconcile it.</li>
     <li><strong>Redesign:</strong> minimum intervention — Zanko's existing screen, unchanged, plus
     five fixes: an added steps-and-next-action bar; the complaint shown in full; confidence, an
@@ -145,11 +146,10 @@ a platform mid-migration. But the analyst's volume has outgrown the template: at
 its costs now compound on every case.</p>
 
 <h3>Root cause</h3>
-<p><strong>The screen renders the database record, not the analyst's job.</strong> Every field
-gets an identical flat row in database order, so the layout answers "what columns does a complaint
-have?" instead of Maya's four questions: <em>what is this case (S1), can I trust the AI (S3),
-where is it in the workflow (S4), and what do I do now (S7)?</em> Three deeper patterns follow
-from it:</p>
+<p><strong>The analyst's day is four actions: read the complaint, check the AI, send the reply,
+close the case. The old screen shows every saved field but helps with none of the four.</strong>
+Every field gets the same flat row, in database order. The layout answers "what columns does a
+complaint have?" — not "what do I do now?" Three patterns follow from that:</p>
 <ol>
   <li><strong>The workflow doesn't exist on screen.</strong> Nothing shows review → investigate →
   respond → resolve, and a "Waiting on customer" status dropdown is not a workflow position.
@@ -223,7 +223,7 @@ from it:</p>
 <h2 id="design">5 · The redesign, decision by decision</h2>
 
 <div class="card" style="border-left:3px solid var(--accent)">
-  <h3 style="margin-top:0">The three decisions that matter most</h3>
+  <h3 style="margin-top:0">The biggest decisions</h3>
   <p><strong>1 — Minimum intervention.</strong> The current screen's layout survives untouched;
   every change maps to a diagnosed problem. A redesign nobody has to relearn is a redesign that
   can actually ship.</p>
@@ -274,6 +274,37 @@ their labels, their right rail — untouched. Five changes only, each traceable 
   explicit secondary buttons. <span class="tag gray">R6</span></li>
 </ul>
 
+<h3>The key states, in the brief's own words</h3>
+<p>The brief asks the redesign to show a few key states — its examples are "long content, the AI
+analysis, and the primary actions." Here is where each one lives in the prototype:</p>
+<div class="table-scroll"><table>
+  <tr><th>Key state (the brief's words)</th><th>Where it is in the prototype</th></tr>
+  <tr><td><strong>Long content</strong></td><td>The "Long complaint" demo button. The complaint
+    shows in full. A very long one folds, and one click shows the rest.</td></tr>
+  <tr><td><strong>The AI analysis</strong></td><td>The Zanko Analysis card in every state, and the
+    "Low-confidence AI" demo button. Every conclusion says how sure the AI is. The why is one
+    click away. The user agrees, or disagrees with a reason. When the AI is not sure, the numbers
+    turn amber and the why opens by itself.</td></tr>
+  <tr><td><strong>The primary actions</strong></td><td>The purple button in the added top bar. It
+    always names the next action. Approve &amp; send reply sends the email. Then Mark resolved
+    closes the case.</td></tr>
+  <tr><td><strong>Overdue</strong> <span class="tag gray">our addition</span></td><td>The
+    "Overdue" demo button. Every case has a due date. A late case turns red.</td></tr>
+</table></div>
+
+<h3>What I left out of version one, on purpose</h3>
+<p>Each of these is the same feature, one size smaller — it ships, and its bigger version
+waits.</p>
+<ul>
+  <li><strong>The AI does not learn yet.</strong> Every disagreement is saved with its reason.
+  Making the AI learn from those saved reasons is version two.</li>
+  <li><strong>Nothing sends itself.</strong> A person approves every reply. Letting the easiest,
+  highest-confidence replies send themselves is version two, after the AI earns that trust.</li>
+  <li><strong>The seventy-five percent line is a starting number.</strong> I picked it. Below it,
+  the numbers turn amber and the AI's reasoning opens by itself. Version two sets that number from
+  real data — where the AI actually starts being wrong.</li>
+</ul>
+
 <h3>What I deliberately did not build</h3>
 <ul>
   <li><strong>No queue/list redesign, no navigation changes</strong> — the task is this screen; the
@@ -293,10 +324,10 @@ their labels, their right rail — untouched. Five changes only, each traceable 
 </ul>
 
 <p style="margin-top:26px"><a class="btn" href="prototype.html">Open the prototype →</a></p>
-<p class="caption" style="margin-top:10px">In the prototype: use the demo bar (bottom) to flip
-between the key states — long complaint, low-confidence AI, an analyst override, an overdue SLA,
-and resolution — and toggle <strong>Design notes</strong> to see these R# decisions pinned in
-place.</p>
+<p class="caption" style="margin-top:10px">In the prototype: use the demo strip (top) to flip
+between the key states — the respond stage, a long complaint, a low-confidence AI, and an overdue
+case. Sending and resolving happen by clicking the purple button. The <strong>What's new</strong>
+toggle outlines everything added to Zanko's screen.</p>
 
 <div class="footnote">
 Built for the Spring Labs Product Builder exercise · sample case content invented, as the brief

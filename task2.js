@@ -44,20 +44,12 @@ const SCHEDULES = [
     source: "CMS Insights Dashboard", cadence: "Weekly · Fri 4:00 PM",
     nextRun: "Fri Jul 3, 4:00 PM", owner: "leo.park@fintech-demo.com",
     review: false, status: "failed",
-    failNote: "Last run Fri Jun 26: 3 of 4 delivered — j.moss@fintech-demo.com bounced. Owner notified.",
+    failNote: "Last run Fri Jun 26: 1 of 2 delivered — j.moss@fintech-demo.com bounced. Owner notified.",
     recipients: [
       { email: "ops-leads@fintech-demo.com", ext: false, ver: "Full" },
       { email: "j.moss@fintech-demo.com", ext: false, ver: "Full" },
     ],
-    history: [{ at: "Fri Jun 26, 4:01 PM", what: "Full ×4", st: "3 of 4 delivered — 1 bounce", by: "auto-sent" }],
-  },
-  {
-    id: 4, name: "Quarterly UDAAP Risk Review",
-    source: "CMS Insights Dashboard", cadence: "Quarterly · 1st, 9:00 AM",
-    nextRun: "— paused", owner: "dana.reyes@lender-demo.com",
-    review: true, status: "paused",
-    recipients: [{ email: "board-pack@lender-demo.com", ext: false, ver: "Executive" }],
-    history: [{ at: "Wed Apr 1, 9:00 AM", what: "Executive ×1", st: "Delivered", by: "approved by dana.reyes" }],
+    history: [{ at: "Fri Jun 26, 4:01 PM", what: "Full ×2", st: "1 of 2 delivered — 1 bounce", by: "auto-sent" }],
   },
 ];
 
@@ -126,7 +118,8 @@ function retry(id) {
 function togglePause(id) {
   const s = state.schedules.find((x) => x.id === id);
   s.status = s.status === "paused" ? "sent" : "paused";
-  s.nextRun = s.status === "paused" ? "— paused" : "Wed Oct 1, 9:00 AM";
+  // resuming restores the schedule's own next run (from the source data)
+  s.nextRun = s.status === "paused" ? "— paused" : SCHEDULES.find((x) => x.id === id).nextRun;
   render();
 }
 
