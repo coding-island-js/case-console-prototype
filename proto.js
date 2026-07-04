@@ -105,9 +105,16 @@ function advance() {
   c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now",
     text: c.stages[c.stage] === "Respond" ? "Response approved and sent to customer."
         : (c.stages[c.stage] + " finished — moved to " + (c.stages[c.stage + 1] || "done") + ".") });
-  // "Approve & send reply" finishes the job: sending IS resolving.
-  // No second click hiding behind the button's promise.
+  // "Approve & send reply" finishes the job: sending IS resolving,
+  // and approving the reply implies the analysis was reviewed — the
+  // confirmation checkbox flips with it (a disagreement is never
+  // overwritten). Both land in the audit log.
   const wasRespond = c.stages[c.stage] === "Respond";
+  if (wasRespond && !c.agreed && !c.assessment.analystDecision) {
+    c.agreed = true;
+    c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now",
+      text: "AI analysis confirmed as part of approving the reply." });
+  }
   c.stage = wasRespond ? 4 : c.stage + 1;
   if (c.stage >= 4) {
     state.scenario = "resolved"; state.c.status = "Resolved";
