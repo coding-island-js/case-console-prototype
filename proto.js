@@ -81,15 +81,12 @@ function setScenario(name) {
 // ---------- the one next action ----------
 
 function primaryAction() {
-  const c = state.c;
+  // Only real actions exist. The agent already reviewed & investigated
+  // (Peyman: it summarizes the call, pulls the data). The human enters
+  // at Respond: review the AI if it's unsure, otherwise send the reply.
   if (state.scenario === "resolved") return { label: "✓ Case resolved", disabled: true };
   if (state.lowConfidence)          return { label: "Review AI analysis" };
-  switch (c.stages[c.stage]) {
-    case "Review":      return { label: "Start investigating" };
-    case "Investigate": return { label: "Write the reply" };
-    case "Respond":     return { label: "Approve & send reply" };
-    case "Resolve":     return { label: "Mark resolved" };
-  }
+  return { label: "Approve & send reply" };
 }
 
 function advance() {
@@ -147,8 +144,9 @@ function renderStrip() {
     ${c.stages.map((s, i) => {
       const cls = i < c.stage ? "done" : i === c.stage ? "current" : "";
       const line = i ? `<div class="step-line ${i <= c.stage ? "done" : i === c.stage + 1 ? "next" : ""}"></div>` : "";
-      return `${line}<div class="step ${cls}"><span class="step-label">
-        <span class="dot">${i < c.stage ? "✓" : i + 1}</span>${s}</span></div>`;
+      const dot = i < c.stage ? (i < 2 ? "✦" : "✓") : i + 1;
+      return `${line}<div class="step ${cls}" title="${i < 2 ? "done by the Zanko agent" : ""}"><span class="step-label">
+        <span class="dot">${dot}</span>${s}</span></div>`;
     }).join("")}
     <span style="width:14px"></span>
     ${slaChip}
