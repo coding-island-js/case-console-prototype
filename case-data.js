@@ -62,20 +62,20 @@ I want three things: (1) the $487.20 charge reversed, (2) written confirmation t
   // question the AI instead of taking a bare score on faith.
   assessment: {
     summary:
-      "Customer disputes an unauthorized $487.20 charge (Jun 19) and escalated after a promised provisional credit and dispute form never arrived. Primary harm is the service failure compounding the dispute; customer has stated CFPB intent.",
+      "The customer contacted the company expressing extreme dissatisfaction with their customer service regarding an unauthorized charge on his Vera Credit Card. A promised provisional credit and dispute form never arrived, and the customer has stated intent to file with the CFPB.",
     summaryConfidence: 92,
 
     category: {
       issueType: "Complaint",
-      primary: "Unauthorized charges",
-      secondary: "Customer service failure",
+      primary: "Customer Service and Communications",
+      secondary: "Unauthorized charges",
       themes: ["Provisional credit not issued", "Broken follow-up promises", "CFPB threat"],
       confidence: 88,
     },
 
     risk: {
       level: "High",
-      score: 78,
+      score: 53,
       confidence: 85,
       // Business note: the current screen shows "Alleged: Low" and
       // "Inherent: High" a full viewport apart with no explanation.
@@ -123,7 +123,7 @@ Maya Torres · Complaints Team`,
   // ai = agent actions, comment = human notes, audit = system events.
   timeline: [
     { kind: "audit",   who: "System",        at: "Jun 24, 8:02 AM", text: "Case created from inbound email. SLA due Jul 8." },
-    { kind: "ai",      who: "Zanko agent",   at: "Jun 24, 8:03 AM", text: "Complaint summarized and categorized (Unauthorized charges · 88% confidence)." },
+    { kind: "ai",      who: "Zanko agent",   at: "Jun 24, 8:03 AM", text: "Complaint summarized and categorized (Customer Service and Communications · 88% confidence)." },
     { kind: "ai",      who: "Zanko agent",   at: "Jun 24, 8:07 AM", text: "Pulled transaction record from card processor: $487.20, TRV*BOOKINGS LLC, Jun 19." },
     { kind: "audit",   who: "System",        at: "Jun 24, 9:15 AM", text: "Assigned to maya.torres@lender-demo.com." },
     { kind: "comment", who: "Maya Torres",   at: "Jun 30, 2:12 PM", text: "Confirmed with processor: no prior dispute was opened on the first call. Service failure is on us — including an apology and expedited reissue in the response." },
