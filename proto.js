@@ -81,11 +81,10 @@ function setScenario(name) {
 // ---------- the one next action ----------
 
 function primaryAction() {
-  // Only real actions exist. The agent already reviewed & investigated
-  // (Peyman: it summarizes the call, pulls the data). The human enters
-  // at Respond: review the AI if it's unsure, otherwise send the reply.
+  // One button, one verb. Send sends. Resolve resolves.
   if (state.scenario === "resolved") return { label: "✓ Case resolved", disabled: true };
   if (state.lowConfidence)          return { label: "Review AI analysis" };
+  if (state.c.stage >= 3)           return { label: "Mark resolved" };
   return { label: "Approve & send reply" };
 }
 
@@ -99,26 +98,16 @@ function advance() {
     c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now", text: "AI analysis reviewed and confirmed by analyst." });
     render(); return;
   }
-  c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now",
-    text: c.stages[c.stage] === "Respond" ? "Response approved and sent to customer."
-        : (c.stages[c.stage] + " finished — moved to " + (c.stages[c.stage + 1] || "done") + ".") });
-  // "Approve & send reply" finishes the job: sending IS resolving,
-  // and approving the reply implies the analysis was reviewed — the
-  // confirmation checkbox flips with it (a disagreement is never
-  // overwritten). Both land in the audit log.
-  const wasRespond = c.stages[c.stage] === "Respond";
-  if (wasRespond && !c.agreed && !c.assessment.analystDecision) {
-    c.agreed = true;
-    c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now",
-      text: "AI analysis confirmed as part of approving the reply." });
-  }
-  c.stage = wasRespond ? 4 : c.stage + 1;
-  if (c.stage >= 4) {
-    state.scenario = "resolved"; state.c.status = "Resolved";
-    // stay on the letter: its header turns "✓ Sent" right where you clicked
-    if (wasRespond) state.activeTab = "draft";
-  } else if (c.stages[c.stage] === "Respond") {
+  if (c.stage < 3) {
+    // send the reply — one thing
+    c.stage = 3;
     state.activeTab = "draft";
+    c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now", text: "Reply approved and sent to customer." });
+  } else {
+    // mark resolved — one thing
+    state.scenario = "resolved";
+    c.status = "Resolved";
+    c.timeline.push({ kind: "audit", who: "Maya Torres", at: "now", text: "Case marked resolved." });
   }
   render();
 }
@@ -287,10 +276,10 @@ function submitDisagree() {
 
 function renderActivity() {
   const c = state.c;
-  const atRespond = c.stages[c.stage] === "Respond" && state.scenario !== "resolved";
+  const atRespond = c.stage === 2 && state.scenario !== "resolved" && !state.lowConfidence;
   const tabs = ["comments", "draft", "attachments", "audit"];
   const labels = { comments: "Comments",
-    draft: "Draft Response" + (state.scenario === "resolved" ? " ✓" : ""),
+    draft: "Draft Response" + (state.c.stage >= 3 ? " ✓" : ""),
     attachments: "Attachments", audit: "Audit Log" };
 
   let body = "";
@@ -299,13 +288,13 @@ function renderActivity() {
       ${state.lowConfidence ? `<div class="held">⚠ Held — the AI isn't sure about its analysis.
         Review it above before this reply goes out.</div>` : ""}
       <div class="letter" data-new="CHANGED — opens itself when it's time to reply">
-        <div class="letter-head ${state.scenario === "resolved" ? "sent" : ""}">
-          ${state.scenario === "resolved"
+        <div class="letter-head ${state.c.stage >= 3 ? "sent" : ""}">
+          ${c.stage >= 3
             ? `✓ Sent to ${c.customer.name} <span>Jul 2, 2026, 10:05 AM</span>`
             : `Reply to ${c.customer.name} <span>drafted by Zanko · ${c.draft.generatedAt}</span>`}</div>
         <div class="letter-body">${esc(c.draft.text)}</div>
       </div>
-      ${atRespond && !state.lowConfidence ? `<div class="decide-row" style="margin-top:10px">
+      ${atRespond ? `<div class="decide-row" style="margin-top:10px">
         <button class="btn-primary" onclick="advance()">Approve &amp; send reply</button>
         <button class="btn-quiet">Edit</button>
       </div>` : ""}`;
