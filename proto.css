@@ -250,8 +250,8 @@ button { font: inherit; cursor: pointer; }
 
 /* ---- Assessment card (R3/R4) ---- */
 .conf {
-  font-size: 12px; font-weight: 700; border-radius: 6px; padding: 2px 8px;
-  background: var(--green-bg); color: var(--green);
+  font-size: 13.5px; font-weight: 800; border-radius: 6px; padding: 3px 10px;
+  background: var(--green-bg); color: var(--green); border: 1px solid currentColor;
 }
 .conf.low { background: var(--amber-bg); color: var(--amber); }
 .assess-block { border-top: 1px solid #f2f2f4; padding: 12px 0; }
