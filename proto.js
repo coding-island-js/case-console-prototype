@@ -35,9 +35,7 @@ const SCENARIOS = {
   default:    { label: "Respond stage" },
   long:       { label: "Long complaint" },
   lowconf:    { label: "Low-confidence AI" },
-  overridden: { label: "Analyst disagreed" },
   overdue:    { label: "Overdue" },
-  resolved:   { label: "Resolved" },
 };
 
 function setScenario(name) {
