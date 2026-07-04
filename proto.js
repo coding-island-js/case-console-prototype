@@ -242,6 +242,8 @@ function renderAnalysis() {
 
     ${!d && (state.c.agreed || state.scenario !== "resolved") ? `
     <div class="frow decide-row ${!state.c.agreed && state.c.stage < 3 && state.scenario !== "resolved" ? "needs-you" : ""}" data-new="NEW — agree or disagree, with a saved reason">
+      ${!state.c.agreed && state.c.stage < 3 && state.scenario !== "resolved"
+        ? `<span style="font-weight:750">Your review:</span>` : ""}
       ${state.c.agreed
         ? (state.c.stage >= 3
           ? `<label class="agree-check done"><input type="checkbox" checked disabled> Confirmed by analyst</label>`
